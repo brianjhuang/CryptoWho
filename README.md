@@ -39,6 +39,8 @@ Inside your bash profile, you can go ahead and set this at the top:
 # YOUTUBE API KEY
 export YOUTUBE_DATA_API_KEY="YOUR_API_KEY"
 ```
+
+Close out of your terminal and your code editor to see changes occur.
 ### Check that updates have been made
 ```
 echo $YOUTUBE_DATA_API_KEY
