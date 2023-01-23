@@ -2,6 +2,8 @@
 
 ## Overview
 
+### What does this repository offer?
+
 ## Installation
 
 **Create and activate Python >= 3.6 Virtual Environment**
@@ -27,7 +29,7 @@ Once you have a **YouTube Data API Key**, please set the ```YOUTUBE_DATA_API_KEY
 
 You can do so by going to your home directory and running the following command:
 
-**Mac OS / Linux **
+**Mac OS and Linux**
 
 ```
 nano .bash_profile
