@@ -39,7 +39,7 @@ Inside your bash profile, you can go ahead and set this at the top:
 # YOUTUBE API KEY
 export YOUTUBE_DATA_API_KEY="YOUR_API_KEY"
 ```
-# Check that updates have been made
+### Check that updates have been made
 ```
 echo $YOUTUBE_DATA_API_KEY
 ```
