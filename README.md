@@ -40,7 +40,7 @@ Inside your bash profile, you can go ahead and set this at the top:
 export YOUTUBE_DATA_API_KEY="YOUR_API_KEY"
 ```
 
-** Linux **
+**Linux**
 ```
 export YOUTUBE_DATA_API_KEY
 echo $YOUTUBE_DATA_API_KEY
