@@ -27,6 +27,8 @@ Once you have a **YouTube Data API Key**, please set the ```YOUTUBE_DATA_API_KEY
 
 You can do so by going to your home directory and running the following command:
 
+**Mac OS**
+
 ```
 nano .bash_profile
 ```
@@ -36,6 +38,17 @@ Inside your bash profile, you can go ahead and set this at the top:
 ```
 # YOUTUBE API KEY
 export YOUTUBE_DATA_API_KEY="YOUR_API_KEY"
+```
+
+** Linux **
+```
+export YOUTUBE_DATA_API_KEY
+echo $YOUTUBE_DATA_API_KEY
+```
+
+You can un-set your API KEY like so:
+```
+unset YOUTUBE_DATA_API_KEY
 ```
 
 The following tutorials cover how to do this as well:
