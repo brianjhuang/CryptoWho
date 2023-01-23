@@ -37,7 +37,7 @@ Pygments==2.14.0
 PySocks==1.7.1
 python-dateutil==2.8.2
 pytz==2022.7.1
-pywin32==305
+pywin32==305; sys_platform == "win32"
 pyzmq==25.0.0
 selenium==4.7.2
 six==1.16.0
