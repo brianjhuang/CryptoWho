@@ -1,4 +1,8 @@
 # CryptoWho
+Data Science Capstone Project advised under Stuart Geiger
+
+## Authors
+Brian Huang and Lily Yu
 
 ## Overview
 
