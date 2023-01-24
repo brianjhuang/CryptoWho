@@ -9,7 +9,7 @@ In 2020, Bitcoin, other Cryptocurrencies and blockchain investments (NFTs) exper
 
 For many, cryptocurrency and NFTs were the first time they encountered an 'investment'. Many proclaimed crypto/NFT traders had no prior experience with any investing (stock market, retirement accounts, etc.) and looked to crypto/NFT as a get rich quick path. However, with the influx of new and young traders it was only a matter of time before the crypto/NFT scams began to pray on it's new consumers.
 
-While crypto/NFT is not inherently a scam, many bad actors began to manipulate the influx of young and inexperienced investors. Many schemes akin to pump and dumps began to appear and with the popularity of crypto/NFT throughout social media, many inexperienced investors were quick to turn a blind eye to scams that seasoned investors may realize immediately.
+While crypto/NFT is not inherently a scam, many bad actors began to manipulate the influx of young and inexperienced investors. Many schemes akin to pump and dumps began to appear and with the popularity of crypto/NFT throughout social media, many inexperienced investors were quick to turn a blind eye to scams that seasoned investors may recognize immediately.
 
 Cases like this have occured with traditional markets as well, where investors pour money into an asset based off of hype with no sound reasoning ($GME or GameStop). Crypto/NFTts however were especially susceptible to this with the combination of a relatively new asset, large demographic of young investors, and many social media influencers promoting these assets (Logan Paul, Doja Cat, etc)
 
