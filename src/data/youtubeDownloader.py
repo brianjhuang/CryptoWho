@@ -301,7 +301,7 @@ class Downloader():
                     ))
                 return {"comments": []}
 
-        logging.info("Top " + self.max_comments + " comments downloaded for " + self.video_id)
+        logging.info("Top " + str(self.max_comments) + " comments downloaded for " + self.video_id)
         return {"comments":comments}
 
     def getVideoTranscript(self):
