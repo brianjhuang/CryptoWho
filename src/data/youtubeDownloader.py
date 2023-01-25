@@ -20,6 +20,18 @@ from socket import error as SocketError
 # Config Imports
 from config import youtube
 
+# Logging variables
+totalLogs = len(os.listdir('../../logs'))
+logFileName = 'logs/youtube_download_log_{0}.txt'.format(totalLogs)
+
+
+# Set up the settings to log information as we run our build pipeline
+logging.basicConfig(filename=logFileName, 
+        filemode='a', 
+        level=logging.INFO,
+        datefmt='%H:%M:%S',
+        format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
+
 class Downloader():
     ''' Gets tabular data for YouTube video(s) given id(s)
 
@@ -62,8 +74,10 @@ class Downloader():
                 self.youtube_api = build(youtube.YOUTUBE_API_SERVICE_NAME, youtube.YOUTUBE_API_VERSION, developerKey=youtube.YOUTUBE_DATA_API_KEY)
                 self.transcriber = YouTubeTranscriptApi()
                 print("Successfully built YouTube API object")
+                logging.info("Successfully built YouTube API object")
             except:
                 print("Failure to build YouTube API object, are all the values correct/filled in config/YouTube.py?")
+                logging.info("Failure to build YouTube API object, are all the values correct/filled in config/YouTube.py?")
     
     def keyExists(self):
         """ Check if we have a key in our environment
@@ -128,7 +142,7 @@ class Downloader():
                 .list(part="id,snippet,contentDetails", id=self.video_id)
                 .execute()
             )
-            print(response)
+
             # Get Video Details
             try:
                 videoContent = response["items"][0]
@@ -151,6 +165,9 @@ class Downloader():
                     self.video_id, error
                 )
             )
+            logging.info("--- HTTP Error occurred while retrieving meta data for VideoID: {0}. [ERROR]: {1}".format(
+                    self.video_id, error
+                ))
             return {"title": "", "description": "", "tags": []}
 
     def getVideoComments(self):
@@ -184,7 +201,6 @@ class Downloader():
                         .list(part="snippet,replies", videoId=self.video_id, maxResults=100)
                         .execute()
                     )
-                    print(response)
 
                     # Grab the ID to the next page
                     if "nextPageToken" in response.keys():
@@ -231,7 +247,6 @@ class Downloader():
                         )
                         .execute()
                     )
-                    print(response)
 
                     # Grab the ID to the next page
                     if "nextPageToken" in response.keys():
@@ -272,6 +287,9 @@ class Downloader():
                         self.video_id, error
                     )
                 )
+                logging.info("--- HTTP Error occurred while retrieving comments for VideoID: {0}. [ERROR]: {1}".format(
+                        self.video_id, error
+                    ))
                 return {"comments": []}
 
         return {"comments":comments}
@@ -314,6 +332,9 @@ if __name__ == '__main__':
     videos = []
     file_id = len(os.listdir(youtube.RAW_VIDEOS))
 
+    print("Starting download...")
+    logging.info("Starting download...")
+    start = time.time()
     # Collect our data
     for video_id in targets:
         downloader.setVideoId(video_id)
@@ -337,4 +358,7 @@ if __name__ == '__main__':
         videos.append(video)
 
     df = pd.DataFrame(videos)
-    df.to_csv(youtube.RAW_VIDEOS + 'videos_{}.csv'.format(file_id))
+
+    print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+    logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+    df.to_csv(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id))
