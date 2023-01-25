@@ -19,18 +19,6 @@ from socket import error as SocketError
 # Config Imports
 from config import youtube
 
-# Logging variables
-totalLogs = len(os.listdir('../../logs'))
-logFileName = '../../logs/youtube_download_log_{0}.txt'.format(totalLogs)
-
-
-# Set up the settings to log information as we run our build pipeline
-logging.basicConfig(filename=logFileName, 
-        filemode='a', 
-        level=logging.INFO,
-        datefmt='%H:%M:%S',
-        format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
-
 class Downloader():
     ''' Gets tabular data for YouTube video(s) given id(s)
 
@@ -337,13 +325,25 @@ class Downloader():
 
 
 if __name__ == '__main__':
+    # Logging variables
+    totalLogs = len(os.listdir('../../logs'))
+    logFileName = '../../logs/youtube_downloads/youtube_download_log_{0}.txt'.format(totalLogs)
+
+
+    # Set up the settings to log information as we run our build pipeline
+    logging.basicConfig(filename=logFileName, 
+            filemode='a', 
+            level=logging.INFO,
+            datefmt='%H:%M:%S',
+            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
+            
     # Get IDs as targets passed through command line
     targets = sys.argv[1:]
 
     # Create downloader, list for videos, file_id
     downloader = Downloader()
     videos = []
-    file_id = len(os.listdir(youtube.RAW_VIDEOS))
+    file_id = len(os.listdir(youtube.RAW_VIDEOS)) - 1
 
     print("Starting download...")
     logging.info("Starting download...")
@@ -382,4 +382,4 @@ if __name__ == '__main__':
 
     print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
     logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
-    df.to_csv(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id))
+    df.to_csv(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id), index_col=0)
