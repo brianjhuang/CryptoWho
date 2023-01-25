@@ -382,4 +382,4 @@ if __name__ == '__main__':
 
     print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
     logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
-    df.to_csv(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id), index_col=0)
+    df.to_csv(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id), index_label=False)
