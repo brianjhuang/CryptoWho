@@ -22,7 +22,7 @@ from config import youtube
 
 # Logging variables
 totalLogs = len(os.listdir('../../logs'))
-logFileName = 'logs/youtube_download_log_{0}.txt'.format(totalLogs)
+logFileName = '../../logs/youtube_download_log_{0}.txt'.format(totalLogs)
 
 
 # Set up the settings to log information as we run our build pipeline
