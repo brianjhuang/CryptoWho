@@ -4,10 +4,9 @@ sys.path.insert(0, '../../')
 
 import os
 import logging
-import json
 import time
 
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 import pandas as pd
 import random
 
@@ -142,6 +141,7 @@ class Downloader():
                 .list(part="id,snippet,contentDetails", id=self.video_id)
                 .execute()
             )
+            logging.info("Retrieved video meta data response for " + self.video_id)
 
             # Get Video Details
             try:
@@ -150,6 +150,7 @@ class Downloader():
                 if "snippet" in videoContent.keys():
                     videoSnippet = videoContent["snippet"]
 
+                    logging.info("Retrieved video meta data for " + self.video_id)
                     return {
                         "title": videoSnippet["title"],
                         "description": videoSnippet["description"],
@@ -157,6 +158,7 @@ class Downloader():
                     }
 
             except:
+                logging.info("Meta data was empty or video was missing for " + self.video_id)
                 return {"title": "", "description": "", "tags": []}
 
         except (HttpError, SocketError) as error:
@@ -202,6 +204,8 @@ class Downloader():
                         .execute()
                     )
 
+                    logging.info("Retrieved video comments response for page one of  " + self.video_id)
+
                     # Grab the ID to the next page
                     if "nextPageToken" in response.keys():
                         nextPageToken = response["nextPageToken"]
@@ -230,9 +234,11 @@ class Downloader():
 
                         # Each page grabs at max 100 comments
                         counter -= 100
+                        logging.info("Retrieved video comments for page one of  " + self.video_id)
                         comments += pageComments
 
                     except:
+                        logging.info("Comments missing or not available for " + self.video_id)
                         return {"comments": []}
 
                 else:
@@ -247,6 +253,7 @@ class Downloader():
                         )
                         .execute()
                     )
+                    logging.info("Retrieved video comments response for " + self.video_id)
 
                     # Grab the ID to the next page
                     if "nextPageToken" in response.keys():
@@ -276,9 +283,11 @@ class Downloader():
 
                         # Each page grabs at max 100 comments
                         counter -= 100
+                        logging.info("Retrieved video comments for " + self.video_id)
                         comments += pageComments
 
                     except:
+                        logging.info("Comments missing or not available for " + self.video_id)
                         return {"comments": []}
 
             except (HttpError, SocketError) as error:
@@ -292,6 +301,7 @@ class Downloader():
                     ))
                 return {"comments": []}
 
+        logging.info("Top " + self.max_comments + " comments downloaded for " + self.video_id)
         return {"comments":comments}
 
     def getVideoTranscript(self):
@@ -315,11 +325,14 @@ class Downloader():
 
         try:
             raw_transcript = self.transcriber.get_transcript(self.video_id)
+            logging.info("Retrieved video transcript data for " + self.video_id)
         except:
+            logging.info("No video transcript data for " + self.video_id)
             return {"cleaned_transcript" : "", "raw_transcript" : {}}
 
         cleaned_transcript = " ".join([phrase['text'] for phrase in raw_transcript])
 
+        logging.info("Cleaned and return transcript data for " + self.video_id)
         return {"cleaned_transcript" : cleaned_transcript, "raw_transcript" : raw_transcript}
 
 
@@ -335,8 +348,14 @@ if __name__ == '__main__':
     print("Starting download...")
     logging.info("Starting download...")
     start = time.time()
-    # Collect our data
-    for video_id in targets:
+
+    # Collect our data, Added TQDM progress bar
+    for i in tqdm(range(len(targets))):
+
+        video_id = targets[i]
+
+        logging.info("Downloading " + video_id)
+
         downloader.setVideoId(video_id)
         
         videoMetaData = downloader.getVideoMetadata()
@@ -356,6 +375,8 @@ if __name__ == '__main__':
         }
 
         videos.append(video)
+
+        logging.info("Finished downloading " + video_id)
 
     df = pd.DataFrame(videos)
 
