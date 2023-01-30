@@ -38,7 +38,11 @@ pip install -r requirements.txt
 ```
 ### Reddit Thread Scraper
 
-***TO BE ADDED***
+We use Selenium with the Firefox Webdriver to scrape Reddit threads for YouTube videos. This data is used to train a YouTube video classifier.
+
+To run the scraper, you will need to install the Firefox Webdriver, which can be downloaded [here](https://github.com/mozilla/geckodriver/releases).
+
+To install, place your OS-appropriate executable in a directory locatable by your PATH.
 
 ### YouTube Data API
 
