@@ -11,7 +11,7 @@ class Reddit(object):
     SCRAPE_DEPTH = 2 # How many pages to scrape per subreddit (25 threads per page)
 
     # SAVE PATHS
-    RAW_VIDEOS = '../../data/raw/reddit/'
-    PROCESSED_VIDEOS = '../../data/processed/reddit/'
-    INTERIM_VIDEOS = '../../data/interim/reddit/'
-    EXTERNAL_VIDEOS ='../../data/external/reddit/'
+    RAW_THREADS = '../../data/raw/reddit/'
+    PROCESSED_THREADS = '../../data/processed/reddit/'
+    INTERIM_THREADS = '../../data/interim/reddit/'
+    EXTERNAL_THREADS ='../../data/external/reddit/'
