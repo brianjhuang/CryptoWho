@@ -7,7 +7,8 @@ class Reddit(object):
     """
 
     # GENERAL CONFIG
-    SUBREDDITS = ['investing', 'finance', 'cryptocurrency', 'wallstreetbets'] 
+    SUBREDDITS = ['investing', 'finance', 'cryptocurrency', 'wallstreetbets']
+    
 
     # SAVE PATHS
     RAW_VIDEOS = '../../data/raw/reddit/'
