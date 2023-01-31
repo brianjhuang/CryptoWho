@@ -8,7 +8,7 @@ class Reddit(object):
 
     # GENERAL CONFIG
     SUBREDDITS = ['investing', 'finance', 'cryptocurrency', 'wallstreetbets']
-    
+    SCRAPE_DEPTH = 2 # How many pages to scrape per subreddit (25 threads per page)
 
     # SAVE PATHS
     RAW_VIDEOS = '../../data/raw/reddit/'
