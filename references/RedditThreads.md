@@ -1,11 +1,40 @@
 # Selected Reddit Threads
 
 ### Crypto Related
-https://coinbound.io/best-crypto-subreddits/
+r/bitcoin
+r/btc
+r/ethereum
+r/dogecoin
+r/CryptoMarkets
+r/CryptoCurrencies
+r/CryptoCurrency
+r/CryptoCurrencyTrading
+r/Crypto_General
+r/binance
+r/CoinBase
+r/ledgerwallet
+r/bitcoinbeginners
+r/altcoin
+r/NFT
+r/NFTsMarketplace
+r/opensea
 
 ### Non-Crypto Related
-https://therobusttrader.com/popular-subreddits-about-trading/
-
 r/wallstreetbets
-
-https://www.reddit.com/r/ListOfSubreddits/comments/ja8du7/list_of_economic_and_stock_market_subreddits/
+r/finance
+r/BusinessHub
+r/FinancialPlanning
+r/AskEconomics
+r/investing
+r/povertyfinance
+r/Economics
+r/Trading
+r/StockMarket
+r/Forex
+r/stocks
+r/Economy
+r/options
+r/dividends
+r/SecurityAnalysis
+r/Daytrading
+r/pennystocks
