@@ -1,6 +1,4 @@
 import sys
-# Provide access to main dir path for config, data, etc
-sys.path.insert(0, '../../')
 
 from selenium import webdriver
 from bs4 import BeautifulSoup

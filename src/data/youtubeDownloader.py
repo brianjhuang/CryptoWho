@@ -1,6 +1,4 @@
 import sys
-# Provide access to main dir path for config, data, etc
-sys.path.insert(0, '../../')
 
 import os
 import logging
