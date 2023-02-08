@@ -53,24 +53,27 @@ class Scraper():
         
         # old.reddit.com is easier to scrape, doesn't have js lazy loading
         self.driver.get(url)
-        soup = BeautifulSoup(self.driver.page_source)
-        
-        subreddit = self.extract_subreddit(url)
-        
-        main_thread = soup.find('div', {'class': 'expando'}).text
-        self.TextEntries.append(TextEntry(main_thread, subreddit, url, 'thread'))
-        
-        #Find all links in comments, keeping only youtube links
-        comments = soup.find_all('div', {"data-type": "comment"})
-        for comment in comments:
-            #Record comment text
-            comment_text = comment.find('div', {'class': 'md'}).text
-            self.TextEntries.append(TextEntry(comment_text, subreddit, url, 'comment'))
+        try:
+            soup = BeautifulSoup(self.driver.page_source)
             
-            #Record youtube links
-            for link in comment.find('div', {'class': 'usertext-body'}).find_all('a', href=True):
-                if 'youtube.com' in link['href']:
-                    self.YoutubeLinks.append(YoutubeLink(link['href'], subreddit, url))
+            subreddit = self.extract_subreddit(url)
+            
+            main_thread = soup.find('div', {'class': 'expando'}).text
+            self.TextEntries.append(TextEntry(main_thread, subreddit, url, 'thread'))
+            
+            #Find all links in comments, keeping only youtube links
+            comments = soup.find_all('div', {"data-type": "comment"})
+            for comment in comments:
+                #Record comment text
+                comment_text = comment.find('div', {'class': 'md'}).text
+                self.TextEntries.append(TextEntry(comment_text, subreddit, url, 'comment'))
+                
+                #Record youtube links
+                for link in comment.find('div', {'class': 'usertext-body'}).find_all('a', href=True):
+                    if 'youtube.com' in link['href']:
+                        self.YoutubeLinks.append(YoutubeLink(link['href'], subreddit, url))
+        except:
+            print("Failed to scrape: {} for URL: {}".format(subreddit, url))
                     
     def process_subreddit(self, subreddit):
         """Gets thread links from a subreddit, up to a specified depth
