@@ -50,10 +50,10 @@ class Scraper():
         Args:
             url (str): The url of the thread to scrape
         """
-        
-        # old.reddit.com is easier to scrape, doesn't have js lazy loading
-        self.driver.get(url)
         try:
+            # old.reddit.com is easier to scrape, doesn't have js lazy loading
+            self.driver.get(url)
+        
             soup = BeautifulSoup(self.driver.page_source)
             
             subreddit = self.extract_subreddit(url)
@@ -84,18 +84,22 @@ class Scraper():
         Returns:
             list: List of all thread links found
         """
-        url = f"https://old.reddit.com/r/{subreddit}/top/?sort=top&t=year"
-        self.driver.get(url)
         threads = []
-        for i in range(self.SCRAPE_DEPTH):
-            # Get all thread links
-            soup = BeautifulSoup(self.driver.page_source)
-            links = soup.find_all('a', {"class": "title"})
-            threads += [link for link in links if link['href'].startswith('/r/')]
-            
-            self.driver.find_element(By.CLASS_NAME, 'next-button').click()
+        try:
+            url = f"https://old.reddit.com/r/{subreddit}/top/?sort=top&t=year"
+            self.driver.get(url)
+            for i in range(self.SCRAPE_DEPTH):
+                # Get all thread links
+                soup = BeautifulSoup(self.driver.page_source)
+                links = soup.find_all('a', {"class": "title"})
+                threads += [link for link in links if link['href'].startswith('/r/')]
+                
+                self.driver.find_element(By.CLASS_NAME, 'next-button').click()
 
-        return threads
+            return threads
+        except:
+            print("Failed to scrape: {} for URL: {}".format(subreddit, url))
+            return threads    
     
     def scrape(self):
         """Scrapes all subreddits, saving all youtube links and text entries found
