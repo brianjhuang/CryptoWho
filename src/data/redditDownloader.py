@@ -1,6 +1,4 @@
 import sys
-# Provide access to main dir path for config, data, etc
-sys.path.insert(0, '../../')
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -52,27 +50,30 @@ class Scraper():
         Args:
             url (str): The url of the thread to scrape
         """
+        try:
+            # old.reddit.com is easier to scrape, doesn't have js lazy loading
+            self.driver.get(url)
         
-        # old.reddit.com is easier to scrape, doesn't have js lazy loading
-        self.driver.get(url)
-        soup = BeautifulSoup(self.driver.page_source)
-        
-        subreddit = self.extract_subreddit(url)
-        
-        main_thread = soup.find('div', {'class': 'expando'}).text
-        self.TextEntries.append(TextEntry(main_thread, subreddit, url, 'thread'))
-        
-        #Find all links in comments, keeping only youtube links
-        comments = soup.find_all('div', {"data-type": "comment"})
-        for comment in comments:
-            #Record comment text
-            comment_text = comment.find('div', {'class': 'md'}).text
-            self.TextEntries.append(TextEntry(comment_text, subreddit, url, 'comment'))
+            soup = BeautifulSoup(self.driver.page_source)
             
-            #Record youtube links
-            for link in comment.find('div', {'class': 'usertext-body'}).find_all('a', href=True):
-                if 'youtube.com' in link['href']:
-                    self.YoutubeLinks.append(YoutubeLink(link['href'], subreddit, url))
+            subreddit = self.extract_subreddit(url)
+            
+            main_thread = soup.find('div', {'class': 'expando'}).text
+            self.TextEntries.append(TextEntry(main_thread, subreddit, url, 'thread'))
+            
+            #Find all links in comments, keeping only youtube links
+            comments = soup.find_all('div', {"data-type": "comment"})
+            for comment in comments:
+                #Record comment text
+                comment_text = comment.find('div', {'class': 'md'}).text
+                self.TextEntries.append(TextEntry(comment_text, subreddit, url, 'comment'))
+                
+                #Record youtube links
+                for link in comment.find('div', {'class': 'usertext-body'}).find_all('a', href=True):
+                    if 'youtube.com' in link['href']:
+                        self.YoutubeLinks.append(YoutubeLink(link['href'], subreddit, url))
+        except:
+            print("Failed to scrape: {} for URL: {}".format(subreddit, url))
                     
     def process_subreddit(self, subreddit):
         """Gets thread links from a subreddit, up to a specified depth
@@ -83,18 +84,22 @@ class Scraper():
         Returns:
             list: List of all thread links found
         """
-        url = f"https://old.reddit.com/r/{subreddit}/top/?sort=top&t=year"
-        self.driver.get(url)
         threads = []
-        for i in range(self.SCRAPE_DEPTH):
-            # Get all thread links
-            soup = BeautifulSoup(self.driver.page_source)
-            links = soup.find_all('a', {"class": "title"})
-            threads += [link for link in links if link['href'].startswith('/r/')]
-            
-            self.driver.find_element(By.CLASS_NAME, 'next-button').click()
+        try:
+            url = f"https://old.reddit.com/r/{subreddit}/top/?sort=top&t=year"
+            self.driver.get(url)
+            for i in range(self.SCRAPE_DEPTH):
+                # Get all thread links
+                soup = BeautifulSoup(self.driver.page_source)
+                links = soup.find_all('a', {"class": "title"})
+                threads += [link for link in links if link['href'].startswith('/r/')]
+                
+                self.driver.find_element(By.CLASS_NAME, 'next-button').click()
 
-        return threads
+            return threads
+        except:
+            print("Failed to scrape: {} for URL: {}".format(subreddit, url))
+            return threads    
     
     def scrape(self):
         """Scrapes all subreddits, saving all youtube links and text entries found

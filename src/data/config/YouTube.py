@@ -13,10 +13,10 @@ class YouTube(object):
     DOWNLOAD_VIDEO_COMMENTS = True
 
     # SAVE PATHS
-    RAW_VIDEOS = '../../data/raw/youtube/'
-    PROCESSED_VIDEOS = '../../data/processed/youtube/'
-    INTERIM_VIDEOS = '../../data/interim/youtube/'
-    EXTERNAL_VIDEOS ='../../data/external/youtube/'
+    RAW_VIDEOS = 'data/raw/youtube/'
+    PROCESSED_VIDEOS = 'data/processed/youtube/'
+    INTERIM_VIDEOS = 'data/interim/youtube/'
+    EXTERNAL_VIDEOS ='data/external/youtube/'
 
     # YouTube Data API Config
     YOUTUBE_API_SERVICE_NAME = "youtube"
