@@ -316,7 +316,7 @@ class Downloader():
             logging.info("No video transcript data for " + self.video_id)
             return {"cleaned_transcript" : "", "raw_transcript" : {}}
 
-        cleaned_transcript = " ".join([phrase['text'] for phrase in raw_transcript])
+        cleaned_transcript = ". ".join([phrase['text'] for phrase in raw_transcript])
 
         logging.info("Cleaned and return transcript data for " + self.video_id)
         return {"cleaned_transcript" : cleaned_transcript, "raw_transcript" : raw_transcript}
@@ -324,8 +324,8 @@ class Downloader():
 
 if __name__ == '__main__':
     # Logging variables
-    totalLogs = len(os.listdir('../../logs'))
-    logFileName = '../../logs/youtube_downloads/youtube_download_log_{0}.txt'.format(totalLogs)
+    totalLogs = len(os.listdir('logs'))
+    logFileName = 'logs/youtube_downloads/youtube_download_log_{0}.txt'.format(totalLogs)
 
 
     # Set up the settings to log information as we run our build pipeline
