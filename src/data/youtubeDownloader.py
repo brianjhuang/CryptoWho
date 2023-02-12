@@ -15,7 +15,7 @@ from googleapiclient.errors import HttpError
 from socket import error as SocketError
 
 # Config Imports
-from config import youtube
+from src.data.config import youtube
 
 class Downloader():
     ''' Gets tabular data for YouTube video(s) given id(s)
@@ -323,9 +323,10 @@ class Downloader():
 
 
 if __name__ == '__main__':
+
     # Logging variables
     totalLogs = len(os.listdir('logs'))
-    logFileName = 'logs/youtube_downloads/youtube_download_log_{0}.txt'.format(totalLogs)
+    logFileName = youtube.LOGS_PATH + '/youtube_download_log_{0}.txt'.format(totalLogs)
 
 
     # Set up the settings to log information as we run our build pipeline
@@ -341,7 +342,7 @@ if __name__ == '__main__':
     # Create downloader, list for videos, file_id
     downloader = Downloader()
     videos = []
-    file_id = len(os.listdir(youtube.RAW_VIDEOS)) - 1
+    file_id = len(os.listdir(youtube.EXTERNAL_VIDEOS)) - 1
 
     print("Starting download...")
     logging.info("Starting download...")
@@ -363,6 +364,7 @@ if __name__ == '__main__':
         videoTranscript = downloader.getVideoTranscript()
 
         video = {
+            "id": video_id,
             "title": videoMetaData["title"],
             "description": videoMetaData["description"],
             "tags": videoMetaData["tags"],
@@ -381,7 +383,7 @@ if __name__ == '__main__':
     print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
     logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
 
-    df.to_csv(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id), index_label=False)
+    df.to_csv(youtube.EXTERNAL_VIDEOS + 'videos_{0}.csv'.format(file_id), index_label=False)
 
-    print("Saved file to:  {0}".format(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id)))
-    logging.info("Saved file to:  {0}".format(youtube.RAW_VIDEOS + 'videos_{0}.csv'.format(file_id)))
+    print("Saved file to:  {0}".format(youtube.EXTERNAL_VIDEOS + 'videos_{0}.csv'.format(file_id)))
+    logging.info("Saved file to:  {0}".format(youtube.EXTERNAL_VIDEOS + 'videos_{0}.csv'.format(file_id)))

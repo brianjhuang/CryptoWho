@@ -3,6 +3,5 @@
 # Except this file
 !.gitignore
 !external
-!interim
-!processed
-!raw
+!audit
+!seed
