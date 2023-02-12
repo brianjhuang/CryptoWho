@@ -88,11 +88,12 @@ import os
 os.environ.get("YOUTUBE_DATA_API_KEY")
 ```
 
-## Scraping Reddit Threads for YouTube Videos
-***TO BE ADDED***
-
 ## Downloading YouTube Video Data
-***TO BE ADDED***
+Using `run.py seed` will download all seed videos and save it in `data/seed/youtube/videos_{}.csv`.
+
+Using `run.py audit` will download all videos throughout the audit and save it in `data/audit/youtube/videos_{}.csv`
+
+Calling `python src/data/youTubeDownloader.py <video_ids seperated by spaces>` will download any videos you want and save it in `data/external/youtube/videos_{}.csv`. 
 
 ## Training and Tuning the Classifier
 ***TO BE ADDED***
