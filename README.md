@@ -44,14 +44,16 @@ To run the scraper, you will need to install the Firefox Webdriver, which can be
 
 To install, place your OS-appropriate executable in a directory locatable by your PATH.
 
-### YouTube Data API
+### API Key Setup
 
-Our codebase uses the YouTube Data API to download video metadata, comments, and for many other purposes like searching YouTube and grabbing recommendations. 
+Our codebase uses the YouTube Data API to download video metadata, comments, and for many other purposes like searching YouTube and grabbing recommendations. We use the OpenAI API to provide snippets and retrieve classification labels for our downloaded videos.
 
 It is important that you create an API key for the YouTube Data API and set it in the configuration files of our codebase.
 You can enable the YouTube Data API for your Google account and obtain an API key following the steps <a href="https://developers.google.com/youtube/v3/getting-started">here</a>.
 
-Once you have a **YouTube Data API Key**, please set the ```YOUTUBE_DATA_API_KEY``` variable in your environment:
+You can fetch your OpenAI API key from <a href="https://openai.com/blog/openai-api/">here</a>.:
+
+Once you have both API keys, please set the ```YOUTUBE_DATA_API_KEY``` and ```OPEN_AI_KEY``` variable in your environment:
 
 You can do so by going to your home directory and running the following command:
 
@@ -66,6 +68,7 @@ Inside your bash profile, you can go ahead and set this at the top:
 ```
 # YOUTUBE API KEY
 export YOUTUBE_DATA_API_KEY="YOUR_API_KEY"
+export OPEN_AI_KEY="YOUR_API_KEY"
 ```
 
 Close out of your terminal and your code editor to see changes occur.
@@ -73,6 +76,7 @@ Close out of your terminal and your code editor to see changes occur.
 **Check that updates have been made**
 ```
 echo $YOUTUBE_DATA_API_KEY
+echo $OPEN_AI_KEY
 ```
 
 The following tutorials cover how to do this as well:
@@ -85,7 +89,8 @@ Now within Python you can access your API key by doing the following:
 ```
 import os
 
-os.environ.get("YOUTUBE_DATA_API_KEY")
+youtube_key = os.environ.get("YOUTUBE_DATA_API_KEY")
+openai_key = os.environ.get("OPEN_AI_KEY")
 ```
 
 ## Downloading YouTube Video Data
@@ -95,7 +100,7 @@ Using `run.py audit` will download all videos throughout the audit and save it i
 
 Calling `python src/data/youTubeDownloader.py <video_ids seperated by spaces>` will download any videos you want and save it in `data/external/youtube/videos_{}.csv`. 
 
-## Training and Tuning the Classifier
+### DaVinci-003 Fine Tuning
 ***TO BE ADDED***
 
 ## Conducting the Audit
