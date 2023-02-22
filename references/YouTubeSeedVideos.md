@@ -1,11 +1,3 @@
-https://www.youtube.com/results?search_query=things+to+do+after+you+turn+55
-
-https://www.youtube.com/results?search_query=do+this+before+you+turn+18
-
-https://www.youtube.com/watch?v=xd1N0WOcd5A
-
-https://research.google.com/youtube8m/index.html
-
 55-60
 9 Best things to do in your retirement
 https://www.youtube.com/watch?v=os3WWbEruCU
@@ -106,7 +98,107 @@ https://www.youtube.com/watch?v=nmkKo8QAeh4
 
 
 Traditional
+How to Invest for Beginners
+https://www.youtube.com/watch?v=gFQNPmLKj1k&t=9s
+I asked a personal finance expert how to invest.
+https://www.youtube.com/watch?v=GZ42PIi9bis
+Traditional and Roth IRAs | Simple Steps for a Retirement Portfolio Course
+https://www.youtube.com/watch?v=Z3I8TPYn4Z0
+What is a 401(k)?
+https://www.youtube.com/watch?v=ss5yImerkhg
+How IRAs Work And Why They Are More Popular Than 401(k)s
+https://www.youtube.com/watch?v=DPnXJpDOAHI
+What Are Index Funds?
+https://www.youtube.com/watch?v=3rFjS2yNjqc
+What The Heck Is An Index Fund?
+https://www.youtube.com/watch?v=u5eewhr7KKY
+How To Become A Millionaire: Index Fund Investing For Beginners
+https://www.youtube.com/watch?v=fwe-PjrX23o
+Investing Basics: Bonds
+https://www.youtube.com/watch?v=IuyejHOGCro
+What are Bonds and How do they Work?
+https://www.youtube.com/watch?v=N_0d35JvuO0
+How to Build a Bulletproof Investment Portfolio in 2023
+https://www.youtube.com/watch?v=DcXUTu5bnEU
+The ULTIMATE Beginner's Guide to Investing in Real Estate Step-By-Step
+https://www.youtube.com/watch?v=VXeaU0i54H0
+7 Dividend Stocks That Pay Me $500+ Per Month
+https://www.youtube.com/watch?v=W9CTkPDm09c
+5 Golden Rules of Real Estate Investing
+https://www.youtube.com/watch?v=d07IMGz7Dkc
+Warren Buffett: Why Most People Should Invest In S&P 500 Index
+https://www.youtube.com/watch?v=SzKlsWsWRRY
+Stock Options Explained
+https://www.youtube.com/watch?v=VJgHkAqohbU
+Explained | The Stock Market | FULL EPISODE | Netflix
+https://www.youtube.com/watch?v=ZCFkWDdmXG8
+The Intelligent Investor’s Road to $1,000,000
+https://www.youtube.com/watch?v=5Vxjyz9DZ6k
+The Housing Market Is DOOMED - Why Everyone Is Getting Out
+https://www.youtube.com/watch?v=bhpMAmpfau8
+Why The 3 Fund Portfolio Is King
+https://www.youtube.com/watch?v=X7hZQmSj8KI
+How To Make Passive Income: $100 A Day With Dividends
+https://www.youtube.com/watch?v=hXdpNoogyg4
+Investing in Commodities
+https://www.youtube.com/watch?v=w5I6sT34ttE
+How To Invest In Commodities? A Beginner's Guide
+https://www.youtube.com/watch?v=Hjws0WX-MTc
+Introduction to the Commodity Markets
+https://www.youtube.com/watch?v=JD8KNwtx61c
+Futures Market Explained
+https://www.youtube.com/watch?v=CC9VeHrI3Es
+Stock Market Crash Warning to All Investors
+https://www.youtube.com/watch?v=nxAzhzLIsqY
+Charlie Munger: 95% of People Have No Chance of Beating The S&P 500 Index | DJ 2017 【C:C.M Ep.255】
+https://www.youtube.com/watch?v=6vlqrfRn7Bg
+Warren Buffett: Buying And Holding Index Funds Has Worked | CNBC
+https://www.youtube.com/watch?v=10QoUi2PmNs
+Top 5 Best Tech Stocks 2023 (To Buy Now)
+https://www.youtube.com/watch?v=SIDn2c-3C4E
+Top 3 Stocks to Buy in 2023 (Over TSLA or NVDA Stock)
+https://www.youtube.com/watch?v=-jTDoDhXJXA
+These are the stocks to buy for the next 10 years
+https://www.youtube.com/watch?v=ioOPYOvoKng
+Top 7 Stocks to BUY NOW (High Growth Stocks)
+https://www.youtube.com/watch?v=VmfngVIdE8Q
+7 Dividend Stocks That Pay Me $1,800 Per Month
+https://www.youtube.com/watch?v=lFyeLeP44kY
+SCHD: The KING of Dividend Funds | Consistent GAINS and Dividend CASHFLOW!!
+https://www.youtube.com/watch?v=KAoryk7TJDc
+Bank CD vs Brokered CD| The Best Option For Your Cash
+https://www.youtube.com/watch?v=NQ0BBsH8i7A
+Why Brokered CDs Beat Savings Accounts & How to Buy Them!
+https://www.youtube.com/watch?v=ZWdN44pbraM
+Should You Invest in I Bonds?
+https://www.youtube.com/watch?v=Oiw6824aXvE
+Should You Still Be Investing in TIPS or I Bonds To Hedge Against Inflation?
+https://www.youtube.com/watch?v=wjYYFC_wTCI
+I Bonds Explained! (Is 7.12% Guaranteed for Real?)
+https://www.youtube.com/watch?v=sIMJo6UZ0hc
+Stock Market Terminology Explained For Beginners | Top 10 Terms
+https://www.youtube.com/watch?v=0FzXdVeTmhE
 
 Blockchain
 
+
 Mixed
+
+
+
+
+
+
+
+
+Debatable Traditional
+Charlie Munger: Bitcoin Is Worthless Artificial Gold | CNBC
+https://www.youtube.com/watch?v=NBVDqAHQ4-M
+Charlie Munger: Bitcoin is Worthless Rat Poison
+https://www.youtube.com/watch?v=7LxtHoAHdOY
+Why Are Tech Stocks Taking Such a Beating? | WSJ
+https://www.youtube.com/watch?v=5rgTFHoO6oY
+Why Wall Street Is Buying So Many U.S. Homes
+https://www.youtube.com/watch?v=iLsZlrZIFwU
+The Craziest Wallstreetbets Trades You Never Heard About
+https://www.youtube.com/watch?v=KgH4rDtxqHg
