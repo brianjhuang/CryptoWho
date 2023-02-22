@@ -85,6 +85,19 @@ https://www.youtube.com/watch?v=5iWhQWVXosU&t=1s (Mac/Linux)
 
 https://www.youtube.com/watch?v=IolxqkL7cD8 (Windows)
 
+If you are not seeing updates, your `bash_profile` may not be sourced. To resolve this, add the following line to your `.bashrc`:
+
+```
+. ~/.bash_profile
+```
+
+This can be anywhere, but we've put ours at the very bottom. Use the following command to enter your `.bashrc`.
+
+```
+nano .bashrc
+```
+
+
 Now within Python you can access your API key by doing the following:
 ```
 import os
