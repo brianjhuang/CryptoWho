@@ -68,7 +68,7 @@ Inside your bash profile, you can go ahead and set this at the top:
 ```
 # YOUTUBE API KEY
 export YOUTUBE_DATA_API_KEY="YOUR_API_KEY"
-export OPEN_AI_KEY="YOUR_API_KEY"
+export OPENAI_API_KEY="YOUR_API_KEY"
 ```
 
 Close out of your terminal and your code editor to see changes occur.
@@ -76,7 +76,7 @@ Close out of your terminal and your code editor to see changes occur.
 **Check that updates have been made**
 ```
 echo $YOUTUBE_DATA_API_KEY
-echo $OPEN_AI_KEY
+echo $OPENAI_API_KEY
 ```
 
 The following tutorials cover how to do this as well:
@@ -85,12 +85,25 @@ https://www.youtube.com/watch?v=5iWhQWVXosU&t=1s (Mac/Linux)
 
 https://www.youtube.com/watch?v=IolxqkL7cD8 (Windows)
 
+If you are not seeing updates, your `bash_profile` may not be sourced. To resolve this, add the following line to your `.bashrc`:
+
+```
+. ~/.bash_profile
+```
+
+This can be anywhere, but we've put ours at the very bottom. Use the following command to enter your `.bashrc`.
+
+```
+nano .bashrc
+```
+
+
 Now within Python you can access your API key by doing the following:
 ```
 import os
 
 youtube_key = os.environ.get("YOUTUBE_DATA_API_KEY")
-openai_key = os.environ.get("OPEN_AI_KEY")
+openai_key = os.environ.get("OPENAI_API_KEY")
 ```
 
 ## Downloading YouTube Video Data
