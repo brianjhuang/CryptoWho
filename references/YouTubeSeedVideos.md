@@ -180,14 +180,80 @@ Stock Market Terminology Explained For Beginners | Top 10 Terms
 https://www.youtube.com/watch?v=0FzXdVeTmhE
 
 Blockchain
-
+How does a blockchain work - Simply Explained
+https://www.youtube.com/watch?v=SSo_EIwHSd4
+Understand the Blockchain in Two Minutes
+https://www.youtube.com/watch?v=r43LhSUUGTQ
+Blockchain In 7 Minutes | What Is Blockchain | Blockchain Explained|How Blockchain Works|Simplilearn
+https://www.youtube.com/watch?v=yubzJw0uiE4
+How to Launch an NFT Collection WITHOUT EXPERIENCE
+https://www.youtube.com/watch?v=L384Cd427yw
+Making $46K In 6 Weeks Selling NFTs
+https://www.youtube.com/watch?v=gDAZZfGRBeE
+I Made $832,000 Flipping NFTs (Full Advanced Guide)
+https://www.youtube.com/watch?v=HIf2ecpTQ0A
+NFT Explained In 5 Minutes | What Is NFT? - Non Fungible Token | NFT Crypto Explained | Simplilearn
+https://www.youtube.com/watch?v=NNQLJcJEzv0
+Crypto Bull Run Will Start in 2024 - Bitcoin Price Prediction in 2023
+https://www.youtube.com/watch?v=_BfrWRmoXDw
+Bitcoin and Altcoins Will Skyrocket After The Halving Event
+https://www.youtube.com/watch?v=4qPlsDlB5MM
+Crypto Dilemma - What You Should Do With Your Bitcoin and Altcoins Going into 2023
+https://www.youtube.com/watch?v=bcyUNQYMy1A
+How To Invest In Crypto Full Beginners Guide in 2023
+https://www.youtube.com/watch?v=Yb6825iv0Vk
+Crypto: a beginner’s guide
+https://www.youtube.com/watch?v=Helf3Ku8kho
+What is Ethereum? A Beginner's Explanation in Plain English
+https://www.youtube.com/watch?v=jxLkbJozKbY
+Cryptocurrency In 5 Minutes | Cryptocurrency Explained | What Is Cryptocurrency? | Simplilearn
+https://www.youtube.com/watch?v=1YyAzVmP9xQ
+How Cryptocurrency ACTUALLY works.
+https://www.youtube.com/watch?v=rYQgy8QDEBI
+How I Made $1 Million With NFTs (& Lost It All)
+https://www.youtube.com/watch?v=rAVMSa_B8OM
+How To Make Money With Crypto In 2023 (For Beginners)
+https://www.youtube.com/watch?v=Xo4zvzVD-h4
+How To Start Making Money With Crypto Currency Step By Step
+https://www.youtube.com/watch?v=jascgnWYJvw
+How To Make Money With Coinbase in 2023 (Beginners Guide)
+https://www.youtube.com/watch?v=w-mD-W96yn0
+Simple Method To Make $100 A Day Trading Cryptocurrency As A Beginner | Binance Tutorial Guide
+https://www.youtube.com/watch?v=Us7HiZIcWb4
+How To Grow $100 To $10,000 Trading Crypto In 2023 | 100x Strategy
+https://www.youtube.com/watch?v=-UJHObtnp5A
+Mine 1.07 Ethereum in 75 minutes - Free Ethereum Mining Website 2022 | Payment Proof
+https://www.youtube.com/watch?v=7gKpT3ulMzk
+7 Ways To Make Money With Crypto
+https://www.youtube.com/watch?v=9wrhYKQz314
+The Beginner's Guide to Making Money with Crypto Arbitrage
+https://www.youtube.com/watch?v=bXNGACsNXbY
+The BEST Way To Make Money with Crypto in 2023!
+https://www.youtube.com/watch?v=0bs8ACeqyVs
+How To Make Money With Binance | $100 A Day!
+https://www.youtube.com/watch?v=pgsM_BXfcmg
+SHIBA INU Why I Just Bought 100,000,000 SHIB & BONE Tokens #doge #bitcoin
+https://www.youtube.com/watch?v=RSfQVgZkc60
+HOW MUCH WILL 1000 DOGECOIN TOKENS BE WORTH BY 2025
+https://www.youtube.com/watch?v=QyjShCyG1CA
+The Rise of Dogecoin #doge #dogecoin
+https://www.youtube.com/watch?v=9lnhl5CRw2A
+SHIBA INU ABOUT TO PUMP, SHIBARUIM ON SCHEDULE? Why I AM BUYING More Shiba Inu! #DOGE #XRP
+https://www.youtube.com/watch?v=yx3WxDQGeow
+5 Tips For Investing In Cryptocurrency — Beginner's Guide!
+https://www.youtube.com/watch?v=hoN45jSXB9U
+Top 5 Altcoins to Buy in 2023 Recession w/ Massive Potential | Coin Bureau Clips
+https://www.youtube.com/watch?v=PxHVwCxaz9c
+These Altcoins Are GROWING!! 2023 Latest Developer Report
+https://www.youtube.com/watch?v=i83OuE-aXOM
+Top 10 Crypto The Rich Are Buying NOW!
+https://www.youtube.com/watch?v=a1UXp_2C-5I
 
 Mixed
-
-
-
-
-
+Stock Market Crash & Crypto Crash Bottom in 2023 | Prepping For Silver to Skyrocket
+https://www.youtube.com/watch?v=MPMIrx4KMxg
+Stocks and Bitcoin in 2023 - A Great Buying Opportunity - Be Ready!
+https://www.youtube.com/watch?v=LmHmPeRTNdI
 
 
 
