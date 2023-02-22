@@ -55,8 +55,8 @@ What’s One Thing All Teenagers Need To Know Before They Turn 18? (r/AskReddit)
 https://www.youtube.com/watch?v=wm6Ld8XcdGc
 7 BEST Style Tips For Teens
 https://www.youtube.com/watch?v=pWg6aUl0ldg
-What Shoes To Bring To College
-https://www.youtube.com/shorts/UsatWGDeUqI
+7 TIPS TO MAKE FRIENDS IN COLLEGE (transfer, freshman advice)
+https://www.youtube.com/watch?v=W8lJMJNOiAI
 College Decision REACTIONS 2022! | Ivies, UCs, Stanford, Duke, and more!
 https://www.youtube.com/watch?v=hSCBHRwFiqM
 COLLEGE 101 // what you need to know before your first year.
