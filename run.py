@@ -116,22 +116,95 @@ def downloadYoutubeData(load_path, test = False):
         print("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
         logging.info("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
 
+    return df
 
+def processAgeVideos(load_path, test = False):
+    '''
+    Create the links for the two age bucket videos and 
+    return it as a dataframe.
+
+    Parameters
+    ----------
+    load_path : str
+        The path to our age videos.
+    test : bool
+        If we are running this for the test target.
+    
+    Returns
+    -------
+    pd.DataFrame
+        The old and young age videos
+    '''
+
+    old = pd.DataFrame()
+    young = pd.DataFrame()
+
+    return (old, young)
+
+def audit():
+    return
+
+def finetune_davinci():
+    return
+
+def finetuned_classifier():
+    return
+
+def binary_classifier():
+    return
+
+def prompted_classifier():
+    return
 
 def main(targets):
     if 'all' in targets:
-        print('Running entire audit pipeline')
+        print('Running entire pipeline.')
+        logging.info('Running entire pipeline.')
+
         print("Downloading seed data")
-        print("Assessing GPT-3 accuracy on seed videos")
+        logging.info("Downloading seed data")
+        downloadYoutubeData(youtube.RAW_SEED_DATA)
+
+        print("Creating and seperating age bucket videos.")
+        logging.info("Creating and seperating age bucket videos.")
+        processAgeVideos(youtube.RAW_AGE_DATA)
+
+        print("Running audit, please ensure you've logged into the account you're auditing with.")
+        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
+        audit()
+
+        print("Assessing GPT-3 accuracy on test seed videos")
+        logging.info("Assessing GPT-3 accuracy on test seed videos")
+        ### Add abiltiy to switch between fine tuned, binary, and baseline GPT classifier
+
     if 'audit' in targets:
-        print("Running audit, please ensure you've logged into your account.")
+        print("Running audit, please ensure you've logged into the account you're auditing with.")
+        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
+        audit()
+        
+    if 'seed' in targets:
+        print("Downloading seed data")
+        downloadYoutubeData(youtube.RAW_SEED_DATA)
+
+        print("Creating and seperating age bucket videos.")
+        logging.info("Creating and seperating age bucket videos.")
+        processAgeVideos(youtube.RAW_AGE_DATA)
+
     if 'test' in targets:
         print("Running test pipeline")
         logging.info("Running test pipeline")
         
         print("Downloading seed data")
         logging.info("Downloading seed data")
-        downloadYoutubeData(youtube.TEST_DATA)
+        downloadYoutubeData(youtube.TEST_DATA, test = True)
+
+        print("Creating and seperating age bucket videos.")
+        logging.info("Creating and seperating age bucket videos.")
+        processAgeVideos(youtube.RAW_AGE_DATA, test = True)
+
+        print("Running audit, please ensure you've logged into the account you're auditing with.")
+        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
+        # Note we do not run the audit on a test run
 
         print("Assessing GPT-3 accuracy on test seed videos")
         logging.info("Assessing GPT-3 accuracy on test seed videos")

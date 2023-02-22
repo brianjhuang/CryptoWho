@@ -14,7 +14,9 @@ class YouTube(object):
 
     #LOAD PATHS
     TEST_DATA = 'test/youtube/video_ids.csv'
-    RAW_DATA = 'data/raw/youtube/seed_finance_videos.csv'
+    RAW_SEED_DATA = 'data/raw/youtube/seed_finance_videos.csv'
+    RAW_AGE_DATA = 'data/raw/youtube/seed_age_videos.csv'
+
 
     # SAVE PATHS
     SEED_VIDEOS = 'data/seed/youtube/'
