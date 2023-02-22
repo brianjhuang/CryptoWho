@@ -23,10 +23,17 @@ The goal of this project is to investigate YouTube's recommendation algorithm to
 
 **Create and activate Python >= 3.6 Virtual Environment**
 
-We are using Python version 3.8.5
+We are using Python version 3.8.5 (https://www.python.org/downloads/release/python-385/)
 
 ```bash
 python3 -m venv .venv
+
+source .venv/bin/activate
+```
+
+Note: We use Python 3.8.5 to use the gensim.summarization package. If you are having issues with that, please downgrade to Python 3.8.5 and run this instead:
+```bash
+python3.8.5 -m venv .venv
 
 source .venv/bin/activate
 ```
