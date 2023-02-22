@@ -12,6 +12,10 @@ class YouTube(object):
     DOWNLOAD_VIDEO_TRANSCRIPT = True
     DOWNLOAD_VIDEO_COMMENTS = True
 
+    #LOAD PATHS
+    TEST_DATA = 'test/youtube/video_ids.csv'
+    RAW_DATA = 'data/raw/youtube/seed_finance_videos.csv'
+
     # SAVE PATHS
     SEED_VIDEOS = 'data/seed/youtube/'
     AUDIT_VIDEOS = 'data/audit/youtube/'
