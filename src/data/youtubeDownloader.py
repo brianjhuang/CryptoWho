@@ -63,6 +63,10 @@ class Downloader():
             except:
                 print("Failure to build YouTube API object, are all the values correct/filled in config/YouTube.py?")
                 logging.info("Failure to build YouTube API object, are all the values correct/filled in config/YouTube.py?")
+        else:
+            self.youtube_api = None
+            print("Failure to build YouTube API object, are all the values correct/filled in config/YouTube.py?")
+            logging.info("Failure to build YouTube API object, are all the values correct/filled in config/YouTube.py?")
     
     def keyExists(self):
         """ Check if we have a key in our environment
@@ -74,6 +78,16 @@ class Downloader():
         """
 
         return youtube.YOUTUBE_DATA_API_KEY != None
+
+    def apiObjectExists(self):
+        """ Check if we have a valid API object
+
+        Returns
+        -------
+        bool
+            If we have a valid API object, return True
+        """
+        return self.youtube_api != None
 
     def setVideoId(self, video_id):
         """ Set our video id
@@ -121,6 +135,11 @@ class Downloader():
         dict
             A dictionary with the video desc, title and video tags
         """
+        if not self.apiObjectExists():
+            print("No API object found.")
+            logging.info("No API object found.")
+            return {"title": "", "description": "", "tags": []}
+
         try:
             response = (
                 self.youtube_api.videos()
@@ -175,6 +194,11 @@ class Downloader():
         dict
             A dictionary with the comments
         """
+
+        if not self.apiObjectExists():
+            print("No API object found.")
+            logging.info("No API object found.")
+            return {"comments": []}
 
         counter = self.max_comments
         nextPageToken = ""
@@ -308,6 +332,11 @@ class Downloader():
         dict
             A dictionary with the raw transcript, cleaned transcript, and pauses in the video.
         """
+
+        if not self.apiObjectExists():
+            print("No API object found.")
+            logging.info("No API object found.")
+            return {"cleaned_transcript" : "", "raw_transcript" : {}}
 
         try:
             raw_transcript = self.transcriber.get_transcript(self.video_id)
