@@ -68,6 +68,11 @@ def downloadYoutubeData(load_path, test = False):
     logging.info("Starting download...")
     start = time.time()
 
+    if not downloader.apiObjectExists():
+        print("API object not found")
+        logging.info("API object not found")
+        return pd.DataFrame()
+
     # Collect our data, Added TQDM progress bar
     for i in tqdm(range(len(video_ids))):
 
@@ -111,7 +116,7 @@ def downloadYoutubeData(load_path, test = False):
         print("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id)))
         logging.info("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id)))
     else:
-        df.to_csv(youtube.SEED_VIDEOS + 'videos_{0}.csv'.format(file_id), index_label=False)
+        df.to_csv(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id), index_label=False)
 
         print("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
         logging.info("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
