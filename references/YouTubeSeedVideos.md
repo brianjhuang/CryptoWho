@@ -3,8 +3,6 @@
 https://www.youtube.com/watch?v=os3WWbEruCU
 Preparing for Colonoscopy
 https://www.youtube.com/watch?v=xd1N0WOcd5A
-Preparing for your colonoscopy
-https://www.youtube.com/watch?v=YJvDe4tpwW8
 Fit at 55
 https://www.youtube.com/watch?v=L7YE78S6_Lk
 How to look/dress wealthy at 55
@@ -19,26 +17,12 @@ OVER 50? Say GOOD-BYE to These 9 Things FOREVER!
 https://www.youtube.com/watch?v=TRI9n58l70o
 Turning 50 an honest talk about what to expect.
 https://www.youtube.com/watch?v=fCPZ1gtxa8U
-Keanu Reeves on Turning 50
-https://www.youtube.com/watch?v=aMgWfOT_sQI
-How I became an entrepreneur at 66 | Paul Tasner
-https://www.youtube.com/watch?v=Ogce5D2XMZ0
 A Woman Over 50: A Life Unleashed | Connie Schultz | TEDxClevelandStateUniversity
 https://www.youtube.com/watch?v=97d2P7U1Ukk
-Blondie - Call me
-https://www.youtube.com/watch?v=StKVS0eI85I
-Top Gun - You've Lost That Loving Feeling
-https://www.youtube.com/watch?v=CFT0jGibz80
-Top Gun Maverick Trailer
-https://www.youtube.com/watch?v=qSqVVswa420
 How to parent a teen from a teen’s perspective | Lucy Androski | TEDxYouth@Okoboji
 https://www.youtube.com/watch?v=0vdPxLfAsqo
 Is your kid heading to college? You need to watch this | Mel Robbins
 https://www.youtube.com/watch?v=WDOy67VXdSc
-The 100 most iconic songs of the '80s (New Version)
-https://www.youtube.com/watch?v=ZnCgqtPixI0
-Top 10 Movies of the 1980s
-https://www.youtube.com/watch?v=16x_bDXW4-Q
 14 Foods People Over Age 50 Should Be Eating as Much as Possible
 https://www.youtube.com/watch?v=F3Hqq7-j9kY
 Exercise and nutrition for middle-age and older individuals | Dr. Stella Volpe | TEDxSJU
@@ -47,6 +31,14 @@ Fit at 58! My Diet + Exercise Routine!
 https://www.youtube.com/watch?v=EODlZG3E-zI
 How To Be A Good Parent To Young Adults
 https://www.youtube.com/watch?v=nTgeaSLVfHs
+Top 10 Foods To Eat After 50 (Anti-Aging Benefits!)
+https://www.youtube.com/watch?v=HIaj15hfT-U
+How To Be More ATTRACTIVE Over 50!
+https://www.youtube.com/watch?v=oLiFQe3S0fI
+Stay Younger After 50, 3 MUST Do Fitness Routines for Long Term Success!
+https://www.youtube.com/watch?v=pJGNe1xExIQ
+How To Stay Healthy Until Your Old Age
+https://www.youtube.com/watch?v=5SQ8sQ9GBZk
 
 18-23
 21 Life Lessons for Teenagers
@@ -65,37 +57,30 @@ https://www.youtube.com/watch?v=wm6Ld8XcdGc
 https://www.youtube.com/watch?v=pWg6aUl0ldg
 What Shoes To Bring To College
 https://www.youtube.com/shorts/UsatWGDeUqI
-GINNY AND GEORGIA Season 2 Ending Explained
-https://www.youtube.com/watch?v=vedNg3L3TVk
-The Last of Us | Official Trailer | HBO Max
-https://www.youtube.com/watch?v=uLtkt8BonwM
-ARCHEOLOGY, CHERRY GROVE, SNIFFER! - Minecraft Snapshot 23w07a
-https://www.youtube.com/watch?v=s9RA3u5tEbs
-watch this if you're avoiding homework
-https://www.youtube.com/watch?v=20L1VH0wdRc
 College Decision REACTIONS 2022! | Ivies, UCs, Stanford, Duke, and more!
 https://www.youtube.com/watch?v=hSCBHRwFiqM
-The Roomba That Screams When it Bumps Into Stuff
-https://www.youtube.com/watch?v=mvz3LRK263E
-Outer Banks Seasons 1 & 2 Recap | Netflix
-https://www.youtube.com/watch?v=Q9gtX_EtOkE
 COLLEGE 101 // what you need to know before your first year.
 https://www.youtube.com/watch?v=0lJYviju6RY
 5 Things to Know when you Turn 18
 https://www.youtube.com/watch?v=gTpogtMdtPU
-Barstool Pizza Review - Pizzeria Bianco (Phoenix, AZ)
-https://www.youtube.com/watch?v=laXiI_P14R0
-FIRST LOOK: Terrace Tom returns... | Love Island Series 9
-https://www.youtube.com/watch?v=41B9pXn4j0o
-Checkin' in w/ the Hype House
-https://www.youtube.com/watch?v=eVteZtxXVdc
-Tinder Nightmares 5
-https://www.youtube.com/watch?v=QOs0qHDHpo8
 dating advice I WISH I KNEW in high school
 https://www.youtube.com/watch?v=Muwc8eyxPJs
 10 WORST COLLEGE FRESHMAN MISTAKES | College student advice | Freshman mistakes to avoid in college
 https://www.youtube.com/watch?v=nmkKo8QAeh4
-
+REALISTIC COLLEGE ADVICE FOR INCOMING STUDENTS
+https://www.youtube.com/watch?v=3ErErK1wRDM
+Best College Tips & Hacks Compilation | scott.frenzel | TikTok
+https://www.youtube.com/watch?v=IPUInP53HO0
+10 Things Everyone Should Do Before 20
+https://www.youtube.com/watch?v=ViXfbDN6oTI
+7 things I wish I knew at 20
+https://www.youtube.com/watch?v=lUqIPo4DDHE
+5 things you need to know before 20 | Scott Carr | TEDxBrentwoodCollegeSchool
+https://www.youtube.com/watch?v=IAwE4o6gdts
+What to Do AFTER HIGH SCHOOL (Advice for Teenagers)
+https://www.youtube.com/watch?v=sIxtOqJan2M
+Get JACKED in College With These Eating Hacks!
+https://www.youtube.com/watch?v=3D-vUKVQqS4
 
 Traditional
 How to Invest for Beginners
@@ -248,13 +233,55 @@ These Altcoins Are GROWING!! 2023 Latest Developer Report
 https://www.youtube.com/watch?v=i83OuE-aXOM
 Top 10 Crypto The Rich Are Buying NOW!
 https://www.youtube.com/watch?v=a1UXp_2C-5I
+How to Buy and Sell NFTs For Profit (Complete Guide)
+https://www.youtube.com/watch?v=9yrj2iSuI38
+How to Make Money with NFTs for Beginners 2022 [FREE COURSE]
+https://www.youtube.com/watch?v=YBTdDfRmcrI
+The EASIEST way to find NFT's to flip for PROFIT
+https://www.youtube.com/watch?v=dE4lXkfRp9Q
+🔥UNDERVALUED "TINY" CRYPTO TO BUY IN 2023 (MOONBEAM MASSIVE POTENTIAL?!)🚀🚀🚀
+https://www.youtube.com/watch?v=fMD-uVF0y6M
+LIKE BUYING ETHEREUM AT $80 🔴 CRYPTO NEXT BIG OPPORTUNITY
+https://www.youtube.com/watch?v=93tTlejQCuI
+Top 3 Crypto to buy in January 2023 (HUGE Potential)
+https://www.youtube.com/watch?v=_2dX1XFoyJc
+Turn $3,000 into MILLIONS With These Crypto Tokens... (2023)
+https://www.youtube.com/watch?v=YIc6eRCD8g4
+
 
 Mixed
 Stock Market Crash & Crypto Crash Bottom in 2023 | Prepping For Silver to Skyrocket
 https://www.youtube.com/watch?v=MPMIrx4KMxg
 Stocks and Bitcoin in 2023 - A Great Buying Opportunity - Be Ready!
 https://www.youtube.com/watch?v=LmHmPeRTNdI
+STOCKS vs CRYPTO - Which Will Make You RICH? (2023)
+https://www.youtube.com/watch?v=xE1LHwUPT70
+My Investing Plan For 2023 (How To Prepare)
+https://www.youtube.com/watch?v=VmdncOfNWas
+Revealing My Entire $500K Investment Portfolio
+https://www.youtube.com/watch?v=d4h8dYSgHMw&t=644s
 
+Talk about money, but generally unrelated
+How Mark Cuban Turned His First Million Dollars Into A Billion | GQ Sports
+https://www.youtube.com/watch?v=Y_2N5HVrniA
+"I Got Rich When I Understood This" | Jeff Bezos
+https://www.youtube.com/watch?v=7TWKKww-F30
+How TikTok Could Become a U.S. Company | WSJ
+https://www.youtube.com/watch?v=WFI6Bg-zmv4
+The #1 Wealth Killer No One Talks About...
+https://www.youtube.com/watch?v=p8gT4N-UHtI
+5 Money Mistakes the Ultra Wealthy Avoid
+https://www.youtube.com/watch?v=ppofn1JXhLY
+The 7 BEST Side Hustles That Make $100+ Per day
+https://www.youtube.com/watch?v=XoPX0G8GnwI
+7 Side Hustles That Will Make Money ASAP (2022)
+https://www.youtube.com/watch?v=ghf5nVV1paI
+I Found The EASIEST Way to Make $1000 with AI
+https://www.youtube.com/watch?v=l26z1OIJaqo
+I Tried Selling AI Art For 30 Days
+https://www.youtube.com/watch?v=2psSl6oM0vw
+The Secret to Making $250 per Day with Ai Art
+https://www.youtube.com/watch?v=X4acYl34xGE
 
 
 Debatable Traditional
