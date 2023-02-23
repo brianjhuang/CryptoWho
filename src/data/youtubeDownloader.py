@@ -156,10 +156,26 @@ class Downloader():
                     videoSnippet = videoContent["snippet"]
 
                     logging.info("Retrieved video meta data for " + self.video_id)
+                    
+                    if 'title' in videoSnippet.keys():
+                        title = videoSnippet["title"]
+                    else:
+                        title = ""
+                        
+                    if 'description' in videoSnippet.keys():
+                        description = videoSnippet['description']
+                    else:
+                        description = ""
+                    
+                    if 'tags' in videoSnippet.keys():
+                        tags = videoSnippet['tags']
+                    else:
+                        tags = ""
+                    
                     return {
-                        "title": videoSnippet["title"],
-                        "description": videoSnippet["description"],
-                        "tags": videoSnippet["tags"],
+                        "title": title,
+                        "description": description,
+                        "tags": tags,
                     }
 
             except:
@@ -249,7 +265,7 @@ class Downloader():
 
                     except:
                         logging.info("Comments missing or not available for " + self.video_id)
-                        return {"comments": []}
+                        comments += []
 
                 else:
                     # For all subsequent pages
@@ -298,7 +314,7 @@ class Downloader():
 
                     except:
                         logging.info("Comments missing or not available for " + self.video_id)
-                        return {"comments": []}
+                        comments += []
 
             except (HttpError, SocketError) as error:
                 print(
