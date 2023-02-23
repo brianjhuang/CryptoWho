@@ -163,6 +163,10 @@ I Bonds Explained! (Is 7.12% Guaranteed for Real?)
 https://www.youtube.com/watch?v=sIMJo6UZ0hc
 Stock Market Terminology Explained For Beginners | Top 10 Terms
 https://www.youtube.com/watch?v=0FzXdVeTmhE
+How does the stock market work? - Oliver Elfenbaum
+https://www.youtube.com/watch?v=p7HKvqRI_Bo
+Options Trading: Understanding Option Prices
+https://www.youtube.com/watch?v=MiybniIIvx0
 
 Blockchain
 How does a blockchain work - Simply Explained
@@ -191,7 +195,7 @@ Crypto: a beginner’s guide
 https://www.youtube.com/watch?v=Helf3Ku8kho
 What is Ethereum? A Beginner's Explanation in Plain English
 https://www.youtube.com/watch?v=jxLkbJozKbY
-Cryptocurrency In 5 Minutes | Cryptocurrency Explained | What Is Cryptocurrency? | Simplilearn
+Cryptocurrency In 5 Minutes | Cryptocurrency Explained | What Is Cryptocurrency? | SimplVJgHkAqohbUilearn
 https://www.youtube.com/watch?v=1YyAzVmP9xQ
 How Cryptocurrency ACTUALLY works.
 https://www.youtube.com/watch?v=rYQgy8QDEBI
@@ -247,6 +251,11 @@ Top 3 Crypto to buy in January 2023 (HUGE Potential)
 https://www.youtube.com/watch?v=_2dX1XFoyJc
 Turn $3,000 into MILLIONS With These Crypto Tokens... (2023)
 https://www.youtube.com/watch?v=YIc6eRCD8g4
+What is a Blockchain? (Animated + Examples)
+https://www.youtube.com/watch?v=kHybf1aC-jE
+NFTs, Explained
+https://www.youtube.com/watch?v=Oz9zw7-_vhM
+
 
 
 Mixed
