@@ -195,7 +195,7 @@ Crypto: a beginner’s guide
 https://www.youtube.com/watch?v=Helf3Ku8kho
 What is Ethereum? A Beginner's Explanation in Plain English
 https://www.youtube.com/watch?v=jxLkbJozKbY
-Cryptocurrency In 5 Minutes | Cryptocurrency Explained | What Is Cryptocurrency? | SimplVJgHkAqohbUilearn
+Cryptocurrency In 5 Minutes | Cryptocurrency Explained | What Is Cryptocurrency? | Simplilearn
 https://www.youtube.com/watch?v=1YyAzVmP9xQ
 How Cryptocurrency ACTUALLY works.
 https://www.youtube.com/watch?v=rYQgy8QDEBI
