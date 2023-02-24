@@ -20,7 +20,7 @@ class YouTube(object):
 
     # SAVE PATHS
     SEED_VIDEOS = 'data/seed/youtube/'
-    INTERIM_VIDEOS = 'data/interim/youtube'
+    INTERIM_VIDEOS = 'data/interim/youtube/'
     AUDIT_VIDEOS = 'data/audit/youtube/'
     EXTERNAL_VIDEOS ='data/external/youtube/'
     LOGS_PATH = 'logs/youtube_downloads'

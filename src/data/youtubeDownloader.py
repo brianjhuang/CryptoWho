@@ -27,25 +27,13 @@ class Downloader():
 
     Parameters
     ----------
-    save_path : str
-        The path we want to save the data to.
-    set_name : str
-        The name of the set we're scraping
+    max_comments: int
+        The max number of comments we can download.
 
     Attributes (class)
     -------
-    card_url : str
-        The URL of the card we want to scrape.
-    card_name : str
-        The name of the card
-
-    Attributes (class)
-    -------
-    card_url : str
-        The URL of the card we are currently scraping
-    card_name : str
-        The name of the card
-
+    video_id : str
+        The current video we're downloading.
     '''
 
     video_id = None
