@@ -62,7 +62,7 @@ def downloadYoutubeData(load_path, test = False):
     # Create downloader, list for videos, file_id
     downloader = Downloader()
     videos = []
-    file_id = len(os.listdir(youtube.SEED_VIDEOS)) - 1
+    file_id = len(os.listdir(youtube.INTERIM_VIDEOS)) - 1
 
     print("Starting download...")
     logging.info("Starting download...")
@@ -99,6 +99,7 @@ def downloadYoutubeData(load_path, test = False):
             "comments": [list(comment.values())[0] for comment in videoComments["comments"]],
             "comment_ids" : [list(comment.keys())[0] for comment in videoComments["comments"]],
             "label": label,
+            "link": "www.youtube.com/watch?v=" + video_id,
         }
 
         videos.append(video)
@@ -111,15 +112,15 @@ def downloadYoutubeData(load_path, test = False):
     logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
 
     if test:
-        df.to_csv(youtube.SEED_VIDEOS + 'test_videos_{0}.csv'.format(file_id), index_label=False)
+        df.to_csv(youtube.INTERIM_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id), index_label=False)
 
-        print("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id)))
-        logging.info("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id)))
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id)))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_seed_videos_{0}.csv'.format(file_id)))
     else:
-        df.to_csv(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id), index_label=False)
+        df.to_csv(youtube.INTERIM_VIDEOS + 'seed_videos_{0}.csv'.format(file_id), index_label=False)
 
-        print("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
-        logging.info("Saved file to:  {0}".format(youtube.SEED_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'seed_videos_{0}.csv'.format(file_id)))
 
     return df
 
@@ -141,10 +142,90 @@ def processAgeVideos(load_path, test = False):
         The old and young age videos
     '''
 
-    old = pd.DataFrame()
-    young = pd.DataFrame()
+    # Logging variables
+    totalLogs = len(os.listdir('logs'))
+    logFileName = youtube.LOGS_PATH + '/youtube_download_log_{0}.txt'.format(totalLogs)
 
-    return (old, young)
+    # Set up the settings to log information as we run our build pipeline
+    logging.basicConfig(filename=logFileName, 
+            filemode='a', 
+            level=logging.INFO,
+            datefmt='%H:%M:%S',
+            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
+
+    seed_data = pd.read_csv(load_path)
+    video_ids = seed_data['video_id']
+    labels = seed_data['label']
+            
+    # Create downloader, list for videos, file_id
+    downloader = Downloader()
+    videos = []
+    file_id = len(os.listdir(youtube.INTERIM_VIDEOS)) - 1
+
+    print("Starting download...")
+    logging.info("Starting download...")
+    start = time.time()
+
+    if not downloader.apiObjectExists():
+        print("API object not found")
+        logging.info("API object not found")
+        return pd.DataFrame()
+
+    # Collect our data, Added TQDM progress bar
+    for i in tqdm(range(len(video_ids))):
+
+        video_id = video_ids[i]
+        label = labels[i]
+
+        logging.info("Downloading " + video_id)
+
+        downloader.setVideoId(video_id)
+        
+        videoMetaData = downloader.getVideoMetadata()
+        time.sleep(random.randint(1, 5))
+        videoComments = downloader.getVideoComments()
+        time.sleep(random.randint(1, 5))
+        videoTranscript = downloader.getVideoTranscript()
+
+        video = {
+            "id": video_id,
+            "title": videoMetaData["title"],
+            "description": videoMetaData["description"],
+            "tags": videoMetaData["tags"],
+            "cleaned_transcript": videoTranscript["cleaned_transcript"],
+            "raw_transcript": videoTranscript["raw_transcript"], 
+            "comments": [list(comment.values())[0] for comment in videoComments["comments"]],
+            "comment_ids" : [list(comment.keys())[0] for comment in videoComments["comments"]],
+            "label": label,
+            "link": "www.youtube.com/watch?v=" + video_id,
+        }
+
+        videos.append(video)
+
+        logging.info("Finished downloading " + video_id)
+
+    df = pd.DataFrame(videos)
+
+    print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+    logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+
+    if test:
+        df.to_csv(youtube.INTERIM_VIDEOS + 'test_age_videos_{0}.csv'.format(file_id), index_label=False)
+
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_age_videos_{0}.csv'.format(file_id)))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_age_videos_{0}.csv'.format(file_id)))
+    else:
+        df[df['label'] == 'young'].to_csv(youtube.INTERIM_VIDEOS + 'young_videos_{0}.csv'.format(file_id), index_label=False)
+
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'young_videos_{0}.csv'.format(file_id)))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'young_videos_{0}.csv'.format(file_id)))
+
+        df[df['label'] == 'old'].to_csv(youtube.INTERIM_VIDEOS + 'old_videos_{0}.csv'.format(file_id), index_label=False)
+
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'old_videos_{0}.csv'.format(file_id)))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'old_videos_{0}.csv'.format(file_id)))
+
+    return df
 
 def audit():
     return
