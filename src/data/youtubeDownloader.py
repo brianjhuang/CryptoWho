@@ -348,8 +348,12 @@ class Downloader():
         except:
             logging.info("No video transcript data for " + self.video_id)
             return {"cleaned_transcript" : "", "raw_transcript" : {}}
+        
+        def clean_transcript(phrase):
+            """Clean our transcript"""
+            return phrase.strip(".\n- ")
 
-        cleaned_transcript = ". ".join([phrase['text'] for phrase in raw_transcript])
+        cleaned_transcript = ". ".join([clean_transcript(phrase['text']) for phrase in raw_transcript]).strip(" \n")
 
         logging.info("Cleaned and return transcript data for " + self.video_id)
         return {"cleaned_transcript" : cleaned_transcript, "raw_transcript" : raw_transcript}

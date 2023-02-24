@@ -8,6 +8,8 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from gensim.summarization import summarize
 
+import config.YouTube as youtube
+
 class Cleaner():
     ''' Cleans and condenses our YouTube videos into snippets that can be used to GPT classification.
 
@@ -190,5 +192,24 @@ class Cleaner():
         pd.DataFrame
             The top tags seperate by spaces
         """
-        return
+
+        title = self.clean_text(title)
+        description = self.clean_text(self.condense(description))
+        transcript = self.clean_text(self.condense(transcript))
+        tags = self.clean_text(self.topTags(tags))
+
+        return title + ". " + description + ". " + transcript + ". " + tags + "."
     
+    def generateVideoSnippets(self):
+        """ Creates the video snippets for all videos.
+        
+        Returns
+        -------
+        pd.DataFrame
+            The videos with snippets appended.
+        """
+
+        df = self.videos.apply(lambda x: self.createVideoSnippet(x.title, x.description, x.transcript, x.tags), axis = 1)
+
+        df.to_csv(youtube.SEED_VIDEOS + 'processed_seed_videos.csv')
+        return df
