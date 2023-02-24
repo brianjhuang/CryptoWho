@@ -15,7 +15,7 @@ from googleapiclient.errors import HttpError
 from socket import error as SocketError
 
 # Config Imports
-from src.data.config import youtube
+from config import youtube
 
 class Downloader():
     ''' Gets tabular data for YouTube video(s) given id(s)
@@ -351,9 +351,15 @@ class Downloader():
         
         def clean_transcript(phrase):
             """Clean our transcript"""
-            return phrase.strip(".\n- ")
+            phrase = phrase.strip(".\n ")
+            try:
+                if phrase[-1] not in ['!', ',', ':', ';', '?', '-']:
+                    phrase += "."
+            except:
+                return phrase
+            return phrase
 
-        cleaned_transcript = ". ".join([clean_transcript(phrase['text']) for phrase in raw_transcript]).strip(" \n")
+        cleaned_transcript = " ".join([clean_transcript(phrase['text']) for phrase in raw_transcript]).strip(" \n")
 
         logging.info("Cleaned and return transcript data for " + self.video_id)
         return {"cleaned_transcript" : cleaned_transcript, "raw_transcript" : raw_transcript}

@@ -12,7 +12,7 @@ import pandas as pd
 import random
 
 from src.data.youtubeDownloader import Downloader
-from src.data.config import youtube
+from config import youtube
 
 # Logging variables
 totalLogs = len(os.listdir('logs'))

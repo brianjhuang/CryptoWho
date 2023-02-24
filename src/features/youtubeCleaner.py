@@ -8,7 +8,7 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from gensim.summarization import summarize
 
-import config.YouTube as youtube
+from config import youtube
 
 class Cleaner():
     ''' Cleans and condenses our YouTube videos into snippets that can be used to GPT classification.
@@ -22,10 +22,13 @@ class Cleaner():
     ----------
     videos: pd.DataFrame
         The videos we want to create snippets for.
+    save_path: str
+        Where we want to save our data
     '''
 
-    def __init__(self, videos):
+    def __init__(self, videos, save_path = youtube.SEED_VIDEOS + 'processed_seed_videos.csv'):
         self.videos = videos
+        self.save_path = save_path
 
     def getVideos(self):
         """
@@ -63,9 +66,11 @@ class Cleaner():
         """
         # Remove videos with no transcript
         df = self.videos.dropna(subset = ['cleaned_transcript', 'title']).reset_index(drop = True)
+        
+        self.videos = df.fillna("")
 
         # Fill in remaining values with empty string. We can work without tags
-        return df.fillna("")
+        return self.videos
     
     def clean_text(self, corpus):
         """Applies TF-IDF on a text corpus to extract the N most important words/phrases
@@ -85,6 +90,37 @@ class Cleaner():
         return corpus.strip('.\n- ')
     
     def applyTfidf(self, corpus, n):
+        """ Applies TF-IDF on a text corpus to extract the N most important words/phrases
+
+        Parameters
+        ----------
+        corpus : str
+            The body of text we want to extract words from.
+        n : int
+            The number of words we want. Default 10
+        
+        Returns
+        -------
+        list
+            The top N words.
+        """
+        # Convert the text into a sparse matrix using TF-IDF
+        vectorizer = TfidfVectorizer()
+        tfidf = vectorizer.fit_transform([corpus])
+        
+        # Get the feature names and scores
+        feature_names = vectorizer.get_feature_names_out()
+        scores = dict(zip(feature_names, tfidf.data))
+        
+        # Sort the scores in descending order
+        sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
+        # Select only the top N features
+        selected_features = [x[0] for x in sorted_scores[:n]]
+        
+        return selected_features
+
+    def condenseTfidf(self, corpus, n):
         """ Applies TF-IDF on a text corpus to extract the N most important words/phrases
 
         Parameters
@@ -173,7 +209,7 @@ class Cleaner():
         
         return " ".join(selected_features)
     
-    def createVideoSnippet(self, title = "", description = "", transcript = "", tags = ""):
+    def createVideoSnippet(self, title = "", description = "", transcript = "", tags = "", tfidf = False, use_desc = False):
         """ Creates the video snippet.
         
         Parameters
@@ -194,13 +230,24 @@ class Cleaner():
         """
 
         title = self.clean_text(title)
-        description = self.clean_text(self.condense(description))
-        transcript = self.clean_text(self.condense(transcript))
-        tags = self.clean_text(self.topTags(tags))
+        
+        if tfidf:
+            if use_desc:
+                description = self.clean_text(self.condenseTfidf(description, 100))
+            transcript = self.clean_text(self.condenseTfidf(transcript, 200))
+        else:
+            if use_desc:
+                description = self.clean_text(self.condense(description, 100))
+            transcript = self.clean_text(self.condense(transcript))
 
-        return title + ". " + description + ". " + transcript + ". " + tags + "."
+        tags = self.clean_text(self.topTags(tags))
+        
+        if use_desc:
+            return title + ". " + description + ". " + transcript + ". " + tags + "."
+
+        return title + ". " + transcript + ". " + tags + "." 
     
-    def generateVideoSnippets(self):
+    def generateVideoSnippets(self, tfidf = False, use_desc = False):
         """ Creates the video snippets for all videos.
         
         Returns
@@ -208,8 +255,10 @@ class Cleaner():
         pd.DataFrame
             The videos with snippets appended.
         """
+        
+        self.remove_nulls()
 
-        df = self.videos.apply(lambda x: self.createVideoSnippet(x.title, x.description, x.transcript, x.tags), axis = 1)
-
-        df.to_csv(youtube.SEED_VIDEOS + 'processed_seed_videos.csv')
-        return df
+        self.videos['snippet'] = self.videos.apply(lambda x: self.createVideoSnippet(x.title, x.description, x.cleaned_transcript, x.tags, tfidf, use_desc), axis = 1)
+        
+        self.videos.to_csv(self.save_path)
+        return self.videos
