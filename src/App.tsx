@@ -16,7 +16,7 @@ function App() {
               opacity: 0.75,
             }}
           >
-            Who is YouTube recommending cryptocurrency to?
+            Who is seeing cryptocurrency content on YouTube?
             <strong
               style={{
                 display: "block",
