@@ -23,14 +23,35 @@ function App() {
       </section>
 
       <section>
-        <h2>Abstract</h2>
+        <h2>What is this, and why do should I care?</h2>
         <p>
           {"Lorem Ipsum :)"}
         </p>
       </section>
 
       <section>
-        <h2>Methodology</h2>
+        <h2>Where is your data from?</h2>
+        <p>
+          {"Lorem Ipsum :)"}
+        </p>
+      </section>
+
+      <section>
+        <h2>How did you do this?</h2>
+        <p>
+          {"Lorem Ipsum :)"}
+        </p>
+      </section>
+
+      <section>
+        <h2>Results</h2>
+        <p>
+          {"Lorem Ipsum :)"}
+        </p>
+      </section>
+
+      <section>
+        <h2>Conclusion</h2>
         <p>
           {"Lorem Ipsum :)"}
         </p>
