@@ -1,6 +1,7 @@
 import React from "react";
-
 import "./App.css";
+import Button from "@mui/material/Button";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 function App() {
   return (
@@ -27,6 +28,15 @@ function App() {
               by Brian Huang, Lily Yu
             </strong>
           </strong>
+          <Button
+            variant="contained"
+            startIcon={<GitHubIcon />}
+            onClick={() =>
+              window.open("https://github.com/brianjhuang/CryptoWho", "_blank")
+            }
+          >
+            GitHub
+          </Button>
         </h1>
       </section>
 
