@@ -1,13 +1,24 @@
 import React from "react";
+import { useRef, useEffect } from "react";
 import "./App.css";
+
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { animated, Interpolation, useSpring } from '@react-spring/web'
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 function App() {
+  const ref = useRef();
+
   return (
     <>
-      <section>
-        <h1 style={{ fontSize: 50 }}>
+      <Parallax pages={3}>
+        <ParallaxLayer offset={0} speed={2.5}>
+          <p>Layers can contain anything</p>
+        </ParallaxLayer>
+      </Parallax>
+      {/* <section>
+        <h1 style={{ fontSize: 50}}>
           CryptoWho
           <strong
             style={{
@@ -63,7 +74,7 @@ function App() {
       <section>
         <h2>Conclusion</h2>
         <p>{"Lorem Ipsum :)"}</p>
-      </section>
+      </section> */}
     </>
   );
 }
