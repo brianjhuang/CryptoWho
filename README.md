@@ -21,9 +21,11 @@ The goal of this project is to investigate YouTube's recommendation algorithm to
 
 ## Installation
 
-**Create and activate Python >= 3.6 Virtual Environment**
+**Create and activate Python Virtual Environment**
 
-We are using Python version 3.8.5 (https://www.python.org/downloads/release/python-385/)
+We are using Python version 3.8.5 (https://www.python.org/downloads/release/python-385/).
+
+Please install this version of Python, as gensim summarization is still supported.
 
 ```bash
 python3 -m venv .venv
