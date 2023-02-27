@@ -14,6 +14,7 @@ function App() {
     <>
       <section
         style={{
+          // backgroundColor: "#101030",
           backgroundImage: `url(${process.env.PUBLIC_URL}/images/cryptowho.png)`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -52,27 +53,47 @@ function App() {
         </h1>
       </section>
 
-      <section>
+      <section
+        style={{
+          backgroundColor: "#000000",
+        }}
+      >
         <h2>What is this, and why do should I care?</h2>
         <p>{"Lorem Ipsum :)"}</p>
       </section>
 
-      <section>
+      <section
+        style={{
+          backgroundColor: "#000000",
+        }}
+      >
         <h2>Where is your data from?</h2>
         <p>{"Lorem Ipsum :)"}</p>
       </section>
 
-      <section>
+      <section
+        style={{
+          backgroundColor: "#000000",
+        }}
+      >
         <h2>How did you do this?</h2>
         <p>{"Lorem Ipsum :)"}</p>
       </section>
 
-      <section>
+      <section
+        style={{
+          backgroundColor: "#000000",
+        }}
+      >
         <h2>Results</h2>
         <p>{"Lorem Ipsum :)"}</p>
       </section>
 
-      <section>
+      <section
+        style={{
+          backgroundColor: "#000000",
+        }}
+      >
         <h2>Conclusion</h2>
         <p>{"Lorem Ipsum :)"}</p>
       </section>
