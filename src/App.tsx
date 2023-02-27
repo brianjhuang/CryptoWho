@@ -5,13 +5,16 @@ import "./App.css";
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { animated, Interpolation, useSpring } from '@react-spring/web'
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
 
 function App() {
-  const ref = useRef();
+  const parallax = useRef<IParallax>(null!)
 
   return (
     <>
+    <Parallax ref = {parallax} pages={1}>
+      <ParallaxLayer></ParallaxLayer>
+    </Parallax>
       <section>
         <h1 style={{ fontSize: 50}}>
           CryptoWho
