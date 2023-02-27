@@ -4,19 +4,22 @@ import "./App.css";
 
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { animated, Interpolation, useSpring } from '@react-spring/web'
+import { animated, Interpolation, useSpring } from "@react-spring/web";
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
 
 function App() {
-  const parallax = useRef<IParallax>(null!)
+  const parallax = useRef<IParallax>(null!);
 
   return (
     <>
-    <Parallax ref = {parallax} pages={3}>
-      <ParallaxLayer>Webpage still under development</ParallaxLayer>
-    </Parallax>
-      <section>
-        <h1 style={{ fontSize: 50}}>
+      <section
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL}/images/cryptowho.png)`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <h1 style={{ fontSize: 50 }}>
           CryptoWho
           <strong
             style={{
