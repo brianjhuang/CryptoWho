@@ -12,8 +12,8 @@ function App() {
 
   return (
     <>
-    <Parallax ref = {parallax} pages={1}>
-      <ParallaxLayer></ParallaxLayer>
+    <Parallax ref = {parallax} pages={3}>
+      <ParallaxLayer>Webpage still under development</ParallaxLayer>
     </Parallax>
       <section>
         <h1 style={{ fontSize: 50}}>
