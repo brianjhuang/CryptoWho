@@ -48,9 +48,9 @@
     ]
   },
   "devDependencies": {
-    "@react-spring/parallax": "^9.7.0",
-    "@react-spring/types": "^9.7.0",
-    "@react-spring/web": "^9.7.0",
+    "@react-spring/parallax": "^9.6.1",
+    "@react-spring/types": "^9.6.1",
+    "@react-spring/web": "^9.6.1",
     "gh-pages": "^5.0.0"
   }
 }

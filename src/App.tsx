@@ -12,12 +12,7 @@ function App() {
 
   return (
     <>
-      <Parallax pages={3}>
-        <ParallaxLayer offset={0} speed={2.5}>
-          <p>Layers can contain anything</p>
-        </ParallaxLayer>
-      </Parallax>
-      {/* <section>
+      <section>
         <h1 style={{ fontSize: 50}}>
           CryptoWho
           <strong
@@ -74,7 +69,7 @@ function App() {
       <section>
         <h2>Conclusion</h2>
         <p>{"Lorem Ipsum :)"}</p>
-      </section> */}
+      </section>
     </>
   );
 }
