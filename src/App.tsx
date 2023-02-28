@@ -18,10 +18,10 @@ function App() {
           backgroundImage: `url(${process.env.PUBLIC_URL}/images/cryptowho.png)`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          paddingTop: "60px"
+          backgroundSize: "cover"
         }}
       >
-        <h1 style={{ fontSize: 50, paddingTop: "170px"}}>
+        <h1 style={{ fontSize: 50}}>
           CryptoWho
           <strong
             style={{
