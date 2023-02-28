@@ -29,9 +29,10 @@ class YouTube(object):
     LOGS_PATH = 'logs/youtube_downloads'
 
     # CLEANING CONFIGS
-    USE_RATIO = True
+    USE_RATIO = False
     RATIO = 0.2
-    MAX_WORD_COUNT = 250
+    MAX_WORD_COUNT = 300
+    SENTENCE_CUTOFF = 5 # The minimum number of sentences needed for us to summarize the text.
 
     # YouTube Data API Config
     YOUTUBE_API_SERVICE_NAME = "youtube"

@@ -235,7 +235,7 @@ class Cleaner():
         """
         
         # If we have less than N words, we don't need to summarize
-        if len(corpus) < n:
+        if len(corpus.split(" ")) < n:
             return corpus
         # If we have less than a sentence, we also don't need TF-IDF
         if len(corpus.split(". ")) <= 1:
@@ -279,8 +279,8 @@ class Cleaner():
         word_count = self.max_word_count
         ratio = self.ratio
         
-        # If we have less than 250 words, we don't need to summarize
-        if len(corpus) < word_count:
+        # If we have less than 250 characters, we don't need to summarize
+        if len(corpus.split(" ")) < word_count:
             return corpus
         # If we have less than a sentence, make it a sentence
         if len(corpus.split(". ")) <= 1:

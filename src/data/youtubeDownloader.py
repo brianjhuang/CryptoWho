@@ -7,6 +7,7 @@ import time
 from tqdm import tqdm
 import pandas as pd
 import random
+import datetime
 
 # YouTube API Libraries
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -111,7 +112,7 @@ class Downloader():
         """Download video meta data given an ID
 
         Method queries the YouTube Data API and retrieves details of the video. These
-        details are used as the video desc, title and tags.
+        details are used as the video desc, title tags, and video duration.
 
         Parameters
         ----------
@@ -121,8 +122,26 @@ class Downloader():
         Returns
         -------
         dict
-            A dictionary with the video desc, title and video tags
+            A dictionary with the video desc, title, video tags, and duration
         """
+        
+        def parse_duration(duration_string):
+            # Get the time components from the duration string
+            if 'M' in duration_string:
+                minutes = int(duration_string[2:duration_string.index('M')])
+            else:
+                minutes = 0
+
+            if 'S' in duration_string:   
+                seconds = int(duration_string[duration_string.index('M')+1:-1])
+            else:
+                seconds = 0
+
+            # Create a time object with the parsed components
+            time_obj = datetime.time(minute=minutes, second=seconds)
+
+            return time_obj
+
         if not self.apiObjectExists():
             print("No API object found.")
             logging.info("No API object found.")
@@ -159,11 +178,24 @@ class Downloader():
                         tags = videoSnippet['tags']
                     else:
                         tags = ""
+                
+                # Get the duration of each video
+                if 'contentDetails' in videoContent.keys():
+                    videoDetails = videoContent['contentDetails']
+                    
+                    if 'duration' in videoDetails.keys():
+                        raw_duration = videoDetails['duration']
+                        duration = parse_duration(raw_duration)
+                    else:
+                        raw_duration = "No Duration"
+                        duration = datetime.time(minute=0, second=0)
                     
                     return {
                         "title": title,
                         "description": description,
                         "tags": tags,
+                        "raw_duration" : raw_duration,
+                        "duration" : duration
                     }
 
             except:
@@ -363,8 +395,8 @@ class Downloader():
 
         cleaned_transcript = " ".join([clean_transcript(phrase['text']) for phrase in raw_transcript]).strip(" \n")
         
-        # We can't summarize videos with no sentences
-        if len(cleaned_transcript.split('. ')) <= 1:
+        # We can't summarize videos with no sentences and should summarize videos with more than five sentences
+        if len(cleaned_transcript.split('. ')) <= youtube.SENTENCE_CUTOFF:
             cleaned_transcript = " ".join([add_pauses(clean_transcript(phrase['text'])) for phrase in raw_transcript]).strip(" \n")
 
         logging.info("Cleaned and return transcript data for " + self.video_id)
