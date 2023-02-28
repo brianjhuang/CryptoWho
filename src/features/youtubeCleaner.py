@@ -26,9 +26,12 @@ class Cleaner():
         Where we want to save our data
     '''
 
-    def __init__(self, videos, save_path = youtube.SEED_VIDEOS + 'processed_seed_videos.csv'):
+    def __init__(self, videos, save_path = youtube.SEED_VIDEOS + 'processed_seed_videos.csv', use_ratio = False, ratio = 0.2, max_word_count = 250):
         self.videos = videos
         self.save_path = save_path
+        self.max_word_count = max_word_count
+        self.use_ratio = use_ratio
+        self.ratio = ratio
 
     def getVideos(self):
         """
@@ -54,6 +57,101 @@ class Cleaner():
 
         self.videos = videos
 
+    def getSavePath(self):
+        """
+        Gets all of our save_path.
+
+        Returns
+        -------
+        pd.DataFrame
+            Our save_path
+        """
+
+        return self.save_path
+    
+    def setSavePath(self, save_path):
+        """
+        Sets our new save_path.
+
+        Parameters
+        ----------
+        videos : pd.DataFrame
+            Our new save_path
+        """
+
+        self.save_path = save_path
+
+    def getMaxWordCount(self):
+        """
+        Gets all of our max_word_count.
+
+        Returns
+        -------
+        pd.DataFrame
+            Our max_word_count
+        """
+
+        return self.max_word_count
+    
+    def setMaxWordCount(self, max_word_count):
+        """
+        Sets our new max_word_count.
+
+        Parameters
+        ----------
+        videos : pd.DataFrame
+            Our new max_word_count
+        """
+
+        self.max_word_count = max_word_count
+
+    def getUseRatio(self):
+        """
+        Gets all of our use_ratio.
+
+        Returns
+        -------
+        pd.DataFrame
+            Our use_ratio
+        """
+
+        return self.use_ratio
+    
+    def setUseRatio(self, use_ratio):
+        """
+        Sets our new use_ratio.
+
+        Parameters
+        ----------
+        videos : pd.DataFrame
+            Our new use_ratio
+        """
+
+        self.use_ratio = use_ratio
+
+    def getRatio(self):
+        """
+        Gets all of our ratio.
+
+        Returns
+        -------
+        pd.DataFrame
+            Our ratio
+        """
+
+        return self.ratio
+    
+    def setRatio(self, ratio):
+        """
+        Sets our new ratio.
+
+        Parameters
+        ----------
+        videos : pd.DataFrame
+            Our new ratio
+        """
+
+        self.ratio = ratio
 
     def remove_nulls(self):
         """
@@ -135,13 +233,16 @@ class Cleaner():
         list
             The top N words.
         """
-
+        
         # If we have less than N words, we don't need to summarize
         if len(corpus) < n:
             return corpus
         # If we have less than a sentence, we also don't need TF-IDF
-        elif len(corpus.split(".")) <= 1:
-            return corpus
+        if len(corpus.split(". ")) <= 1:
+            corpus += '.'
+
+        corpus = corpus.replace("\n", " ").replace(" - ", "").replace('- ', "").replace("\'", "").replace(".", ". ")
+        corpus = corpus.replace("U.S.", "United States").replace("U.S", "United States").replace("U.S.A", "United States").replace("U.S.A.", "United States")
 
         # Convert the text into a sparse matrix using TF-IDF
         vectorizer = TfidfVectorizer()
@@ -159,7 +260,7 @@ class Cleaner():
         
         return selected_features
     
-    def condense(self, corpus, word_count = 250):
+    def condense(self, corpus, word_count = 250, ratio = 0.2):
         """Applies gensim summarization using TextRank to summarize a corpus of text.
 
         Parameters
@@ -174,15 +275,23 @@ class Cleaner():
         str
             The top tags seperate by spaces
         """
-
-        corpus = corpus.replace("\n", " ").replace(" - ", "").replace('- ', "").replace("\'", "").replace(".", ". ")
+        
+        word_count = self.max_word_count
+        ratio = self.ratio
         
         # If we have less than 250 words, we don't need to summarize
         if len(corpus) < word_count:
             return corpus
-        # If we have less than a sentence, we also don't summarize
-        elif len(corpus.split(".")) <= 1:
-            return corpus
+        # If we have less than a sentence, make it a sentence
+        if len(corpus.split(". ")) <= 1:
+            corpus += '.'
+        
+        corpus = corpus.replace("U.S.", "United States").replace("U.S", "United States").replace("U.S.A", "United States").replace("U.S.A.", "United States")
+        corpus = corpus.replace("\n", " ").replace(" - ", "").replace('- ', "").replace("\'", "").replace(".", ". ")
+        
+        if self.use_ratio:
+            return summarize(corpus, ratio = ratio)
+        
         return summarize(corpus, word_count = word_count)
     
     def topTags(self, tags, n = 10):

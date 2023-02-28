@@ -351,15 +351,21 @@ class Downloader():
         
         def clean_transcript(phrase):
             """Clean our transcript"""
-            phrase = phrase.strip(".\n ")
-            try:
-                if phrase[-1] not in ['!', ',', ':', ';', '?', '-']:
-                    phrase += "."
-            except:
-                return phrase
+            phrase = phrase.strip("\n ")
+            logging.info(f"Cleaning following phrase: {phrase}")
+            return phrase
+        
+        def add_pauses(phrase):
+            """For transcripts with no natural pauses, add periods."""
+            phrase = phrase + ". "
+            logging.info(f"Cleaning following phrase: {phrase}")
             return phrase
 
         cleaned_transcript = " ".join([clean_transcript(phrase['text']) for phrase in raw_transcript]).strip(" \n")
+        
+        # We can't summarize videos with no sentences
+        if len(cleaned_transcript.split('. ')) <= 1:
+            cleaned_transcript = " ".join([add_pauses(clean_transcript(phrase['text'])) for phrase in raw_transcript]).strip(" \n")
 
         logging.info("Cleaned and return transcript data for " + self.video_id)
         return {"cleaned_transcript" : cleaned_transcript, "raw_transcript" : raw_transcript}
