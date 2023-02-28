@@ -62,7 +62,7 @@ You can enable the YouTube Data API for your Google account and obtain an API ke
 
 You can fetch your OpenAI API key from <a href="https://openai.com/blog/openai-api/">here</a>.:
 
-Once you have both API keys, please set the ```YOUTUBE_DATA_API_KEY``` and ```OPEN_AI_KEY``` variable in your environment:
+Once you have both API keys, please set the ```YOUTUBE_DATA_API_KEY``` and ```OPENAI_API_KEY``` variable in your environment:
 
 You can do so by going to your home directory and running the following command:
 
