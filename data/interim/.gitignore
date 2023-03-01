@@ -2,8 +2,5 @@
 *
 # Except this file
 !.gitignore
-!external
-!audit
-!seed
-!interim
-!raw
+!youtube
+!reddit

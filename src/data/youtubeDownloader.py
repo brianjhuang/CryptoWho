@@ -7,6 +7,7 @@ import time
 from tqdm import tqdm
 import pandas as pd
 import random
+import datetime
 
 # YouTube API Libraries
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -15,7 +16,7 @@ from googleapiclient.errors import HttpError
 from socket import error as SocketError
 
 # Config Imports
-from src.data.config import youtube
+from config import youtube
 
 class Downloader():
     ''' Gets tabular data for YouTube video(s) given id(s)
@@ -27,25 +28,13 @@ class Downloader():
 
     Parameters
     ----------
-    save_path : str
-        The path we want to save the data to.
-    set_name : str
-        The name of the set we're scraping
+    max_comments: int
+        The max number of comments we can download.
 
     Attributes (class)
     -------
-    card_url : str
-        The URL of the card we want to scrape.
-    card_name : str
-        The name of the card
-
-    Attributes (class)
-    -------
-    card_url : str
-        The URL of the card we are currently scraping
-    card_name : str
-        The name of the card
-
+    video_id : str
+        The current video we're downloading.
     '''
 
     video_id = None
@@ -123,7 +112,7 @@ class Downloader():
         """Download video meta data given an ID
 
         Method queries the YouTube Data API and retrieves details of the video. These
-        details are used as the video desc, title and tags.
+        details are used as the video desc, title tags, and video duration.
 
         Parameters
         ----------
@@ -133,8 +122,26 @@ class Downloader():
         Returns
         -------
         dict
-            A dictionary with the video desc, title and video tags
+            A dictionary with the video desc, title, video tags, and duration
         """
+        
+        def parse_duration(duration_string):
+            # Get the time components from the duration string
+            if 'M' in duration_string:
+                minutes = int(duration_string[2:duration_string.index('M')])
+            else:
+                minutes = 0
+
+            if 'S' in duration_string:   
+                seconds = int(duration_string[duration_string.index('M')+1:-1])
+            else:
+                seconds = 0
+
+            # Create a time object with the parsed components
+            time_obj = datetime.time(minute=minutes, second=seconds)
+
+            return time_obj
+
         if not self.apiObjectExists():
             print("No API object found.")
             logging.info("No API object found.")
@@ -156,10 +163,39 @@ class Downloader():
                     videoSnippet = videoContent["snippet"]
 
                     logging.info("Retrieved video meta data for " + self.video_id)
+                    
+                    if 'title' in videoSnippet.keys():
+                        title = videoSnippet["title"]
+                    else:
+                        title = ""
+                        
+                    if 'description' in videoSnippet.keys():
+                        description = videoSnippet['description']
+                    else:
+                        description = ""
+                    
+                    if 'tags' in videoSnippet.keys():
+                        tags = videoSnippet['tags']
+                    else:
+                        tags = ""
+                
+                # Get the duration of each video
+                if 'contentDetails' in videoContent.keys():
+                    videoDetails = videoContent['contentDetails']
+                    
+                    if 'duration' in videoDetails.keys():
+                        raw_duration = videoDetails['duration']
+                        duration = parse_duration(raw_duration)
+                    else:
+                        raw_duration = "No Duration"
+                        duration = datetime.time(minute=0, second=0)
+                    
                     return {
-                        "title": videoSnippet["title"],
-                        "description": videoSnippet["description"],
-                        "tags": videoSnippet["tags"],
+                        "title": title,
+                        "description": description,
+                        "tags": tags,
+                        "raw_duration" : raw_duration,
+                        "duration" : duration
                     }
 
             except:
@@ -249,7 +285,7 @@ class Downloader():
 
                     except:
                         logging.info("Comments missing or not available for " + self.video_id)
-                        return {"comments": []}
+                        comments += []
 
                 else:
                     # For all subsequent pages
@@ -298,7 +334,7 @@ class Downloader():
 
                     except:
                         logging.info("Comments missing or not available for " + self.video_id)
-                        return {"comments": []}
+                        comments += []
 
             except (HttpError, SocketError) as error:
                 print(
@@ -344,8 +380,24 @@ class Downloader():
         except:
             logging.info("No video transcript data for " + self.video_id)
             return {"cleaned_transcript" : "", "raw_transcript" : {}}
+        
+        def clean_transcript(phrase):
+            """Clean our transcript"""
+            phrase = phrase.strip("\n ")
+            logging.info(f"Cleaning following phrase: {phrase}")
+            return phrase
+        
+        def add_pauses(phrase):
+            """For transcripts with no natural pauses, add periods."""
+            phrase = phrase + ". "
+            logging.info(f"Cleaning following phrase: {phrase}")
+            return phrase
 
-        cleaned_transcript = ". ".join([phrase['text'] for phrase in raw_transcript])
+        cleaned_transcript = " ".join([clean_transcript(phrase['text']) for phrase in raw_transcript]).strip(" \n")
+        
+        # We can't summarize videos with no sentences and should summarize videos with more than five sentences
+        if len(cleaned_transcript.split('. ')) <= youtube.SENTENCE_CUTOFF:
+            cleaned_transcript = " ".join([add_pauses(clean_transcript(phrase['text'])) for phrase in raw_transcript]).strip(" \n")
 
         logging.info("Cleaned and return transcript data for " + self.video_id)
         return {"cleaned_transcript" : cleaned_transcript, "raw_transcript" : raw_transcript}

@@ -16,13 +16,23 @@ class YouTube(object):
     TEST_DATA = 'test/youtube/video_ids.csv'
     RAW_SEED_DATA = 'data/raw/youtube/seed_finance_videos.csv'
     RAW_AGE_DATA = 'data/raw/youtube/seed_age_videos.csv'
+    INTERIM_SEED_DATA = 'data/interim/youtube/seed_videos.csv'
+    INTERIM_YOUNG_DATA = 'data/interim/youtube/young_videos.csv'
+    INTERIM_OLD_DATA = 'data/interim/youtube/old_videos.csv'
 
 
     # SAVE PATHS
     SEED_VIDEOS = 'data/seed/youtube/'
+    INTERIM_VIDEOS = 'data/interim/youtube/'
     AUDIT_VIDEOS = 'data/audit/youtube/'
     EXTERNAL_VIDEOS ='data/external/youtube/'
     LOGS_PATH = 'logs/youtube_downloads'
+
+    # CLEANING CONFIGS
+    USE_RATIO = False
+    RATIO = 0.2
+    MAX_WORD_COUNT = 300
+    SENTENCE_CUTOFF = 5 # The minimum number of sentences needed for us to summarize the text.
 
     # YouTube Data API Config
     YOUTUBE_API_SERVICE_NAME = "youtube"
