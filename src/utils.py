@@ -3,6 +3,13 @@ import pandas as pd
 import os
 import subprocess
 import re
+from dataclasses import dataclass
+
+@dataclass
+class AuditVideo:
+    url: str
+    reccommendation_source: str
+    videos_watched: int
 
 def json_to_csv(data, filepath):
     df = pd.DataFrame(data)

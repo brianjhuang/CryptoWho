@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException
 from time import sleep
-from src.utils import Video, VideoUnavailableException, time2seconds
+from src.utils import Video, VideoUnavailableException, time2seconds, AuditVideo
 #from pyvirtualdisplay import Display
 import os
 
@@ -41,6 +41,10 @@ class YTDriver:
             raise Exception("Invalid browser", browser)
 
         self.driver.set_page_load_timeout(30)
+        self.VIDEOS_WATCHED = 0
+
+        self.video_recs = []
+        self.homepage_recs = []
 
     def close(self):
         """
@@ -161,11 +165,41 @@ class YTDriver:
             self.__click_video(video)
             self.__check_video_availability()
             self.__click_play_button()
-            #self.__handle_ads()
+            self.__handle_ads()
             #self.__clear_prompts()
             sleep(duration)
-        except WebDriverException as e:
+            self.VIDEOS_WATCHED += 1
+        except Exception as e:
             self.__log(e)
+            
+
+    def play_list(self, videos, duration=5, homepage_interval=0):
+        """
+        Play a list of videos for a set duration. Returns when that duration passes.
+
+        ### Arguments:
+        - `videos` (`list`): List of video objects or URLs to play.
+        - `duration` (`int`): How long to play each video.
+        - `homepage_interval` (`int`): How often to scrape the homepage. (If 0, never scrape homepage.)
+        
+        """
+        
+        for i, video in enumerate(videos):
+            self.play(video, duration)
+            try:
+                recs = self.get_recommendations()
+                rec_urls = [rec.url for rec in recs]
+                for rec_url in rec_urls:
+                    audit_vid = AuditVideo(rec_url, video, self.VIDEOS_WATCHED)
+                    self.video_recs.append(audit_vid)
+            except Exception as e:
+                self.__log("Failed to get recommendations.")
+                self.__log(e)
+            if homepage_interval and i % homepage_interval == 0:
+                homepage_vids = self.get_homepage()
+                for homepage_vid in homepage_vids:
+                    audit_vid = AuditVideo(homepage_vid.url, 'homepage', self.VIDEOS_WATCHED)
+                    self.homepage_recs.append(audit_vid)
 
     def save_screenshot(self, filename):
         """
