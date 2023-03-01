@@ -173,7 +173,7 @@ class YTDriver:
             self.__log(e)
             
 
-    def play_list(self, videos, duration=5, homepage_interval=0):
+    def play_list(self, videos, duration=5, homepage_interval=0, topn=5):
         """
         Play a list of videos for a set duration. Returns when that duration passes.
 
@@ -187,7 +187,7 @@ class YTDriver:
         for i, video in enumerate(videos):
             self.play(video, duration)
             try:
-                recs = self.get_recommendations()
+                recs = self.get_recommendations(topn=topn)
                 rec_urls = [rec.url for rec in recs]
                 for rec_url in rec_urls:
                     audit_vid = AuditVideo(rec_url, video, self.VIDEOS_WATCHED)

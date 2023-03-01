@@ -50,11 +50,11 @@ def run_audit():
 
     #Watch age seed videos
     age_seed_videos = get_age_seed_videos()
-    driver.play_list(age_seed_videos[5:7], duration = audit.WATCH_DURATION, homepage_interval=0)
+    driver.play_list(age_seed_videos, duration = audit.WATCH_DURATION, homepage_interval=0, topn=audit.NUM_RECOMMENDATIONS)
 
     #Watch finance videos
     finance_seed_videos = get_finance_seed_videos()
-    driver.play_list(finance_seed_videos[5:7], duration = audit.WATCH_DURATION, homepage_interval=10)
+    driver.play_list(finance_seed_videos, duration = audit.WATCH_DURATION, homepage_interval=10, topn=audit.NUM_RECOMMENDATIONS)
 
     driver.close() #Only closes the browser, object and results are still available
 

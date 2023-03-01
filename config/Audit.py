@@ -12,6 +12,7 @@ class Audit(object):
     FINANCE_VIDEO_TYPE = 'traditional' #'traditional', 'blockchain', 'mixed', 'unrelated'
 
     WATCH_DURATION = 10 #Number of seconds to watch each video
+    NUM_RECOMMENDATIONS = 10 #Number of recommendations to collect, very large values may throw errors
 
     #PATH VARIABLES
     SEED_AGE_VIDEO_PATH = 'data/raw/youtube/seed_age_videos.csv'
