@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException
-from time import sleep
+from time import sleep, time
 from src.utils import Video, VideoUnavailableException, time2seconds, AuditVideo
 #from pyvirtualdisplay import Display
 import os
@@ -45,6 +45,7 @@ class YTDriver:
 
         self.video_recs = []
         self.homepage_recs = []
+        self.errors = []
 
     def close(self):
         """
@@ -166,11 +167,12 @@ class YTDriver:
             self.__check_video_availability()
             self.__click_play_button()
             self.__handle_ads()
-            #self.__clear_prompts()
+            self.__clear_prompts()
             sleep(duration)
             self.VIDEOS_WATCHED += 1
         except Exception as e:
             self.__log(e)
+            self.errors.append({'timestamp': time(), 'video': video, 'error': e})
             
 
     def play_list(self, videos, duration=5, homepage_interval=0, topn=5):
@@ -195,6 +197,7 @@ class YTDriver:
             except Exception as e:
                 self.__log("Failed to get recommendations.")
                 self.__log(e)
+                self.errors.append({'timestamp': time(), 'video': video, 'error': e})
             if homepage_interval and i % homepage_interval == 0:
                 homepage_vids = self.get_homepage()
                 for homepage_vid in homepage_vids:

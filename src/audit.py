@@ -42,6 +42,10 @@ def to_csv(driver, start_time):
     homepage_recs_df['Finance Video Type'] = audit.FINANCE_VIDEO_TYPE
     homepage_recs_df.to_csv(audit.AUDIT_RESULTS_PATH + f'{start_time_str}-homepage_recs.csv', index=False)
 
+    if driver.errors:
+        errors_df = pd.DataFrame(driver.errors)
+        errors_df.to_csv(audit.AUDIT_RESULTS_PATH + f'{start_time_str}-errors.csv', index=False)
+    
 def run_audit():
 
     #Record start time
