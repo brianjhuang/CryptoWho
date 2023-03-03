@@ -12,20 +12,47 @@ import time
 from config import audit
 from src.utils import get_full_url
 from src.YTDriver import YTDriver
+import datetime
 
 def get_age_seed_videos():
-    df = pd.read_csv(audit.SEED_AGE_VIDEO_PATH, index_col=0)
-    df = df[df['label'] == audit.USER_AGE]
-    video_ids = df['video_id'].values
+    if audit.USER_AGE == 'young':
+        df = pd.read_csv(audit.YOUNG_SEED_AGE_VIDEO_PATH, index_col=0)
+    elif audit.USER_AGE == 'old':
+        df = pd.read_csv(audit.OLD_SEED_AGE_VIDEO_PATH, index_col=0)
+    else:
+        raise ValueError('User age must be "young" or "old"')
+    
+    # Convert duration to seconds
+    df['duration'] = df['duration'].apply(lambda x: datetime.datetime.strptime(x, '%H:%M:%S').time())
+    df['duration'] = df['duration'].apply(lambda x: x.hour * 3600 + x.minute * 60 + x.second)
+    durations = df['duration'].values
+    
+    #df = df[df['label'] == audit.USER_AGE]
+    video_ids = df[audit.VIDEO_ID_COLUMN].values
     video_urls = [get_full_url(video_id) for video_id in video_ids]
-    return video_urls
+    return video_urls, durations
 
 def get_finance_seed_videos():
     df = pd.read_csv(audit.SEED_FINANCE_VIDEO_PATH, index_col=0)
-    df = df[df['label'] == audit.FINANCE_VIDEO_TYPE]
-    video_ids = df['video_id'].values
+    #df = df[df['label'] == audit.FINANCE_VIDEO_TYPE]
+
+    # Convert duration to seconds
+    df['duration'] = df['duration'].apply(lambda x: datetime.datetime.strptime(x, '%H:%M:%S').time())
+    df['duration'] = df['duration'].apply(lambda x: x.hour * 3600 + x.minute * 60 + x.second)
+    durations = df['duration'].values
+
+    video_ids = df[audit.VIDEO_ID_COLUMN].values
     video_urls = [get_full_url(video_id) for video_id in video_ids]
-    return video_urls
+    return video_urls, durations
+
+def process_durations_list(durations):
+    if audit.WATCH_BY_RATIO:
+        durations = [int(duration * audit.WATCH_RATIO) for duration in durations]
+    else:
+        durations = [audit.WATCH_DURATION for duration in durations]
+    return durations
+
+get_age_seed_videos()
 
 def to_csv(driver, start_time):
     start_time_str = str(start_time).replace('.', '') #Remove period from start time for filenames
@@ -53,12 +80,15 @@ def run_audit():
     driver = YTDriver(browser='firefox', verbose=True)
 
     #Watch age seed videos
-    age_seed_videos = get_age_seed_videos()
-    driver.play_list(age_seed_videos, duration = audit.WATCH_DURATION, homepage_interval=0, topn=audit.NUM_RECOMMENDATIONS)
+    age_seed_videos, age_seed_video_durations = get_age_seed_videos()
+    age_seed_video_durations = process_durations_list(age_seed_video_durations)
+    driver.play_list(age_seed_videos, age_seed_video_durations, homepage_interval=0, topn=audit.NUM_RECOMMENDATIONS)
+    to_csv(driver, start_time)
 
     #Watch finance videos
-    finance_seed_videos = get_finance_seed_videos()
-    driver.play_list(finance_seed_videos, duration = audit.WATCH_DURATION, homepage_interval=10, topn=audit.NUM_RECOMMENDATIONS)
+    finance_seed_videos, finance_seed_video_durations = get_finance_seed_videos()
+    finance_seed_video_durations = process_durations_list(finance_seed_video_durations)
+    driver.play_list(finance_seed_videos, finance_seed_video_durations, homepage_interval=10, topn=audit.NUM_RECOMMENDATIONS)
 
     driver.close() #Only closes the browser, object and results are still available
 

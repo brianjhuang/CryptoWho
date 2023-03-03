@@ -175,7 +175,7 @@ class YTDriver:
             self.errors.append({'timestamp': time(), 'video': video, 'error': e})
             
 
-    def play_list(self, videos, duration=5, homepage_interval=0, topn=5):
+    def play_list(self, videos, durations, homepage_interval=0, topn=5):
         """
         Play a list of videos for a set duration. Returns when that duration passes.
 
@@ -187,7 +187,7 @@ class YTDriver:
         """
         
         for i, video in enumerate(videos):
-            self.play(video, duration)
+            self.play(video, durations[i])
             try:
                 recs = self.get_recommendations(topn=topn)
                 rec_urls = [rec.url for rec in recs]
