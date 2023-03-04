@@ -25,4 +25,4 @@ class Audit(object):
 
     VIDEO_ID_COLUMN = 'video_id'
 
-    AUDIT_RESULTS_PATH = '../data/audit/youtube/'
+    AUDIT_RESULTS_PATH = 'data/audit/youtube/'
