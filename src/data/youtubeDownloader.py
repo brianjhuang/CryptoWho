@@ -445,7 +445,7 @@ if __name__ == '__main__':
         videoTranscript = downloader.getVideoTranscript()
 
         video = {
-            "id": video_id,
+            "video_id": video_id,
             "title": videoMetaData["title"],
             "description": videoMetaData["description"],
             "tags": videoMetaData["tags"],
