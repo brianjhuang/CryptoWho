@@ -90,7 +90,7 @@ def downloadYoutubeData(load_path, test = False):
         videoTranscript = downloader.getVideoTranscript()
 
         video = {
-            "id": video_id,
+            "video_id": video_id,
             "title": videoMetaData["title"],
             "description": videoMetaData["description"],
             "tags": videoMetaData["tags"],
@@ -190,7 +190,7 @@ def processAgeVideos(load_path, test = False):
         videoTranscript = downloader.getVideoTranscript()
 
         video = {
-            "id": video_id,
+            "video_id": video_id,
             "title": videoMetaData["title"],
             "description": videoMetaData["description"],
             "tags": videoMetaData["tags"],
