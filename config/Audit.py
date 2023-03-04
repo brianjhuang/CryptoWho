@@ -9,7 +9,7 @@ class Audit(object):
 
     #AUDIT VARIABLES
     USER_AGE = 'young' #'young' or 'old'
-    FINANCE_VIDEO_TYPE = 'traditional' #'traditional', 'blockchain', 'mixed', 'unrelated'
+    FINANCE_VIDEO_TYPE = 'traditional' #'traditional', 'blockchain', 'mixed'
 
     WATCH_BY_RATIO = False #If True, watch videos by ratio of video duration, else watch by number of seconds
     WATCH_DURATION = 10 #Number of seconds to watch each video
