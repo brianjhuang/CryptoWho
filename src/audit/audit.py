@@ -10,8 +10,8 @@ import re
 import time
 
 from config import audit
-from src.utils import get_full_url
-from src.YTDriver import YTDriver
+from utils import get_full_url
+from YTDriver import YTDriver
 import datetime
 
 def get_age_seed_videos():

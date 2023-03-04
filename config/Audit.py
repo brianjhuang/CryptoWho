@@ -23,6 +23,6 @@ class Audit(object):
     # SEED_AGE_VIDEO_PATH = '../data/raw/youtube/seed_age_videos.csv'
     # SEED_FINANCE_VIDEO_PATH = '../data/raw/youtube/seed_finance_videos.csv'
 
-    VIDEO_ID_COLUMN = 'id'
+    VIDEO_ID_COLUMN = 'video_id'
 
     AUDIT_RESULTS_PATH = '../data/audit/youtube/'
