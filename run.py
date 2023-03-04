@@ -284,6 +284,8 @@ def createSnippets(load_path, save_path, max_word_count = 250, use_ratio = False
     return df_with_snippets
 
 def audit():
+    from src.audit.audit import run_audit
+    run_audit()
     return
 
 def finetune_davinci():
