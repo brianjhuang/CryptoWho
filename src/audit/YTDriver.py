@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException
 from time import sleep, time
-from utils import Video, VideoUnavailableException, time2seconds, AuditVideo
+from src.audit.utils import Video, VideoUnavailableException, time2seconds, AuditVideo
 #from pyvirtualdisplay import Display
 import os
 

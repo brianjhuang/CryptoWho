@@ -11,16 +11,16 @@ import re
 import time
 
 from config import audit
-from utils import get_full_url
-from YTDriver import YTDriver
+from src.audit.utils import get_full_url
+from src.audit.YTDriver import YTDriver
 import datetime
 
 
 def get_age_seed_videos():
     if audit.USER_AGE == "young":
-        df = pd.read_csv(audit.YOUNG_SEED_AGE_VIDEO_PATH, index_col=0)
+        df = pd.read_csv(audit.YOUNG_SEED_AGE_VIDEO_PATH)
     elif audit.USER_AGE == "old":
-        df = pd.read_csv(audit.OLD_SEED_AGE_VIDEO_PATH, index_col=0)
+        df = pd.read_csv(audit.OLD_SEED_AGE_VIDEO_PATH)
     else:
         raise ValueError('User age must be "young" or "old"')
 
@@ -40,7 +40,7 @@ def get_age_seed_videos():
 
 
 def get_finance_seed_videos():
-    df = pd.read_csv(audit.SEED_FINANCE_VIDEO_PATH, index_col=0)
+    df = pd.read_csv(audit.SEED_FINANCE_VIDEO_PATH)
 
     if audit.FINANCE_VIDEO_TYPE == "mixed":
         # Grab half of the videos from both labels, sort by duration so we have the shortest videos
