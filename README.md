@@ -17,7 +17,11 @@ With the most recent scandals in the cryptocurrency/NFT world (FTX, Logan Paul's
 
 The goal of this project is to investigate YouTube's recommendation algorithm to provide insight on the types of investment recommendations being provided to users across a variety of age groups. We assume that all individuals should be receiving the same proportion of recommendations based on their search trends (within a margin of error) regardless of age. This implies that a user who is younger and searching for general investment advice should not be receiving more crypto/NFT recommendations than someone who is older with similar watch history. By conducting audits on YouTube, we hope to gain valuable insight on YouTube and it's role in propogating this type of content on their platform (whether intentional or not).
 
-#### What does this repository offer?
+### What does this repository offer?
+
+The repository offers all tools used to conduct the audit. Helper functions and classes help download video and metadata from YouTube, run headless browsers to watch seed videos, and query the GPT-3 API for video sentiment classification.
+
+All code can be found in the `src` folder and imported respectively. For any changes in filepath or settings, please look through the `config` folder.
 
 ## Installation
 
@@ -144,7 +148,7 @@ openai_key = os.environ.get("OPENAI_API_KEY")
 ## Downloading YouTube Video Data
 Using `run.py seed` will download all seed videos and save it in `data/seed/youtube/videos_{}.csv`.
 
-Using `run.py audit` will download all videos throughout the audit and save it in `data/audit/youtube/videos_{}.csv`
+Using `run.py audit` will download all videos from the audit and save the downloaded videos in `data/audit/youtube/videos_{}.csv`.
 
 Calling `python3 src/data/youTubeDownloader.py <video_ids seperated by spaces>` will download any videos you want and save it in `data/external/youtube/videos_{}.csv`. 
 
