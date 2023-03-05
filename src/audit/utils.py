@@ -8,7 +8,7 @@ from dataclasses import dataclass
 @dataclass
 class AuditVideo:
     url: str
-    reccommendation_source: str
+    recommendation_source: str
     videos_watched: int
 
 def json_to_csv(data, filepath):
