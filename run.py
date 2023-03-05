@@ -11,9 +11,6 @@ from tqdm import tqdm
 import pandas as pd
 import random
 
-from src.data.youtubeDownloader import Downloader
-from src.features.youtubeCleaner import Cleaner
-from src.audit.youtubeAudit import run_audit
 from config import youtube
 
 # Logging variables
@@ -45,6 +42,7 @@ def downloadYoutubeData(load_path, test = False):
     pd.DataFrame
         Our downloaded and labeled data.
     '''
+    from src.data.youtubeDownloader import Downloader
 
     # Logging variables
     totalLogs = len(os.listdir('logs'))
@@ -144,6 +142,7 @@ def processAgeVideos(load_path, test = False):
     pd.DataFrame
         The old and young age videos
     '''
+    from src.data.youtubeDownloader import Downloader
 
     # Logging variables
     totalLogs = len(os.listdir('logs'))
@@ -252,6 +251,8 @@ def createSnippets(load_path, save_path, max_word_count = 250, use_ratio = False
         Our cleaned data with snippets
     '''
 
+    from src.features.youtubeCleaner import Cleaner
+
     print(f"""\n Cleaning data with the following settings:
     \n Using Ratio?: {use_ratio}
     \n Ratio: {ratio}
@@ -285,6 +286,9 @@ def createSnippets(load_path, save_path, max_word_count = 250, use_ratio = False
     return df_with_snippets
 
 def audit():
+
+    from src.audit.youtubeAudit import run_audit
+    
     run_audit()
     return
 
