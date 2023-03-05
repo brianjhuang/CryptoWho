@@ -21,11 +21,36 @@ The goal of this project is to investigate YouTube's recommendation algorithm to
 
 ## Installation
 
-**Create and activate Python Virtual Environment**
-
-We are using Python version 3.8.5 (https://www.python.org/downloads/release/python-385/).
+We are using Python version [3.8.5](https://www.python.org/downloads/release/python-385/).
 
 Please install this version of Python, as gensim summarization is still supported.
+
+Versions between 3.8 and 3.9 should work, however we recommend you install the same version we use.
+
+We recommend using [Anaconda](https://www.anaconda.com/) environments to do so.
+
+**Once you've installed Anaconda, please run the following to create your environment.**
+
+```bash
+conda create --name <env_name> python=3.8.5
+```
+
+**Activate your conda environment like so:**
+```bash
+# Linux/Mac
+source activate <env_name>
+
+# Windows
+activate <env_name>
+```
+
+**Install required packages**
+
+```bash
+pip install -r requirements.txt
+```
+
+**If you have Python 3.8.5 working outside of Conda (or any other version of Python that works with gensim) you can create a normal environment if you prefer**
 
 ```bash
 python3 -m venv .venv
@@ -45,6 +70,7 @@ source .venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+
 ### Reddit Thread Scraper
 
 We use Selenium with the Firefox Webdriver to scrape Reddit threads for YouTube videos. This data is used to train a YouTube video classifier.
@@ -120,10 +146,16 @@ Using `run.py seed` will download all seed videos and save it in `data/seed/yout
 
 Using `run.py audit` will download all videos throughout the audit and save it in `data/audit/youtube/videos_{}.csv`
 
-Calling `python src/data/youTubeDownloader.py <video_ids seperated by spaces>` will download any videos you want and save it in `data/external/youtube/videos_{}.csv`. 
+Calling `python3 src/data/youTubeDownloader.py <video_ids seperated by spaces>` will download any videos you want and save it in `data/external/youtube/videos_{}.csv`. 
 
-### DaVinci-003 Fine Tuning
+## GPT Prompting and Fine Tuning
+***TO BE ADDED***
+
+## Running Inference
 ***TO BE ADDED***
 
 ## Conducting the Audit
+***TO BE ADDED***
+
+## Generating Audit Results
 ***TO BE ADDED***
