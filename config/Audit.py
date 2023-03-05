@@ -11,8 +11,10 @@ class Audit(object):
     USER_AGE = 'young' #'young' or 'old'
     FINANCE_VIDEO_TYPE = 'traditional' #'traditional', 'blockchain', 'mixed'
 
+    BROWSER = 'firefox' #'chrome', 'firefox'
+
     WATCH_BY_RATIO = False #If True, watch videos by ratio of video duration, else watch by number of seconds
-    WATCH_DURATION = 10 #Number of seconds to watch each video
+    WATCH_DURATION = 1 #Number of seconds to watch each video
     WATCH_RATIO = 0.5 #Ratio of video duration to watch
 
     NUM_RECOMMENDATIONS = 10 #Number of recommendations to collect, very large values may throw errors

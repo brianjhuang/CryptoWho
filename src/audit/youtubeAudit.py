@@ -41,15 +41,16 @@ def get_age_seed_videos():
 
 def get_finance_seed_videos():
     df = pd.read_csv(audit.SEED_FINANCE_VIDEO_PATH)
+    df["label"] = df["label"].apply(str.lower)
 
     if audit.FINANCE_VIDEO_TYPE == "mixed":
         # Grab half of the videos from both labels, sort by duration so we have the shortest videos
-        traditional = df[df["label"].lower() == "traditional"].sort_values(
-            by="duration"
-        )[: len(df[df["label"].lower() == "traditional"]) // 2]
-        
-        blockchain = df[df["label"].lower() == "blockchain"].sort_values(by="duration")[
-            : len(df[df["label"].lower() == "blockchain"]) // 2
+        traditional = df[df["label"] == "traditional"].sort_values(by="duration")[
+            : len(df[df["label"] == "traditional"]) // 2
+        ]
+
+        blockchain = df[df["label"] == "blockchain"].sort_values(by="duration")[
+            : len(df[df["label"] == "blockchain"]) // 2
         ]
 
         df = pd.concat(traditional, blockchain).reset_index(drop=True)
@@ -78,9 +79,6 @@ def process_durations_list(durations):
     return durations
 
 
-get_age_seed_videos()
-
-
 def to_csv(driver, start_time):
     start_time_str = str(start_time).replace(
         ".", ""
@@ -90,31 +88,62 @@ def to_csv(driver, start_time):
     video_recs_df["Start Time"] = start_time
     video_recs_df["Age"] = audit.USER_AGE
     video_recs_df["Finance Video Type"] = audit.FINANCE_VIDEO_TYPE
-    video_recs_df.to_csv(
-        audit.AUDIT_RESULTS_PATH + f"{start_time_str}-video_recs.csv", index=False
-    )
 
     homepage_recs_df = pd.DataFrame(driver.homepage_recs)
     homepage_recs_df["Start Time"] = start_time
     homepage_recs_df["Age"] = audit.USER_AGE
     homepage_recs_df["Finance Video Type"] = audit.FINANCE_VIDEO_TYPE
-    homepage_recs_df.to_csv(
-        audit.AUDIT_RESULTS_PATH + f"{start_time_str}-homepage_recs.csv", index=False
-    )
+
+    if audit.WATCH_BY_RATIO:
+        video_recs_df.to_csv(
+            audit.AUDIT_RESULTS_PATH
+            + f"{start_time_str}-{audit.FINANCE_VIDEO_TYPE}-{audit.USER_AGE}-watch_ratio{audit.WATCH_RATIO}-video_recs.csv",
+            index=False,
+        )
+
+        homepage_recs_df.to_csv(
+            audit.AUDIT_RESULTS_PATH
+            + f"{start_time_str}-{audit.FINANCE_VIDEO_TYPE}-{audit.USER_AGE}-watch_ratio{audit.WATCH_RATIO}-homepage_recs.csv",
+            index=False,
+        )
+
+    else:
+        video_recs_df.to_csv(
+            audit.AUDIT_RESULTS_PATH
+            + f"{start_time_str}-{audit.FINANCE_VIDEO_TYPE}-{audit.USER_AGE}-watch_time{audit.WATCH_DURATION}-video_recs.csv",
+            index=False,
+        )
+
+        homepage_recs_df.to_csv(
+            audit.AUDIT_RESULTS_PATH
+            + f"{start_time_str}-{audit.FINANCE_VIDEO_TYPE}-{audit.USER_AGE}-watch_time{audit.WATCH_DURATION}-homepage_recs.csv",
+            index=False,
+        )
 
     if driver.errors:
-        errors_df = pd.DataFrame(driver.errors)
-        errors_df.to_csv(
-            audit.AUDIT_RESULTS_PATH + f"{start_time_str}-errors.csv", index=False
-        )
+        if audit.WATCH_BY_RATIO:
+            errors_df = pd.DataFrame(driver.errors)
+            errors_df.to_csv(
+                audit.AUDIT_RESULTS_PATH
+                + f"{start_time_str}-{audit.FINANCE_VIDEO_TYPE}-{audit.USER_AGE}-errors.csv",
+                index=False,
+            )
+        else:
+            errors_df = pd.DataFrame(driver.errors)
+            errors_df.to_csv(
+                audit.AUDIT_RESULTS_PATH
+                + f"{start_time_str}-{audit.FINANCE_VIDEO_TYPE}-{audit.USER_AGE}-watch_time{audit.WATCH_DURATION}-errors.csv",
+                index=False,
+            )
 
 
 def run_audit():
     # Record start time
     start_time = time.time()
-    driver = YTDriver(browser="firefox", verbose=True)
+    driver = YTDriver(browser=audit.BROWSER, verbose=True)
 
     # Watch age seed videos
+    print("Watching age videos...")
     age_seed_videos, age_seed_video_durations = get_age_seed_videos()
     age_seed_video_durations = process_durations_list(age_seed_video_durations)
     driver.play_list(
@@ -126,6 +155,7 @@ def run_audit():
     to_csv(driver, start_time)
 
     # Watch finance videos
+    print("Watching finance videos...")
     finance_seed_videos, finance_seed_video_durations = get_finance_seed_videos()
     finance_seed_video_durations = process_durations_list(finance_seed_video_durations)
     driver.play_list(

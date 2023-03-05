@@ -108,14 +108,17 @@ class YTDriver:
         """
         # wait for page to load
         sleep(2)
-
+        print("Page loaded")
         # wait for recommendations
         elems = WebDriverWait(self.driver, 30).until(
             EC.presence_of_all_elements_located((By.TAG_NAME, 'ytd-compact-video-renderer'))
         )
+        print("Recommendations found")
+        videos = [Video(elem, elem.find_elements(By.TAG_NAME, 'a')[0].get_attribute('href')) for elem in elems[:topn]]
+        print("Recommendations retrieved")
 
         # recommended videos array
-        return [Video(elem, elem.find_elements(By.TAG_NAME, 'a')[0].get_attribute('href')) for elem in elems[:topn]]
+        return videos
 
     def search_videos(self, query, scroll_times=0):
         """
@@ -198,6 +201,7 @@ class YTDriver:
                 self.__log("Failed to get recommendations.")
                 self.__log(e)
                 self.errors.append({'timestamp': time(), 'video': video, 'error': e})
+                
             if homepage_interval and i % homepage_interval == 0:
                 homepage_vids = self.get_homepage()
                 for homepage_vid in homepage_vids:

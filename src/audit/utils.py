@@ -61,9 +61,29 @@ def time2seconds(s):
 
 class Video:
     def __init__(self, elem, url):
+
+
         self.elem = elem
         self.url = url
-        self.videoId = re.search(r'[?&]v=(.*)?$', url).group(1).split('&')[0]
+
+        # Deal with URLs that are missing
+        if url is not None:
+            # Search for the video id
+            match = re.search(r'[?&]v=([^&]*)?', url)
+
+            # If we don't find the video id, try and use a normal split
+            if match:
+                self.videoId = match.group(1).split('&')[0]
+            else:
+                self.videoId = url.split('v=')
+                if len(self.videoId) > 1:
+                    self.videoId = url.split('v=')[1]
+                else:
+                    self.videoId = None
+
+        else:
+            self.videoId = None
+
         self.metadata = None
 
     def get_metadata(self):
