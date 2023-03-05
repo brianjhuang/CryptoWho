@@ -14,7 +14,7 @@ import random
 from src.data.youtubeDownloader import Downloader
 from src.features.youtubeCleaner import Cleaner
 from src.audit.youtubeAudit import run_audit
-from config import youtube
+from config import youtube, audit
 
 # Logging variables
 totalLogs = len(os.listdir('logs'))
@@ -284,9 +284,13 @@ def createSnippets(load_path, save_path, max_word_count = 250, use_ratio = False
 
     return df_with_snippets
 
-def audit():
-    run_audit()
-    return
+def conduct_audit(audits = []):
+    if len(audits) <= 0:
+        run_audit()
+    else:
+        for run in audits:
+            run_audit(run['type'], run['age'])
+            time.sleep(600)
 
 def finetune_davinci():
     return
@@ -326,13 +330,19 @@ def main(targets):
 
         print("Running audit, please ensure you've logged into the account you're auditing with.")
         logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
-        audit()
+        conduct_audit(audit.AUDITS)
 
 
     if 'audit' in targets:
         print("Running audit, please ensure you've logged into the account you're auditing with.")
         logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
-        audit()
+
+        single_audit = input("Would you like to run a single audit? Y or N ").lower()
+
+        if single_audit == 'y':
+            conduct_audit()
+        else:
+            conduct_audit(audit.AUDITS)
         
     if 'seed' in targets:
         download_seed = input("Would you like to download the seed data: Y or N ").lower()
