@@ -13,7 +13,7 @@ class Audit(object):
 
     BROWSER = "firefox"  #'chrome', 'firefox'
 
-    WATCH_BY_RATIO = False  # If True, watch videos by ratio of video duration, else watch by number of seconds
+    WATCH_BY_RATIO = True  # If True, watch videos by ratio of video duration, else watch by number of seconds
     WATCH_DURATION = 1  # Number of seconds to watch each video
     WATCH_RATIO = 0.5  # Ratio of video duration to watch
 
