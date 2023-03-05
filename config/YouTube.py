@@ -42,7 +42,3 @@ class YouTube(object):
 
     # Set the Number of Comments
     LIMIT_PAGES_COMMENTS = 1  # 200 Comments per page
-
-    # # Recommended Videos
-    # RETRIEVE_RECOMMENDED_VIDEOS = False
-    # RECOMMENDED_VIDEOS_THRESHOLD = 10

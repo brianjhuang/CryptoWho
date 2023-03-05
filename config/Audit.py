@@ -24,12 +24,11 @@ class Audit(object):
     YOUNG_SEED_AGE_VIDEO_PATH = "data/seed/youtube/young_videos.csv"
     OLD_SEED_AGE_VIDEO_PATH = "data/seed/youtube/old_videos.csv"
     SEED_FINANCE_VIDEO_PATH = "data/seed/youtube/seed_videos.csv"
-    # SEED_AGE_VIDEO_PATH = '../data/raw/youtube/seed_age_videos.csv'
-    # SEED_FINANCE_VIDEO_PATH = '../data/raw/youtube/seed_finance_videos.csv'
 
     VIDEO_ID_COLUMN = "video_id"
 
-    AUDIT_RESULTS_PATH = "data/audit/youtube/"
+    AUDIT_RESULTS_PATH = "data/audit/youtube/raw"
+    AUDIT_DOWNLOADED_RESULTS_PATH = "data/audit/youtube/processed"
 
     AUDITS = [
         {"type": "traditional", "age": "young"},
