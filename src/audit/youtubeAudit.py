@@ -52,7 +52,7 @@ def get_finance_seed_videos(finance_video_type = audit.FINANCE_VIDEO_TYPE):
             : len(df[df["label"] == "blockchain"]) // 2
         ]
 
-        df = pd.concat(traditional, blockchain).reset_index(drop=True)
+        df = pd.concat([traditional, blockchain]).reset_index(drop=True)
     else:
         df = df[df["label"] == finance_video_type]
 
