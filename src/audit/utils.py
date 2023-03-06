@@ -75,9 +75,18 @@ class Video:
             if match:
                 self.videoId = match.group(1).split('&')[0]
             else:
-                self.videoId = url.split('v=')
-                if len(self.videoId) > 1:
-                    self.videoId = url.split('v=')[1]
+                if 'v=' in url:
+                    self.videoId = url.split('v=')
+                    if len(self.videoId) > 1:
+                        self.videoId = url.split('v=')[1]
+                    else:
+                        self.videoId = None
+                elif 'shorts/' in url:
+                    self.videoId = url.split('shorts/')
+                    if len(self.videoId) > 1:
+                        self.videoId = url.split('shorts/')[1]
+                    else:
+                        self.videoId = None
                 else:
                     self.videoId = None
 
