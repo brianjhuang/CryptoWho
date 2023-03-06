@@ -141,6 +141,8 @@ def run_audit(finance_video_type = audit.FINANCE_VIDEO_TYPE, user_age = audit.US
     start_time = time.time()
     driver = YTDriver(browser=audit.BROWSER, verbose=True)
 
+    print(f"Starting {audit.USER_AGE} {audit.FINANCE_VIDEO_TYPE} audit")
+
     # Watch age seed videos
     print("Watching age videos...")
     age_seed_videos, age_seed_video_durations = get_age_seed_videos(user_age)

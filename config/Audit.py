@@ -9,7 +9,7 @@ class Audit(object):
 
     # AUDIT VARIABLES
     USER_AGE = "young"  #'young' or 'old'
-    FINANCE_VIDEO_TYPE = "traditional"  #'traditional', 'blockchain', 'mixed'
+    FINANCE_VIDEO_TYPE = "blockchain"  #'traditional', 'blockchain', 'mixed'
 
     BROWSER = "firefox"  #'chrome', 'firefox'
 
@@ -27,8 +27,8 @@ class Audit(object):
 
     VIDEO_ID_COLUMN = "video_id"
 
-    AUDIT_RESULTS_PATH = "data/audit/youtube/raw"
-    AUDIT_DOWNLOADED_RESULTS_PATH = "data/audit/youtube/processed"
+    AUDIT_RESULTS_PATH = "data/audit/youtube/raw/"
+    AUDIT_DOWNLOADED_RESULTS_PATH = "data/audit/youtube/processed/"
 
     AUDITS = [
         {"type": "traditional", "age": "young"},
