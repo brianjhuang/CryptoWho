@@ -218,7 +218,8 @@ class Downloader():
 
             except:
                 logging.info("Meta data was empty or video was missing for " + self.video_id)
-                return {"title": "", "description": "", "tags": []}
+                return {"title": "", "description": "", "tags": [], "raw_duration" : "PT0H0M0S",
+                        "duration" : datetime.time(hour=0, minute=0, second=0)}
 
         except (HttpError, SocketError) as error:
             print(

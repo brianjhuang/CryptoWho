@@ -407,10 +407,10 @@ def download_audit_videos(video_ids, save_path, kind):
 
     df = pd.concat([df, pd.DataFrame(videos)])
 
-    df.to_csv(save_path, index_label=False)
+    df.to_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + save_path, index_label=False)
 
-    print("Saved file to:  {0}".format(save_path))
-    logging.info("Saved file to:  {0}".format(save_path))
+    print("Saved file to:  {0}".format(audit.AUDIT_DOWNLOADED_RESULTS_PATH + save_path))
+    logging.info("Saved file to:  {0}".format(audit.AUDIT_DOWNLOADED_RESULTS_PATH + save_path))
 
     return df
 
@@ -505,7 +505,7 @@ def main(targets):
                 df['video_id'] = df['url'].apply(extract_video_id)
 
                 split_path = path.split('-')
-                save_path = 'downloaded_homepage_' + split_path[1] + '_' + split_path[2]
+                save_path = 'downloaded_homepage_' + split_path[1] + '_' + split_path[2] + '.csv'
 
                 download_audit_videos(list(df['video_id']), save_path, 'homepage')
 
