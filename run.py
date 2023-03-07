@@ -10,6 +10,8 @@ import logging.handlers
 from tqdm import tqdm
 import pandas as pd
 import random
+import re
+import math
 
 from src.data.youtubeDownloader import Downloader
 from src.features.youtubeCleaner import Cleaner
@@ -27,6 +29,33 @@ logging.basicConfig(filename=logFileName,
         level=logging.INFO,
         datefmt='%H:%M:%S',
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
+
+def extract_video_id(url):
+    try: 
+        # Search for the video id
+        match = re.search(r'[?&]v=([^&]*)?', url)
+
+        # If we don't find the video id, try and use a normal split
+        if match:
+            videoId = match.group(1).split('&')[0]
+        else:
+            if 'v=' in url:
+                videoId = url.split('v=')
+                if len(videoId) > 1:
+                    videoId = url.split('v=')[1]
+                else:
+                    videoId = None
+            elif 'shorts/' in url:
+                videoId = url.split('shorts/')
+                if len(videoId) > 1:
+                    videoId = url.split('shorts/')[1]
+                else:
+                    videoId = None
+            else:
+                videoId = None
+    except:
+        return None
+    return videoId
 
 def downloadYoutubeData(load_path, test = False):
     '''
@@ -291,6 +320,100 @@ def conduct_audit(audits = []):
             run_audit(run['type'], run['age'])
             time.sleep(600)
 
+def download_audit_videos(video_ids, save_path, kind):
+        
+    # store our downloaded videos
+    videos = []
+    df = pd.DataFrame()
+    
+    # check for progress
+    saved_files = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
+    downloader = Downloader()
+    
+    print("Starting download...")
+    logging.info("Starting download...")
+    start = time.time()
+
+    if not downloader.apiObjectExists():
+        print("API object not found")
+        logging.info("API object not found")
+        return pd.DataFrame()
+    
+    if f'{kind}_audit_progress.csv' in saved_files:
+        
+        print('Progress found, starting from where we left off.')
+        logging.info('Progress found, starting from where we left off.')
+        progress = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + f'{kind}_audit_progress.csv')
+        
+        progress_video_ids = list(progress['video_id'])
+        
+        video_ids = [video_id for video_id in video_ids if video_id not in progress_video_ids]
+        
+        df = pd.concat([df, progress])
+        
+    # Collect our data, Added TQDM progress bar
+    for i in tqdm(range(len(video_ids))):
+
+        try:
+            video_id = video_ids[i]
+
+            if video_id is None:
+                logging.info("Skipped NoneType video_id")
+                continue
+
+            logging.info("Downloading " + video_id)
+
+            downloader.setVideoId(video_id)
+
+            videoMetaData = downloader.getVideoMetadata()
+            time.sleep(random.randint(1, 5))
+            videoTranscript = downloader.getVideoTranscript()
+
+            video = {
+                "video_id": video_id,
+                "title": videoMetaData["title"],
+                "description": videoMetaData["description"],
+                "tags": videoMetaData["tags"],
+                "raw_duration": videoMetaData["raw_duration"],
+                "duration": videoMetaData["duration"],
+                "cleaned_transcript": videoTranscript["cleaned_transcript"],
+                "raw_transcript": videoTranscript["raw_transcript"], 
+                "link": "www.youtube.com/watch?v=" + video_id,
+            }
+
+            videos.append(video)
+
+            logging.info("Finished downloading " + video_id)
+        except Exception as e:
+            # If we run into any error
+            print(f"Ran into exception, saving progress and stopping.")
+            logging.info(f"Ran into exception saving progress and stopping.")
+
+            print(f"Exception: {e}")
+            logging.info(f"Excpetion: {e}")
+
+            df = pd.concat([df, pd.DataFrame(videos)])
+
+            df.to_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + f'{kind}_audit_progress.csv', index_label=False)
+
+            print("Saved file to:  {0}".format(audit.AUDIT_DOWNLOADED_RESULTS_PATH + f'{kind}_audit_progress.csv'))
+            logging.info("Saved file to:  {0}".format(audit.AUDIT_DOWNLOADED_RESULTS_PATH + f'{kind}_audit_progress.csv'))
+
+            return df
+
+    # If we complete the download.
+    print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+    logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+
+    df = pd.concat([df, pd.DataFrame(videos)])
+
+    df.to_csv(save_path, index_label=False)
+
+    print("Saved file to:  {0}".format(save_path))
+    logging.info("Saved file to:  {0}".format(save_path))
+
+    return df
+
 def finetune_davinci():
     return
 
@@ -330,18 +453,6 @@ def main(targets):
         print("Running audit, please ensure you've logged into the account you're auditing with.")
         logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
         conduct_audit(audit.AUDITS)
-
-
-    if 'audit' in targets:
-        print("Running audit, please ensure you've logged into the account you're auditing with.")
-        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
-
-        single_audit = input("Would you like to run a single audit? Y or N ").lower()
-
-        if single_audit == 'y':
-            conduct_audit()
-        else:
-            conduct_audit(audit.AUDITS)
         
     if 'seed' in targets:
         download_seed = input("Would you like to download the seed data: Y or N ").lower()
@@ -364,6 +475,54 @@ def main(targets):
             createSnippets(youtube.INTERIM_SEED_DATA, youtube.SEED_VIDEOS + 'seed_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
             createSnippets(youtube.INTERIM_YOUNG_DATA, youtube.SEED_VIDEOS + 'young_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
             createSnippets(youtube.INTERIM_OLD_DATA, youtube.SEED_VIDEOS + 'old_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+
+
+    if 'audit' in targets:
+        print("Running audit, please ensure you've logged into the account you're auditing with.")
+        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
+
+        single_audit = input("Would you like to run a single audit? Y or N ").lower()
+
+        if single_audit == 'y':
+            conduct_audit()
+        else:
+            conduct_audit(audit.AUDITS)
+
+    if 'download-audit' in targets:
+        print("Downloading audit data.")
+        logging.info("Downloading audit data.")
+
+        homepage = input("Would you like to download homepage videos? Y or N ").lower()
+        sidebar = input("Would you like to download sidebar videos? Y or N ").lower()
+
+        if homepage == 'y':
+            for path in audit.HOMEPAGE_RESULTS_PATHS:
+
+                print(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+                logging.info(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+
+                df = pd.read_csv(audit.AUDIT_RESULTS_PATH + path)
+                df['video_id'] = df['url'].apply(extract_video_id)
+
+                split_path = path.split('-')
+                save_path = 'downloaded_homepage_' + split_path[1] + '_' + split_path[2]
+
+                download_audit_videos(list(df['video_id']), save_path, 'homepage')
+
+        if sidebar == 'y':
+            for path in audit.SIDEBAR_RESULTS_PATHS:
+
+                print(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+                logging.info(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+
+                df = pd.read_csv(audit.AUDIT_RESULTS_PATH + path)
+                df['video_id'] = df['url'].apply(extract_video_id)
+
+                split_path = path.split('-')
+                save_path = 'downloaded_sidebar_' + split_path[1] + '_' + split_path[2]
+
+                download_audit_videos(list(df['video_id']), save_path, 'sidebar')
+                
 
     if 'test' in targets:
         print("Running test pipeline")

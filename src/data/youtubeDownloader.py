@@ -127,18 +127,30 @@ class Downloader():
         
         def parse_duration(duration_string):
             # Get the time components from the duration string
+            if 'H' in duration_string:
+                hours = int(duration_string[2:duration_string.index('H')])
+            else:
+                hours = 0
+
             if 'M' in duration_string:
-                minutes = int(duration_string[2:duration_string.index('M')])
+                if 'H' in duration_string:
+                    minutes = int(duration_string[duration_string.index('H')+1:duration_string.index('M')])
+                else:
+                    minutes = int(duration_string[2:duration_string.index('M')])
             else:
                 minutes = 0
 
-            if 'S' in duration_string:   
-                seconds = int(duration_string[duration_string.index('M')+1:-1])
+            if 'S' in duration_string:
+                if 'M' in duration_string:
+                    seconds = int(duration_string[duration_string.index('M')+1:-1])
+                else:
+                    seconds = int(duration_string[2:-1])
             else:
                 seconds = 0
 
+
             # Create a time object with the parsed components
-            time_obj = datetime.time(minute=minutes, second=seconds)
+            time_obj = datetime.time(hour = hours, minute=minutes, second=seconds)
 
             return time_obj
 
