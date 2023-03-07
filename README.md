@@ -62,13 +62,6 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Note: We use Python 3.8.5 to use the gensim.summarization package. If you are having issues with that, please downgrade to Python 3.8.5 and run this instead:
-```bash
-python3.8.5 -m venv .venv
-
-source .venv/bin/activate
-```
-
 **Install required packages**
 
 ```bash
@@ -77,7 +70,9 @@ pip install -r requirements.txt
 
 ### Reddit Thread Scraper
 
-We use Selenium with the Firefox Webdriver to scrape Reddit threads for YouTube videos. This data is used to train a YouTube video classifier.
+We use Selenium with the Firefox Webdriver to conduct our audit and gather YouTube video recommendations.
+
+Note: More recent versions of FireFox will just launch if you have the browser installed. Please install the Firefox browser. If it does not work, install the driver.
 
 To run the scraper, you will need to install the Firefox Webdriver, which can be downloaded [here](https://github.com/mozilla/geckodriver/releases).
 
@@ -87,10 +82,13 @@ To install, place your OS-appropriate executable in a directory locatable by you
 
 Our codebase uses the YouTube Data API to download video metadata, comments, and for many other purposes like searching YouTube and grabbing recommendations. We use the OpenAI API to provide snippets and retrieve classification labels for our downloaded videos.
 
-It is important that you create an API key for the YouTube Data API and set it in the configuration files of our codebase.
 You can enable the YouTube Data API for your Google account and obtain an API key following the steps <a href="https://developers.google.com/youtube/v3/getting-started">here</a>.
 
-You can fetch your OpenAI API key from <a href="https://openai.com/blog/openai-api/">here</a>.:
+The key can be found after you set up your cloud console.
+
+You can fetch your OpenAI API key from <a href="https://platform.openai.com/here</a>.
+
+The key can be found in your profile under ***View API Keys***.
 
 Once you have both API keys, please set the ```YOUTUBE_DATA_API_KEY``` and ```OPENAI_API_KEY``` variable in your environment:
 
@@ -100,6 +98,9 @@ You can do so by going to your home directory and running the following command:
 
 ```
 nano .bash_profile
+
+# Note Mac Users using zsh shell users should also set their keys in their zsh_profile
+nano .zsh_profile
 ```
 
 Inside your bash profile, you can go ahead and set this at the top:
@@ -128,14 +129,18 @@ If you are not seeing updates, your `bash_profile` may not be sourced. To resolv
 
 ```
 . ~/.bash_profile
+
+# Note Mac Users using zsh shell users should do this in .zshrc
+. ~/.zsh_profile
 ```
 
 This can be anywhere, but we've put ours at the very bottom. Use the following command to enter your `.bashrc`.
 
 ```
 nano .bashrc
+# Note Mac Users using zsh shell users should do this
+nano .zshrc
 ```
-
 
 Now within Python you can access your API key by doing the following:
 ```
