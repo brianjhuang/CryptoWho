@@ -390,7 +390,7 @@ def download_audit_videos(video_ids, save_path, kind):
             logging.info(f"Ran into exception saving progress and stopping.")
 
             print(f"Exception: {e}")
-            logging.info(f"Excpetion: {e}")
+            logging.info(f"Exception: {e}")
 
             df = pd.concat([df, pd.DataFrame(videos)])
 

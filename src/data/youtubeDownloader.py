@@ -3,6 +3,7 @@ import sys
 import os
 import logging
 import time
+import re
 
 from tqdm import tqdm
 import pandas as pd
@@ -126,27 +127,32 @@ class Downloader():
         """
         
         def parse_duration(duration_string):
-            # Get the time components from the duration string
-            if 'H' in duration_string:
-                hours = int(duration_string[2:duration_string.index('H')])
-            else:
-                hours = 0
+            # Define regular expression patterns for hours, minutes, and seconds
+            hours_pattern = r'(?P<hours>\d+)H'
+            minutes_pattern = r'(?P<minutes>\d+)M'
+            seconds_pattern = r'(?P<seconds>\d+)S'
 
-            if 'M' in duration_string:
-                if 'H' in duration_string:
-                    minutes = int(duration_string[duration_string.index('H')+1:duration_string.index('M')])
-                else:
-                    minutes = int(duration_string[2:duration_string.index('M')])
-            else:
-                minutes = 0
+            # Extract the components from the duration string using the regular expressions
+            hours = 0
+            minutes = 0
+            seconds = 0
 
-            if 'S' in duration_string:
-                if 'M' in duration_string:
-                    seconds = int(duration_string[duration_string.index('M')+1:-1])
-                else:
-                    seconds = int(duration_string[2:-1])
-            else:
-                seconds = 0
+            hours_match = re.search(hours_pattern, duration_string)
+            if hours_match:
+                hours = int(hours_match.group('hours'))
+
+            minutes_match = re.search(minutes_pattern, duration_string)
+            if minutes_match:
+                minutes = int(minutes_match.group('minutes'))
+
+            seconds_match = re.search(seconds_pattern, duration_string)
+            if seconds_match:
+                seconds = int(seconds_match.group('seconds'))
+
+            # Create a time object with the parsed components
+            time_obj = datetime.time(hour=hours, minute=minutes, second=seconds)
+
+            return time_obj
 
 
             # Create a time object with the parsed components
@@ -199,8 +205,8 @@ class Downloader():
                         raw_duration = videoDetails['duration']
                         duration = parse_duration(raw_duration)
                     else:
-                        raw_duration = "No Duration"
-                        duration = datetime.time(minute=0, second=0)
+                        raw_duration = "PT0H0M0S"
+                        duration = datetime.time(hour=0, minute=0, second=0)
                     
                     return {
                         "title": title,
