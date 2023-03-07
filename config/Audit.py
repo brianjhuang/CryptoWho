@@ -8,7 +8,7 @@ class Audit(object):
     """
 
     # AUDIT VARIABLES
-    USER_AGE = "young"  #'young' or 'old'
+    USER_AGE = "old"  #'young' or 'old'
     FINANCE_VIDEO_TYPE = "blockchain"  #'traditional', 'blockchain', 'mixed'
 
     BROWSER = "firefox"  #'chrome', 'firefox'
