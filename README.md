@@ -23,6 +23,15 @@ The repository offers all tools used to conduct the audit. Helper functions and 
 
 All code can be found in the `src` folder and imported respectively. For any changes in filepath or settings, please look through the `config` folder.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Downloading YouTube Data](#downloading-youtube-video-data)
+- [GPT Prompting and Fine-Tuning](#gpt-prompting-and-fine-tuning)
+- [Conducting the Audit](#conducting-the-audit)
+- [Inference](#running-inference)
+- [Generating Audit Results](#generating-audit-results)
 ## Installation
 
 We are using Python version [3.8.5](https://www.python.org/downloads/release/python-385/).
@@ -160,10 +169,10 @@ Calling `python3 src/data/youTubeDownloader.py <video_ids seperated by spaces>` 
 ## GPT Prompting and Fine Tuning
 ***TO BE ADDED***
 
-## Running Inference
+## Conducting the Audit
 ***TO BE ADDED***
 
-## Conducting the Audit
+## Running Inference
 ***TO BE ADDED***
 
 ## Generating Audit Results
