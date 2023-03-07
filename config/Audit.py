@@ -39,5 +39,5 @@ class Audit(object):
         {"type": "blockchain", "age": "old"},
     ]
     
-    HOMEPAGE_RESULTS_PATHS = ['16780532672002707-traditional-young-watch_ratio0.5-homepage_recs.csv']
-    SIDEBAR_RESULTS_PATHS = ['16780532672002707-traditional-young-watch_ratio0.5-video_recs.csv']
+    HOMEPAGE_RESULTS_PATHS = ['1678083446438728-blockchain-young-watch_ratio0.5-homepage_recs.csv']
+    SIDEBAR_RESULTS_PATHS = ['1678083446438728-blockchain-young-watch_ratio0.5-video_recs.csv']
