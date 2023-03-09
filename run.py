@@ -419,12 +419,13 @@ def classify_audit_results():
     '''
     Run classification, with a bit of options.
     '''
-    single_classification = input("Would you like to run a single classification, as opposed to multiple? Y or N").lower()
+    single_classification = input("Would you like to run a single classification, as opposed to multiple? Y or N ").lower()
 
     print("Starting classification for downloaded audit videos.")
     logging.info("Starting classification for downloaded audit videos.")
     classify_paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
     classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
+    classify_paths = [path for path in classify_paths if 'snippets' in path]
     
     for path in classify_paths:
         data = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
@@ -439,7 +440,7 @@ def classify_audit_results():
             print("Already run classifications for this file.")
             logging.info("Already run classifications for this file.")
 
-            run_again = input("Would you like to run classifications again? Y or N").lower()
+            run_again = input("Would you like to run classifications again? Y or N ").lower()
             if run_again == 'n':
                 continue
 
@@ -550,6 +551,17 @@ def main(targets):
                 save_path = 'downloaded_sidebar_' + split_path[1] + '_' + split_path[2] + '.csv'
 
                 download_audit_videos(list(df['video_id']), save_path, 'sidebar')
+
+    if 'create_audit_snippets' in targets:
+
+        paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
+        paths = [audit.AUDIT_DOWNLOADED_RESULTS_PATH + path for path in paths if 'homepage' in path or 'sidebar' in path]
+
+        for path in paths:
+            print(f"Creating snippets for {path}")
+            logging.info(f"Creating snippets for {path}")
+            
+            createSnippets(path, path.strip(".csv") + "_with_snippets.csv", max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
 
     if 'classify' in targets:
         classify_audit_results()
