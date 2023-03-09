@@ -29,6 +29,7 @@ class Audit(object):
 
     AUDIT_RESULTS_PATH = "data/audit/youtube/raw/"
     AUDIT_DOWNLOADED_RESULTS_PATH = "data/audit/youtube/processed/"
+    AUDIT_SNIPPET_RESULTS_PATH = "data/audit/youtube/processed/snippets/"
 
     AUDITS = [
         {"type": "traditional", "age": "young"},

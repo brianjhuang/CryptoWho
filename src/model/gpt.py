@@ -162,10 +162,10 @@ class ChatCompletionModel:
                 prediction = completion['content'].split(':')[0].strip()
                 reason = completion['content'].split(':')[1].strip()
 
-                ## Deal with Label: prefix that sometimes occurs
-                if 'label' in prediction.lower():
-                    prediction = prediction.lower().strip('label').strip('label:').strip().strip(":").strip().split(" ")[0]
-                    prediction = prediction[0].upper() + prediction[1:]
+                # ## Deal with Label: prefix that sometimes occurs
+                # if 'label' in prediction.lower():
+                #     prediction = prediction.lower().strip('label').strip('label:').strip().strip(":").strip().split(" ")[0]
+                #     prediction = prediction[0].upper() + prediction[1:]
 
                 completion['prediction']  = prediction
                 completion['reason'] = reason
@@ -186,7 +186,6 @@ class ChatCompletionModel:
 
                 completions.append(completion)
                 time.sleep(5)
-                raise ValueError("This is a test.")
 
             except Exception as e:
                 # If we run into any error

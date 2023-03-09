@@ -424,12 +424,12 @@ def classify_audit_results():
 
     print("Starting classification for downloaded audit videos.")
     logging.info("Starting classification for downloaded audit videos.")
-    classify_paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
+    classify_paths = os.listdir(audit.AUDIT_SNIPPET_RESULTS_PATH)
     classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
     classify_paths = [path for path in classify_paths if 'snippets' in path]
     
     for path in classify_paths:
-        data = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
+        data = pd.read_csv(audit.AUDIT_SNIPPET_RESULTS_PATH + path)
         split_path = path.strip('.csv').split("_")
         save_path = split_path[1] + "_" + split_path[2] + "_" + split_path[3] + "_predictions"
 
@@ -556,24 +556,24 @@ def main(targets):
     if 'create_audit_snippets' in targets:
 
         paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
-        paths = [audit.AUDIT_DOWNLOADED_RESULTS_PATH + path for path in paths if 'homepage' in path or 'sidebar' in path]
+        paths = [path for path in paths if 'homepage' in path or 'sidebar' in path]
 
         for path in paths:
-            print(f"Creating snippets for {path}")
-            logging.info(f"Creating snippets for {path}")
+            print(f"Creating snippets for {audit.AUDIT_DOWNLOADED_RESULTS_PATH + path}")
+            logging.info(f"Creating snippets for {audit.AUDIT_DOWNLOADED_RESULTS_PATH + path}")
 
             # Load CSV and remove videos with extreme durations.
-            df = pd.read_csv(path)
+            df = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
 
             df.loc[df[df['duration'] > str(datetime.time(hour = 1, minute = 0, second = 0))].index, "cleaned_transcript"] = " "
             print("Removed long duration videos.")
             logging.info("Removed long duration videos.")
 
-            df.to_csv(path, index_label = False)
+            df.to_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path, index_label = False)
             print("Saved updated videos.")
             logging.info("Saved updated videos.")
             
-            createSnippets(path, path.strip(".csv") + "_with_snippets.csv", max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+            createSnippets(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path, audit.AUDIT_SNIPPET_RESULTS_PATH + path.strip(".csv") + "_with_snippets.csv", max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
 
     if 'classify' in targets:
         classify_audit_results()
