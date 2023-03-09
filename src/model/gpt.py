@@ -159,8 +159,12 @@ class ChatCompletionModel:
                 body = self.classify_message(entry['messages'])
                 
                 completion = dict(body['choices'][0]['message'])
-                prediction = completion['content'].split(':')[0].strip()
-                reason = completion['content'].split(':')[1].strip()
+                try:
+                    prediction = completion['content'].split(':')[0].strip()
+                    reason = completion['content'].split(':')[1].strip()
+                except:
+                    prediction = "Unrelated"
+                    reason = completion['content']
 
                 # ## Deal with Label: prefix that sometimes occurs
                 # if 'label' in prediction.lower():
