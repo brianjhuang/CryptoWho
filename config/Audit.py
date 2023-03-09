@@ -38,6 +38,7 @@ class Audit(object):
         {"type": "mixed", "age": "old"},
         {"type": "blockchain", "age": "old"},
     ]
-    
-    HOMEPAGE_RESULTS_PATHS = ['1678083446438728-blockchain-young-watch_ratio0.5-homepage_recs.csv']
-    SIDEBAR_RESULTS_PATHS = ['1678083446438728-blockchain-young-watch_ratio0.5-video_recs.csv']
+
+    results = os.listdir('data/audit/youtube/raw')
+    HOMEPAGE_RESULTS_PATHS = [result for result in results if 'homepage' in result]
+    SIDEBAR_RESULTS_PATHS = [result for result in results if 'video_recs' in result]

@@ -16,7 +16,8 @@ import math
 from src.data.youtubeDownloader import Downloader
 from src.features.youtubeCleaner import Cleaner
 from src.audit.youtubeAudit import run_audit
-from config import youtube, audit
+from src.model.gpt import ChatCompletionModel
+from config import youtube, audit, classifier
 
 # Logging variables
 totalLogs = len(os.listdir('logs'))
@@ -414,18 +415,6 @@ def download_audit_videos(video_ids, save_path, kind):
 
     return df
 
-def finetune_davinci():
-    return
-
-def finetuned_classifier():
-    return
-
-def binary_classifier():
-    return
-
-def prompted_classifier():
-    return
-
 def main(targets):
     if 'all' in targets:
         print('Running entire pipeline.')
@@ -522,7 +511,25 @@ def main(targets):
                 save_path = 'downloaded_sidebar_' + split_path[1] + '_' + split_path[2] + '.csv'
 
                 download_audit_videos(list(df['video_id']), save_path, 'sidebar')
-                
+
+    if 'classify' in targets:
+        print("Starting classification for downloaded audit videos.")
+        logging.info("Starting classification for downloaded audit videos.")
+        classify_paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
+        classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
+        
+        for path in classify_paths:
+            data = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
+            split_path = path.strip('.csv').split("_")
+            save_path = split_path[1] + "_" + split_path[2] + "_" + split_path[3] + "_predictions"
+
+            print(f"Loaded data and starting classification for {save_path}")
+            logging.info(f"Loaded data and starting classification for {save_path}")
+
+            model = ChatCompletionModel(data, save_path = save_path)
+
+            print(f"Classification finished for {save_path} and saved to {classifier.RESULTS_PATH + save_path}.csv")
+            logging.info(f"Classification finished for {save_path} and saved to {classifier.RESULTS_PATH + save_path}.csv")
 
     if 'test' in targets:
         print("Running test pipeline")

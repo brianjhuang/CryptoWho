@@ -6,4 +6,5 @@ class Classifier(object):
     Static class that includes configuration for our model
     """
 
-    # PROMPTS
+    # SAVE PATHS
+    RESULTS_PATH = 'data/audit/youtube/results/'
