@@ -415,6 +415,45 @@ def download_audit_videos(video_ids, save_path, kind):
 
     return df
 
+def classify_audit_results():
+    '''
+    Run classification, with a bit of options.
+    '''
+    single_classification = input("Would you like to run a single classification, as opposed to multiple? Y or N").lower()
+
+    print("Starting classification for downloaded audit videos.")
+    logging.info("Starting classification for downloaded audit videos.")
+    classify_paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
+    classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
+    
+    for path in classify_paths:
+        data = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
+        split_path = path.strip('.csv').split("_")
+        save_path = split_path[1] + "_" + split_path[2] + "_" + split_path[3] + "_predictions"
+
+        print(f"Loaded data and starting classification for {save_path}")
+        logging.info(f"Loaded data and starting classification for {save_path}")
+
+        # For single runs or repeat runs, we can skip over classifications we have already made.
+        if f"{save_path}.csv" in os.listdir(classifier.RESULTS_PATH):
+            print("Already run classifications for this file.")
+            logging.info("Already run classifications for this file.")
+
+            run_again = input("Would you like to run classifications again? Y or N").lower()
+            if run_again == 'n':
+                continue
+
+        model = ChatCompletionModel(data, save_path = save_path)
+        model.classify()
+
+        print(f"Classification finished for {save_path} and saved to {classifier.RESULTS_PATH + save_path}.csv")
+        logging.info(f"Classification finished for {save_path} and saved to {classifier.RESULTS_PATH + save_path}.csv")
+
+        if single_classification == 'y':
+            print(f"Completed single classification run.")
+            logging.info(f"Completed single classification run.")
+            break
+
 def main(targets):
     if 'all' in targets:
         print('Running entire pipeline.')
@@ -513,23 +552,7 @@ def main(targets):
                 download_audit_videos(list(df['video_id']), save_path, 'sidebar')
 
     if 'classify' in targets:
-        print("Starting classification for downloaded audit videos.")
-        logging.info("Starting classification for downloaded audit videos.")
-        classify_paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
-        classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
-        
-        for path in classify_paths:
-            data = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
-            split_path = path.strip('.csv').split("_")
-            save_path = split_path[1] + "_" + split_path[2] + "_" + split_path[3] + "_predictions"
-
-            print(f"Loaded data and starting classification for {save_path}")
-            logging.info(f"Loaded data and starting classification for {save_path}")
-
-            model = ChatCompletionModel(data, save_path = save_path)
-
-            print(f"Classification finished for {save_path} and saved to {classifier.RESULTS_PATH + save_path}.csv")
-            logging.info(f"Classification finished for {save_path} and saved to {classifier.RESULTS_PATH + save_path}.csv")
+        classify_audit_results()
 
     if 'test' in targets:
         print("Running test pipeline")

@@ -11,6 +11,12 @@ import openai
 from sklearn.metrics import accuracy_score, classification_report
 from config import classifier
 
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_random_exponential,
+)  # for exponential backoff
+
 
 class ChatCompletionModel:
 
@@ -91,6 +97,7 @@ class ChatCompletionModel:
         
         return messages
     
+    @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     def classify_message(self, messages, temp = 0.25):
         '''
         Given a set of messages, query the OpenAI endpoint to retrieve our prediction.
