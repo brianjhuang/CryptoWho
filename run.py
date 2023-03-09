@@ -6,6 +6,7 @@ import json
 import time
 import logging
 import logging.handlers
+import datetime
 
 from tqdm import tqdm
 import pandas as pd
@@ -560,6 +561,17 @@ def main(targets):
         for path in paths:
             print(f"Creating snippets for {path}")
             logging.info(f"Creating snippets for {path}")
+
+            # Load CSV and remove videos with extreme durations.
+            df = pd.read_csv(path)
+
+            df.loc[df[df['duration'] > str(datetime.time(hour = 1, minute = 0, second = 0))].index, "cleaned_transcript"] = " "
+            print("Removed long duration videos.")
+            logging.info("Removed long duration videos.")
+
+            df.to_csv(path, index_label = False)
+            print("Saved updated videos.")
+            logging.info("Saved updated videos.")
             
             createSnippets(path, path.strip(".csv") + "_with_snippets.csv", max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
 
