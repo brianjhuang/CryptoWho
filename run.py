@@ -578,6 +578,9 @@ def main(targets):
     if 'classify' in targets:
         classify_audit_results()
 
+    if 'audit_results' in targets:
+        pass
+
     if 'test' in targets:
         print("Running test pipeline")
         logging.info("Running test pipeline")
