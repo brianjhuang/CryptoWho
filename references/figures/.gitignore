@@ -2,3 +2,6 @@
 *
 # Except this file
 !.gitignore
+!audit.png
+!methods.png
+!crypto_losses.png
