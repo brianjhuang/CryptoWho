@@ -10,6 +10,10 @@ import datetime
 
 from tqdm import tqdm
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt   
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 import random
 import re
 import math
@@ -18,7 +22,7 @@ from src.data.youtubeDownloader import Downloader
 from src.features.youtubeCleaner import Cleaner
 from src.audit.youtubeAudit import run_audit
 from src.model.gpt import ChatCompletionModel
-from config import youtube, audit, classifier
+from config import youtube, audit, classifier, test_config
 
 # Logging variables
 totalLogs = len(os.listdir('logs'))
@@ -31,6 +35,9 @@ logging.basicConfig(filename=logFileName,
         level=logging.INFO,
         datefmt='%H:%M:%S',
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
+
+# Cost per GPT call
+TURBO_COST = 0.00200 / 1000
 
 def extract_video_id(url):
     try: 
@@ -245,10 +252,15 @@ def processAgeVideos(load_path, test = False):
     logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
 
     if test:
-        df.to_csv(youtube.INTERIM_VIDEOS + 'test_age_videos.csv', index_label=False)
+        df[df['label'] == 'young'].to_csv(youtube.INTERIM_VIDEOS + 'test_young_videos.csv', index_label=False)
 
-        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_age_videos.csv'))
-        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_age_videos.csv'))
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_young_videos.csv'))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_young_videos.csv'))
+
+        df[df['label'] == 'old'].to_csv(youtube.INTERIM_VIDEOS + 'test_old_videos.csv', index_label=False)
+
+        print("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_old_videos.csv'))
+        logging.info("Saved file to:  {0}".format(youtube.INTERIM_VIDEOS + 'test_old_videos.csv'))
     else:
         df[df['label'] == 'young'].to_csv(youtube.INTERIM_VIDEOS + 'young_videos.csv', index_label=False)
 
@@ -314,16 +326,172 @@ def createSnippets(load_path, save_path, max_word_count = 250, use_ratio = False
 
     return df_with_snippets
 
-def conduct_audit(audits = []):
-    if len(audits) <= 0:
-        run_audit()
+def make_confusion_matrix(cf,
+                          group_names=None,
+                          categories='auto',
+                          count=True,
+                          percent=True,
+                          cbar=True,
+                          xyticks=True,
+                          xyplotlabels=True,
+                          sum_stats=True,
+                          figsize=None,
+                          cmap='Blues',
+                          title=None):
+    '''
+    This function will make a pretty plot of an sklearn Confusion Matrix cm using a Seaborn heatmap visualization.
+    Arguments
+    ---------
+    cf:            confusion matrix to be passed in
+    group_names:   List of strings that represent the labels row by row to be shown in each square.
+    categories:    List of strings containing the categories to be displayed on the x,y axis. Default is 'auto'
+    count:         If True, show the raw number in the confusion matrix. Default is True.
+    normalize:     If True, show the proportions for each category. Default is True.
+    cbar:          If True, show the color bar. The cbar values are based off the values in the confusion matrix.
+                   Default is True.
+    xyticks:       If True, show x and y ticks. Default is True.
+    xyplotlabels:  If True, show 'True Label' and 'Predicted Label' on the figure. Default is True.
+    sum_stats:     If True, display summary statistics below the figure. Default is True.
+    figsize:       Tuple representing the figure size. Default will be the matplotlib rcParams value.
+    cmap:          Colormap of the values displayed from matplotlib.pyplot.cm. Default is 'Blues'
+                   See http://matplotlib.org/examples/color/colormaps_reference.html
+                   
+    title:         Title for the heatmap. Default is None.
+    '''
+
+
+    # CODE TO GENERATE TEXT INSIDE EACH SQUARE
+    blanks = ['' for i in range(cf.size)]
+
+    if group_names and len(group_names)==cf.size:
+        group_labels = ["{}\n".format(value) for value in group_names]
     else:
+        group_labels = blanks
+
+    if count:
+        group_counts = ["{0:0.0f}\n".format(value) for value in cf.flatten()]
+    else:
+        group_counts = blanks
+
+    if percent:
+        group_percentages = ["{0:.2%}".format(value) for value in cf.flatten()/np.sum(cf)]
+    else:
+        group_percentages = blanks
+
+    box_labels = [f"{v1}{v2}{v3}".strip() for v1, v2, v3 in zip(group_labels,group_counts,group_percentages)]
+    box_labels = np.asarray(box_labels).reshape(cf.shape[0],cf.shape[1])
+
+
+    # CODE TO GENERATE SUMMARY STATISTICS & TEXT FOR SUMMARY STATS
+    if sum_stats:
+        #Accuracy is sum of diagonal divided by total observations
+        accuracy  = np.trace(cf) / float(np.sum(cf)) * 100
+
+        #if it is a binary confusion matrix, show some more stats
+        if len(cf)==2:
+            #Metrics for Binary Confusion Matrices
+            precision = cf[1,1] / sum(cf[:,1])
+            recall    = cf[1,1] / sum(cf[1,:])
+            f1_score  = 2*precision*recall / (precision + recall)
+            stats_text = "\n\nAccuracy={:0.3f}\nPrecision={:0.3f}\nRecall={:0.3f}\nF1 Score={:0.3f}".format(
+                accuracy,precision,recall,f1_score)
+        else:
+            stats_text = "\n\nAccuracy={:0.3f}%".format(accuracy)
+    else:
+        stats_text = ""
+
+
+    # SET FIGURE PARAMETERS ACCORDING TO OTHER ARGUMENTS
+    if figsize==None:
+        #Get default figure size if not set
+        figsize = plt.rcParams.get('figure.figsize')
+
+    if xyticks==False:
+        #Do not show categories if xyticks is False
+        categories=False
+
+
+    # MAKE THE HEATMAP VISUALIZATION
+    plt.figure(figsize=figsize)
+    output = sns.heatmap(cf,annot=box_labels,fmt="",cmap=cmap,cbar=cbar,xticklabels=categories,yticklabels=categories)
+
+    if xyplotlabels:
+        plt.ylabel('True label')
+        plt.xlabel('Predicted label' + stats_text)
+    else:
+        plt.xlabel(stats_text)
+    
+    if title:
+        plt.title(title)
+
+    return output
+
+def classify_seed(load_paths, save_path, viz_path):
+    """Runs classifier on seed videos."""
+
+    print("Starting classification for downloaded seed videos.")
+    logging.info("Starting classification for downloaded seed videos.")
+
+    # Load all the seed videos
+    data = pd.DataFrame()
+
+    for path in load_paths:
+        data = pd.concat([data, pd.read_csv(path)])
+
+    data['label'] = data['label'].apply(lambda x: 'Unrelated' if x == 'old' else 'Unrelated' if x == 'young' else 'Unrelated' if x == 'None' else x)
+
+    print(f"Loaded data and starting classification for {save_path}")
+    logging.info(f"Loaded data and starting classification for {save_path}")
+
+    model = ChatCompletionModel(data, save_path = save_path)
+    predictions = model.classify()
+
+    print(f"Classification finished for {save_path} and saved to {save_path}.csv")
+    logging.info(f"Classification finished for {save_path} and saved to {save_path}.csv")
+
+    preds = list(predictions['prediction'])
+    actual = list(data['label'])
+
+    # Deal with this later where classifications return 'Label: Prediction'
+    preds = ['Unrelated' if pred == 'Label' else pred for pred in preds]
+    total_cost = sum(predictions['total_tokens']) * TURBO_COST
+
+    report = classification_report(actual, preds)
+
+    print(f"Classification Report: \n")
+    logging.info(f"Classification Report: \n")
+
+    print(report)
+    logging.info(report)
+
+    print(f"Total Cost: {total_cost}")
+    logging.info(f"Total cost: {total_cost}")
+
+    labels = ['Blockchain', 'Mixed', 'Traditional', 'Unrelated']
+    cf_matrix = confusion_matrix(actual, preds)
+
+    make_confusion_matrix(cf_matrix, categories = labels, cmap = "rocket").get_figure().savefig(viz_path, dpi = 300, bbox_inches ='tight')
+
+    print(f"Visulization generated and saved to {viz_path}")
+    logging.info(f"Visualization generated and saved to {viz_path}")
+    
+
+def conduct_audit(audits = [], test = False):
+    """Run the audit"""
+    if test:
         for run in audits:
-            run_audit(run['type'], run['age'])
-            time.sleep(600)
+            run_audit(run['type'], run['age'], test = test)
+            time.sleep(5)
+    else:
+        if len(audits) <= 0:
+            run_audit()
+        else:
+            for run in audits:
+                run_audit(run['type'], run['age'])
+                time.sleep(600)
 
 def download_audit_videos(video_ids, save_path, kind):
-        
+    """Download our videos from the audit"""       
     # store our downloaded videos
     videos = []
     df = pd.DataFrame()
@@ -404,8 +572,8 @@ def download_audit_videos(video_ids, save_path, kind):
             return df
 
     # If we complete the download.
-    print("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
-    logging.info("Downloaded {0} in {1} seconds.".format(len(targets), time.time() - start))
+    print("Downloaded {0} in {1} seconds.".format(audit.AUDIT_DOWNLOADED_RESULTS_PATH + save_path, time.time() - start))
+    logging.info("Downloaded {0} in {1} seconds.".format(audit.AUDIT_DOWNLOADED_RESULTS_PATH + save_path, time.time() - start))
 
     df = pd.concat([df, pd.DataFrame(videos)])
 
@@ -416,7 +584,7 @@ def download_audit_videos(video_ids, save_path, kind):
 
     return df
 
-def classify_audit_results():
+def classify_audit_results(test = False):
     '''
     Run classification, with a bit of options.
     '''
@@ -424,14 +592,24 @@ def classify_audit_results():
 
     print("Starting classification for downloaded audit videos.")
     logging.info("Starting classification for downloaded audit videos.")
-    classify_paths = os.listdir(audit.AUDIT_SNIPPET_RESULTS_PATH)
-    classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
-    classify_paths = [path for path in classify_paths if 'snippets' in path]
+    if test:
+        classify_paths = os.listdir(audit.AUDIT_SNIPPET_RESULTS_PATH)
+        classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
+        classify_paths = [path for path in classify_paths if 'snippets' in path]
+        classify_paths = [path for path in classify_paths if 'test' in path]
+    else:
+        classify_paths = os.listdir(audit.AUDIT_SNIPPET_RESULTS_PATH)
+        classify_paths = [path for path in classify_paths if 'homepage' in path or 'sidebar' in path]
+        classify_paths = [path for path in classify_paths if 'snippets' in path]
     
     for path in classify_paths:
         data = pd.read_csv(audit.AUDIT_SNIPPET_RESULTS_PATH + path)
         split_path = path.strip('.csv').split("_")
-        save_path = split_path[1] + "_" + split_path[2] + "_" + split_path[3] + "_predictions"
+
+        if test:
+            save_path = 'test_' + split_path[2] + "_" + split_path[3] + "_" + split_path[4] + "_predictions"
+        else:
+            save_path = split_path[1] + "_" + split_path[2] + "_" + split_path[3] + "_predictions"
 
         print(f"Loaded data and starting classification for {save_path}")
         logging.info(f"Loaded data and starting classification for {save_path}")
@@ -457,32 +635,6 @@ def classify_audit_results():
             break
 
 def main(targets):
-    if 'all' in targets:
-        print('Running entire pipeline.')
-        logging.info('Running entire pipeline.')
-
-        print("Downloading seed data")
-        logging.info("Downloading seed data")
-        downloadYoutubeData(youtube.RAW_SEED_DATA)
-
-        print("Creating and seperating age bucket videos.")
-        logging.info("Creating and seperating age bucket videos.")
-        processAgeVideos(youtube.RAW_AGE_DATA)
-
-        print("Creating snippets and saving to seed videos.")
-        logging.info("Creating snippets and saving to seed videos.")
-        createSnippets(youtube.INTERIM_SEED_DATA, youtube.SEED_VIDEOS + 'seed_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
-        createSnippets(youtube.INTERIM_YOUNG_DATA, youtube.SEED_VIDEOS + 'young_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
-        createSnippets(youtube.INTERIM_OLD_DATA, youtube.SEED_VIDEOS + 'old_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
-
-
-        print("Assessing GPT-3 accuracy on test seed videos")
-        logging.info("Assessing GPT-3 accuracy on test seed videos")
-        ### Add abiltiy to switch between fine tuned, binary, and baseline GPT classifier
-
-        print("Running audit, please ensure you've logged into the account you're auditing with.")
-        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
-        conduct_audit(audit.AUDITS)
         
     if 'seed' in targets:
         download_seed = input("Would you like to download the seed data: Y or N ").lower()
@@ -506,6 +658,8 @@ def main(targets):
             createSnippets(youtube.INTERIM_YOUNG_DATA, youtube.SEED_VIDEOS + 'young_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
             createSnippets(youtube.INTERIM_OLD_DATA, youtube.SEED_VIDEOS + 'old_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
 
+    if 'classify-seed' in targets:
+        classify_seed(classifier.SEED_LOAD_PATHS, classifier.SEED_RESULTS_PATH, classifier.CONFUSION_MATRIX_PATH)
 
     if 'audit' in targets:
         print("Running audit, please ensure you've logged into the account you're auditing with.")
@@ -553,7 +707,7 @@ def main(targets):
 
                 download_audit_videos(list(df['video_id']), save_path, 'sidebar')
 
-    if 'create_audit_snippets' in targets:
+    if 'create-audit-snippets' in targets:
 
         paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
         paths = [path for path in paths if 'homepage' in path or 'sidebar' in path]
@@ -578,8 +732,94 @@ def main(targets):
     if 'classify' in targets:
         classify_audit_results()
 
-    if 'audit_results' in targets:
-        pass
+    if 'all' in targets:
+        print('Running entire pipeline.')
+        logging.info('Running entire pipeline.')
+
+        print("Downloading seed data")
+        logging.info("Downloading seed data")
+        downloadYoutubeData(youtube.RAW_SEED_DATA)
+
+        print("Creating and seperating age bucket videos.")
+        logging.info("Creating and seperating age bucket videos.")
+        processAgeVideos(youtube.RAW_AGE_DATA)
+
+        print("Creating snippets and saving to seed videos.")
+        logging.info("Creating snippets and saving to seed videos.")
+        createSnippets(youtube.INTERIM_SEED_DATA, youtube.SEED_VIDEOS + 'seed_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+        createSnippets(youtube.INTERIM_YOUNG_DATA, youtube.SEED_VIDEOS + 'young_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+        createSnippets(youtube.INTERIM_OLD_DATA, youtube.SEED_VIDEOS + 'old_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+
+
+        print("Assessing GPT-3 accuracy on test seed videos")
+        logging.info("Assessing GPT-3 accuracy on test seed videos")
+        classify_seed(classifier.SEED_LOAD_PATHS, classifier.SEED_RESULTS_PATH, classifier.CONFUSION_MATRIX_PATH)
+
+        print("Running audit(s), please ensure you've logged into the account you're auditing with.")
+        logging.info("Running audit(s), please ensure you've logged into the account you're auditing with.")
+        conduct_audit(audit.AUDITS)
+
+        print("Audits completed.")
+        logging.info("Audits completed")
+        time.sleep(5)
+
+        print("Downloading audit data.")
+        logging.info("Downloading audit data.")
+
+        print("Downloading homepage data.")
+        logging.info("Downloading homepage data.")
+        for path in audit.HOMEPAGE_RESULTS_PATHS:
+            print(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+            logging.info(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+
+            df = pd.read_csv(audit.AUDIT_RESULTS_PATH + path)
+            df['video_id'] = df['url'].apply(extract_video_id)
+
+            split_path = path.split('-')
+            save_path = 'downloaded_homepage_' + split_path[1] + '_' + split_path[2] + '.csv'
+
+            download_audit_videos(list(df['video_id']), save_path, 'homepage')
+
+
+        print("Downloading sidebar data.")
+        logging.info("Downloading sidebar data.")
+        for path in audit.SIDEBAR_RESULTS_PATHS:
+            print(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+            logging.info(f"Downloading {audit.AUDIT_RESULTS_PATH + path}")
+
+            df = pd.read_csv(audit.AUDIT_RESULTS_PATH + path)
+            df['video_id'] = df['url'].apply(extract_video_id)
+
+            split_path = path.split('-')
+            save_path = 'downloaded_sidebar_' + split_path[1] + '_' + split_path[2] + '.csv'
+
+            download_audit_videos(list(df['video_id']), save_path, 'sidebar')
+
+        paths = os.listdir(audit.AUDIT_DOWNLOADED_RESULTS_PATH)
+        paths = [path for path in paths if 'homepage' in path or 'sidebar' in path]
+
+        print("Creating snippets.")
+        logging.info("Creating snippets.")
+        for path in paths:
+            print(f"Creating snippets for {audit.AUDIT_DOWNLOADED_RESULTS_PATH + path}")
+            logging.info(f"Creating snippets for {audit.AUDIT_DOWNLOADED_RESULTS_PATH + path}")
+
+            # Load CSV and remove videos with extreme durations.
+            df = pd.read_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path)
+
+            df.loc[df[df['duration'] > str(datetime.time(hour = 1, minute = 0, second = 0))].index, "cleaned_transcript"] = " "
+            print("Removed long duration videos.")
+            logging.info("Removed long duration videos.")
+
+            df.to_csv(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path, index_label = False)
+            print("Saved updated videos.")
+            logging.info("Saved updated videos.")
+            
+            createSnippets(audit.AUDIT_DOWNLOADED_RESULTS_PATH + path, audit.AUDIT_SNIPPET_RESULTS_PATH + path.strip(".csv") + "_with_snippets.csv", max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+
+        print("Running classification")
+        logging.info("Running classification")
+        classify_audit_results()
 
     if 'test' in targets:
         print("Running test pipeline")
@@ -587,18 +827,91 @@ def main(targets):
         
         print("Downloading seed data")
         logging.info("Downloading seed data")
-        downloadYoutubeData(youtube.TEST_DATA, test = True)
+        downloadYoutubeData(test_config.RAW_SEED_DATA, test = True)
 
         print("Creating and seperating age bucket videos.")
         logging.info("Creating and seperating age bucket videos.")
-        processAgeVideos(youtube.RAW_AGE_DATA, test = True)
+        processAgeVideos(test_config.RAW_AGE_DATA, test = True)
 
-        print("Running audit, please ensure you've logged into the account you're auditing with.")
-        logging.info("Running audit, please ensure you've logged into the account you're auditing with.")
-        # Note we do not run the audit on a test run
+        print("Creating snippets and saving to seed videos.")
+        logging.info("Creating snippets and saving to seed videos.")
+        createSnippets(test_config.INTERIM_SEED_DATA, youtube.SEED_VIDEOS + 'test_seed_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+        createSnippets(test_config.INTERIM_YOUNG_DATA, youtube.SEED_VIDEOS + 'test_young_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+        createSnippets(test_config.INTERIM_OLD_DATA, youtube.SEED_VIDEOS + 'test_old_videos.csv', max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+
 
         print("Assessing GPT-3 accuracy on test seed videos")
         logging.info("Assessing GPT-3 accuracy on test seed videos")
+        classify_seed(test_config.SEED_LOAD_PATHS, test_config.SEED_RESULTS_PATH, test_config.CONFUSION_MATRIX_PATH)
+
+        print("Running audit(s), please ensure you've logged into the account you're auditing with.")
+        logging.info("Running audit(s), please ensure you've logged into the account you're auditing with.")
+        conduct_audit(audit.AUDITS, test = True)
+
+        print("Audits completed.")
+        logging.info("Audits completed")
+        time.sleep(5)
+
+        print("Downloading audit data.")
+        logging.info("Downloading audit data.")
+
+        print("Downloading homepage data.")
+        logging.info("Downloading homepage data.")
+
+        for path in test_config.HOMEPAGE_RESULTS_PATHS:
+            print(f"Downloading {test_config.AUDIT_RESULTS_PATH + path}")
+            logging.info(f"Downloading {test_config.AUDIT_RESULTS_PATH + path}")
+
+            df = pd.read_csv(test_config.AUDIT_RESULTS_PATH + path)
+            df['video_id'] = df['url'].apply(extract_video_id)
+
+            split_path = path.split('-')
+            save_path = 'test_downloaded_homepage_' + split_path[2] + '_' + split_path[3] + '.csv'
+
+            download_audit_videos(list(df['video_id']), save_path, 'homepage')
+
+
+        print("Downloading sidebar data.")
+        logging.info("Downloading sidebar data.")
+        for path in test_config.SIDEBAR_RESULTS_PATHS:
+            print(f"Downloading {test_config.AUDIT_RESULTS_PATH + path}")
+            logging.info(f"Downloading {test_config.AUDIT_RESULTS_PATH + path}")
+
+            df = pd.read_csv(test_config.AUDIT_RESULTS_PATH + path)
+            df['video_id'] = df['url'].apply(extract_video_id)
+
+            split_path = path.split('-')
+            save_path = 'test_downloaded_sidebar_' + split_path[2] + '_' + split_path[3] + '.csv'
+
+            download_audit_videos(list(df['video_id']), save_path, 'sidebar')
+
+        paths = os.listdir(test_config.AUDIT_DOWNLOADED_RESULTS_PATH)
+
+        paths = [path for path in paths if 'homepage' in path or 'sidebar' in path]
+        paths = [path for path in paths if 'test' in path]
+
+        print("Creating snippets.")
+        logging.info("Creating snippets.")
+        for path in paths:
+            print(f"Creating snippets for {test_config.AUDIT_DOWNLOADED_RESULTS_PATH + path}")
+            logging.info(f"Creating snippets for {test_config.AUDIT_DOWNLOADED_RESULTS_PATH + path}")
+
+            # Load CSV and remove videos with extreme durations.
+            df = pd.read_csv(test_config.AUDIT_DOWNLOADED_RESULTS_PATH + path)
+
+            df.loc[df[df['duration'] > str(datetime.time(hour = 1, minute = 0, second = 0))].index, "cleaned_transcript"] = " "
+            print("Removed long duration videos.")
+            logging.info("Removed long duration videos.")
+
+            df.to_csv(test_config.AUDIT_DOWNLOADED_RESULTS_PATH + path, index_label = False)
+            print("Saved updated videos.")
+            logging.info("Saved updated videos.")
+            
+            createSnippets(test_config.AUDIT_DOWNLOADED_RESULTS_PATH + path, test_config.AUDIT_SNIPPET_RESULTS_PATH + path.strip(".csv") + "_with_snippets.csv", max_word_count=youtube.MAX_WORD_COUNT, use_ratio=youtube.USE_RATIO, ratio = youtube.RATIO)
+
+        print("Running classification")
+        logging.info("Running classification")
+        classify_audit_results(test = True)
 
 
 if __name__ == '__main__':

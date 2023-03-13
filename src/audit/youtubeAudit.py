@@ -10,19 +10,28 @@ import pandas as pd
 import re
 import time
 
-from config import audit
+from config import audit, test_config
 from src.audit.utils import get_full_url
 from src.audit.YTDriver import YTDriver
 import datetime
 
 
-def get_age_seed_videos(user_age = audit.USER_AGE):
-    if user_age == "young":
-        df = pd.read_csv(audit.YOUNG_SEED_AGE_VIDEO_PATH)
-    elif user_age == "old":
-        df = pd.read_csv(audit.OLD_SEED_AGE_VIDEO_PATH)
+def get_age_seed_videos(user_age = audit.USER_AGE, test = False):
+
+    if test:
+        if user_age == "young":
+            df = pd.read_csv(test_config.YOUNG_SEED_AGE_VIDEO_PATH)
+        elif user_age == "old":
+            df = pd.read_csv(test_config.OLD_SEED_AGE_VIDEO_PATH)
+        else:
+            raise ValueError('User age must be "young" or "old"')
     else:
-        raise ValueError('User age must be "young" or "old"')
+        if user_age == "young":
+            df = pd.read_csv(audit.YOUNG_SEED_AGE_VIDEO_PATH)
+        elif user_age == "old":
+            df = pd.read_csv(audit.OLD_SEED_AGE_VIDEO_PATH)
+        else:
+            raise ValueError('User age must be "young" or "old"')
 
     # Convert duration to seconds
     df["duration"] = df["duration"].apply(
@@ -38,8 +47,11 @@ def get_age_seed_videos(user_age = audit.USER_AGE):
     return video_urls, durations
 
 
-def get_finance_seed_videos(finance_video_type = audit.FINANCE_VIDEO_TYPE):
-    df = pd.read_csv(audit.SEED_FINANCE_VIDEO_PATH)
+def get_finance_seed_videos(finance_video_type = audit.FINANCE_VIDEO_TYPE, test = False):
+    if test:
+        df = pd.read_csv(test_config.SEED_FINANCE_VIDEO_PATH)
+    else:
+        df = pd.read_csv(test_config.SEED_FINANCE_VIDEO_PATH)
     df["label"] = df["label"].apply(str.lower)
 
     if finance_video_type == "mixed":
@@ -70,15 +82,22 @@ def get_finance_seed_videos(finance_video_type = audit.FINANCE_VIDEO_TYPE):
     return video_urls, durations
 
 
-def process_durations_list(durations):
-    if audit.WATCH_BY_RATIO:
-        durations = [int(duration * audit.WATCH_RATIO) for duration in durations]
+def process_durations_list(durations, test = False):
+    if test:
+        if test_config.WATCH_BY_RATIO:
+            durations = [int(duration * test_config.WATCH_RATIO) for duration in durations]
+        else:
+            durations = [audit.WATCH_DURATION for duration in durations]
     else:
-        durations = [audit.WATCH_DURATION for duration in durations]
+        if audit.WATCH_BY_RATIO:
+            durations = [int(duration * audit.WATCH_RATIO) for duration in durations]
+        else:
+            durations = [audit.WATCH_DURATION for duration in durations]
+
     return durations
 
 
-def to_csv(driver, start_time, finance_video_type = audit.FINANCE_VIDEO_TYPE, user_age = audit.USER_AGE):
+def to_csv(driver, start_time, finance_video_type = audit.FINANCE_VIDEO_TYPE, user_age = audit.USER_AGE, test = False):
     start_time_str = str(start_time).replace(
         ".", ""
     )  # Remove period from start time for filenames
@@ -93,81 +112,160 @@ def to_csv(driver, start_time, finance_video_type = audit.FINANCE_VIDEO_TYPE, us
     homepage_recs_df["Age"] = audit.USER_AGE
     homepage_recs_df["Finance Video Type"] = finance_video_type
 
-    if audit.WATCH_BY_RATIO:
-        video_recs_df.to_csv(
-            audit.AUDIT_RESULTS_PATH
-            + f"{start_time_str}-{finance_video_type}-{user_age}-watch_ratio{audit.WATCH_RATIO}-video_recs.csv",
-            index=False,
+    if test:
+        if test_config.WATCH_BY_RATIO:
+            video_recs_df.to_csv(
+                test_config.AUDIT_RESULTS_PATH
+                + f"test-{start_time_str}-{finance_video_type}-{user_age}-watch_ratio{test_config.WATCH_RATIO}-video_recs.csv",
+                index=False,
+            )
+
+            homepage_recs_df.to_csv(
+                test_config.AUDIT_RESULTS_PATH
+                + f"test-{start_time_str}-{finance_video_type}-{user_age}-watch_ratio{test_config.WATCH_RATIO}-homepage_recs.csv",
+                index=False,
+            )
+
+        else:
+            video_recs_df.to_csv(
+                test_config.AUDIT_RESULTS_PATH
+                + f"test-{start_time_str}-{finance_video_type}-{user_age}-watch_time{test_config.WATCH_DURATION}-video_recs.csv",
+                index=False,
+            )
+
+            homepage_recs_df.to_csv(
+                test_config.AUDIT_RESULTS_PATH
+                + f"test-{start_time_str}-{finance_video_type}-{user_age}-watch_time{test_config.WATCH_DURATION}-homepage_recs.csv",
+                index=False,
+            )
+
+        if driver.errors:
+            if audit.WATCH_BY_RATIO:
+                errors_df = pd.DataFrame(driver.errors)
+                errors_df.to_csv(
+                    audit.AUDIT_RESULTS_PATH
+                    + f"test-{start_time_str}-{finance_video_type}-{user_age}-errors.csv",
+                    index=False,
+                )
+            else:
+                errors_df = pd.DataFrame(driver.errors)
+                errors_df.to_csv(
+                    audit.AUDIT_RESULTS_PATH
+                    + f"test-{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-errors.csv",
+                    index=False,
+                )
+    else:
+        if audit.WATCH_BY_RATIO:
+            video_recs_df.to_csv(
+                audit.AUDIT_RESULTS_PATH
+                + f"{start_time_str}-{finance_video_type}-{user_age}-watch_ratio{audit.WATCH_RATIO}-video_recs.csv",
+                index=False,
+            )
+
+            homepage_recs_df.to_csv(
+                audit.AUDIT_RESULTS_PATH
+                + f"{start_time_str}-{finance_video_type}-{user_age}-watch_ratio{audit.WATCH_RATIO}-homepage_recs.csv",
+                index=False,
+            )
+
+        else:
+            video_recs_df.to_csv(
+                audit.AUDIT_RESULTS_PATH
+                + f"{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-video_recs.csv",
+                index=False,
+            )
+
+            homepage_recs_df.to_csv(
+                audit.AUDIT_RESULTS_PATH
+                + f"{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-homepage_recs.csv",
+                index=False,
+            )
+
+        if driver.errors:
+            if audit.WATCH_BY_RATIO:
+                errors_df = pd.DataFrame(driver.errors)
+                errors_df.to_csv(
+                    audit.AUDIT_RESULTS_PATH
+                    + f"{start_time_str}-{finance_video_type}-{user_age}-errors.csv",
+                    index=False,
+                )
+            else:
+                errors_df = pd.DataFrame(driver.errors)
+                errors_df.to_csv(
+                    audit.AUDIT_RESULTS_PATH
+                    + f"{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-errors.csv",
+                    index=False,
+                )
+
+def run_audit(finance_video_type = audit.FINANCE_VIDEO_TYPE, user_age = audit.USER_AGE, test = False):
+    if test:
+        # Record start time
+        start_time = time.time()
+        driver = YTDriver(browser=audit.BROWSER, verbose=True)
+
+        print(f"Starting test {user_age} {finance_video_type} audit")
+
+        # Watch age seed videos
+        print("Watching age videos...")
+        age_seed_videos, age_seed_video_durations = get_age_seed_videos(user_age, test = test)
+        age_seed_video_durations = process_durations_list(age_seed_video_durations, test = test)
+        driver.play_list(
+            age_seed_videos,
+            age_seed_video_durations,
+            homepage_interval=0,
+            topn=audit.NUM_RECOMMENDATIONS,
         )
 
-        homepage_recs_df.to_csv(
-            audit.AUDIT_RESULTS_PATH
-            + f"{start_time_str}-{finance_video_type}-{user_age}-watch_ratio{audit.WATCH_RATIO}-homepage_recs.csv",
-            index=False,
+        to_csv(driver, start_time, finance_video_type, user_age, test = True)
+
+        # Watch finance videos
+        print("Watching finance videos...")
+        finance_seed_videos, finance_seed_video_durations = get_finance_seed_videos(finance_video_type, test = test)
+        finance_seed_video_durations = process_durations_list(finance_seed_video_durations, test = test)
+        driver.play_list(
+            finance_seed_videos,
+            finance_seed_video_durations,
+            homepage_interval=10,
+            topn=audit.NUM_RECOMMENDATIONS,
         )
+
+        driver.close()  # Only closes the browser, object and results are still available
+
+        # Save results to csv
+        to_csv(driver, start_time, finance_video_type, user_age, test = True)
 
     else:
-        video_recs_df.to_csv(
-            audit.AUDIT_RESULTS_PATH
-            + f"{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-video_recs.csv",
-            index=False,
+        # Record start time
+        start_time = time.time()
+        driver = YTDriver(browser=audit.BROWSER, verbose=True)
+
+        print(f"Starting {user_age} {finance_video_type} audit")
+
+        # Watch age seed videos
+        print("Watching age videos...")
+        age_seed_videos, age_seed_video_durations = get_age_seed_videos(user_age)
+        age_seed_video_durations = process_durations_list(age_seed_video_durations)
+        driver.play_list(
+            age_seed_videos,
+            age_seed_video_durations,
+            homepage_interval=0,
+            topn=audit.NUM_RECOMMENDATIONS,
         )
 
-        homepage_recs_df.to_csv(
-            audit.AUDIT_RESULTS_PATH
-            + f"{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-homepage_recs.csv",
-            index=False,
+        to_csv(driver, start_time, finance_video_type, user_age)
+
+        # Watch finance videos
+        print("Watching finance videos...")
+        finance_seed_videos, finance_seed_video_durations = get_finance_seed_videos(finance_video_type)
+        finance_seed_video_durations = process_durations_list(finance_seed_video_durations)
+        driver.play_list(
+            finance_seed_videos,
+            finance_seed_video_durations,
+            homepage_interval=10,
+            topn=audit.NUM_RECOMMENDATIONS,
         )
 
-    if driver.errors:
-        if audit.WATCH_BY_RATIO:
-            errors_df = pd.DataFrame(driver.errors)
-            errors_df.to_csv(
-                audit.AUDIT_RESULTS_PATH
-                + f"{start_time_str}-{finance_video_type}-{user_age}-errors.csv",
-                index=False,
-            )
-        else:
-            errors_df = pd.DataFrame(driver.errors)
-            errors_df.to_csv(
-                audit.AUDIT_RESULTS_PATH
-                + f"{start_time_str}-{finance_video_type}-{user_age}-watch_time{audit.WATCH_DURATION}-errors.csv",
-                index=False,
-            )
+        driver.close()  # Only closes the browser, object and results are still available
 
-
-def run_audit(finance_video_type = audit.FINANCE_VIDEO_TYPE, user_age = audit.USER_AGE):
-    # Record start time
-    start_time = time.time()
-    driver = YTDriver(browser=audit.BROWSER, verbose=True)
-
-    print(f"Starting {audit.USER_AGE} {audit.FINANCE_VIDEO_TYPE} audit")
-
-    # Watch age seed videos
-    print("Watching age videos...")
-    age_seed_videos, age_seed_video_durations = get_age_seed_videos(user_age)
-    age_seed_video_durations = process_durations_list(age_seed_video_durations)
-    driver.play_list(
-        age_seed_videos,
-        age_seed_video_durations,
-        homepage_interval=0,
-        topn=audit.NUM_RECOMMENDATIONS,
-    )
-
-    to_csv(driver, start_time, finance_video_type, user_age)
-
-    # Watch finance videos
-    print("Watching finance videos...")
-    finance_seed_videos, finance_seed_video_durations = get_finance_seed_videos(finance_video_type)
-    finance_seed_video_durations = process_durations_list(finance_seed_video_durations)
-    driver.play_list(
-        finance_seed_videos,
-        finance_seed_video_durations,
-        homepage_interval=10,
-        topn=audit.NUM_RECOMMENDATIONS,
-    )
-
-    driver.close()  # Only closes the browser, object and results are still available
-
-    # Save results to csv
-    to_csv(driver, start_time, finance_video_type, user_age)
+        # Save results to csv
+        to_csv(driver, start_time, finance_video_type, user_age)
