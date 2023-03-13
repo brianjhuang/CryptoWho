@@ -66,7 +66,7 @@ A old individual (55-60) who:
 
 Watches blockchain
 
-Watches tradtional
+Watches traditional
 
 Watches mixed
 ```
