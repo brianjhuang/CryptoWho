@@ -270,95 +270,97 @@ function App() {
           </section>
         </ParallaxLayer>
 
-        <ParallaxLayer offset={2.15} speed={0.4}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              maxWidth: "1200px",
-              margin: "0 auto",
-            }}
-          >
+        <ParallaxLayer offset={2.5} speed={0.4}>
+          <section>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "20px",
-                marginBottom: "20px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                maxWidth: "1200px",
+                margin: "0 auto",
               }}
             >
-              <Fade delay={1000} cascade damping={0.15} direction="left">
-                {" "}
-                <Card
-                  topText={"Young Blockchain Investor"}
-                  bottomText={
-                    "Our young blockchain expert is around 18-23. Alongside their deep interest in blockchain investments (crypto, NFTs, etc.), they also watch videos about life lesson for teenagers, college decisions and tips, teen dating advice etc."
-                  }
-                />
-                <Card
-                  topText={"Average Young Investor"}
-                  bottomText={
-                    "Our young investor is around 18-23. Alongside their deep interest in both blockchain and traditional investments, they also watch videos about life lesson for teenagers, college decisions and tips, teen dating advice etc."
-                  }
-                />
-                <Card
-                  topText={"Young Traditional Investor"}
-                  bottomText={
-                    "Our young traditional investor is around 18-23. Alongside their deep interest in traditional investments (stocks, bonds, commodities, etc.) they also watch videos about life lesson for teenagers, college decisions and tips, teen dating advice etc."
-                  }
-                />
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "20px",
+                  marginBottom: "20px",
+                }}
+              >
+                <Fade delay={1000} cascade damping={0.15} direction="left">
+                  {" "}
+                  <Card
+                    topText={"Young Blockchain Investor"}
+                    bottomText={
+                      "Our young blockchain expert is around 18-23. Alongside their deep interest in blockchain investments (crypto, NFTs, etc.), they also watch videos about life lesson for teenagers, college decisions and tips, teen dating advice etc."
+                    }
+                  />
+                  <Card
+                    topText={"Average Young Investor"}
+                    bottomText={
+                      "Our young investor is around 18-23. Alongside their deep interest in both blockchain and traditional investments, they also watch videos about life lesson for teenagers, college decisions and tips, teen dating advice etc."
+                    }
+                  />
+                  <Card
+                    topText={"Young Traditional Investor"}
+                    bottomText={
+                      "Our young traditional investor is around 18-23. Alongside their deep interest in traditional investments (stocks, bonds, commodities, etc.) they also watch videos about life lesson for teenagers, college decisions and tips, teen dating advice etc."
+                    }
+                  />
+                </Fade>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "20px",
+                }}
+              >
+                <Fade delay={500} cascade damping={0.15} direction="right">
+                  {" "}
+                  <Card
+                    topText={"Old Blockchain Investor"}
+                    bottomText={
+                      "Our old blockchain investor is around 55-60. Alongside their deep interest in blockchain investments (crypto, NFTs, etc.), they also watch videos about parenting their own teenagers, activities to do when you’re 50+, and age related procedures (colonoscopies)."
+                    }
+                  />
+                  <Card
+                    topText={"Average Old Investor"}
+                    bottomText={
+                      "Our old investor is around 55-60. Alongside their deep interest in both blockchain and traditional investments, they also watch videos about parenting their own teenagers, activities to do when you’re 50+, and age related procedures (colonoscopies)."
+                    }
+                  />
+                  <Card
+                    topText={"Old Traditional Investor"}
+                    bottomText={
+                      "Our old investor is around 55-60. Alongside their deep interest in traditional investments (stocks, bonds, commodities, etc.) they also watch videos about parenting their own teenagers, activities to do when you’re 50+, and age related procedures (colonoscopies)."
+                    }
+                  />
+                </Fade>
+              </div>
+              <Fade style={{ textAlign: "center" }}>
+                <h1>
+                  Each of the user's in our audit is split based on one of two
+                  criteria:
+                </h1>
+                <h2>
+                  <span style={{ color: "green" }}>Age:</span> We want to know
+                  if age impacts your financial recommedations!
+                </h2>
+                <h2>
+                  <span style={{ color: "green" }}>Watch Behavior:</span> What
+                  videos is our user looking for? Are they getting recommended
+                  similar videos based on what they watch?
+                </h2>
+                <h2>
+                  Regardless of user age, we expect users with similar watch
+                  behavior to receive a similar distribution of recommendations!
+                </h2>
               </Fade>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "20px",
-              }}
-            >
-              <Fade delay={500} cascade damping={0.15} direction="right">
-                {" "}
-                <Card
-                  topText={"Old Blockchain Investor"}
-                  bottomText={
-                    "Our old blockchain investor is around 55-60. Alongside their deep interest in blockchain investments (crypto, NFTs, etc.), they also watch videos about parenting their own teenagers, activities to do when you’re 50+, and age related procedures (colonoscopies)."
-                  }
-                />
-                <Card
-                  topText={"Average Old Investor"}
-                  bottomText={
-                    "Our old investor is around 55-60. Alongside their deep interest in both blockchain and traditional investments, they also watch videos about parenting their own teenagers, activities to do when you’re 50+, and age related procedures (colonoscopies)."
-                  }
-                />
-                <Card
-                  topText={"Old Traditional Investor"}
-                  bottomText={
-                    "Our old investor is around 55-60. Alongside their deep interest in traditional investments (stocks, bonds, commodities, etc.) they also watch videos about parenting their own teenagers, activities to do when you’re 50+, and age related procedures (colonoscopies)."
-                  }
-                />
-              </Fade>
-            </div>
-            <Fade style={{ textAlign: "center" }}>
-              <h1>
-                Each of the user's in our audit is split based on one of two
-                criteria:
-              </h1>
-              <h2>
-                <span style={{ color : "green" }}>Age:</span> We want to know if
-                age impacts your financial recommedations!
-              </h2>
-              <h2>
-                <span style={{ color : "green" }}>Watch Behavior:</span> What
-                videos is our user looking for? Are they getting recommended
-                similar videos based on what they watch?
-              </h2>
-              <h2>
-                Regardless of user age, we expect users with similar watch
-                behavior to receive a similar distribution of recommendations!
-              </h2>
-            </Fade>
-          </div>
+          </section>
         </ParallaxLayer>
         <ParallaxLayer offset={3}>
           {" "}
