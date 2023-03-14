@@ -140,7 +140,7 @@ function App() {
           }}
         >
           <section>
-            <h1 style={{ fontSize: 80, zIndex: 1000 }}>
+            <h1 style={{ fontSize: 60, zIndex: 1000 }}>
               CryptoWho
               <strong
                 style={{
@@ -180,20 +180,20 @@ function App() {
         <ParallaxLayer offset={1} speed={0.4}>
           <section style={{ minHeight: "50vh" }}>
             <Fade duration={2000} cascade damping={0.15}>
-              <h1 style={{ fontSize: 80, color: "red" }}>$1,000,000,000</h1>
+              <h1 style={{ fontSize: 60, color: "red" }}>$1,000,000,000</h1>
               <h1>
                 That's how much money has been lost to cryptocurrency scams
                 since 2021.
               </h1>
               <h1>
-                Over <span style={{ fontSize: 50, color: "red" }}>50%</span> of
+                Over <span style={{ fontSize: 40, color: "red" }}>50%</span> of
                 victims reported that their first interaction with
                 cryptocurrency was on social media.
               </h1>
               <h1>
                 Of those victims, people between{" "}
                 <span style={{ color: "red" }}> ages 20-49 </span> were{" "}
-                <span style={{ color: "red", fontSize: 50 }}> 3x </span> more
+                <span style={{ color: "red", fontSize:40 }}> 3x </span> more
                 likely to report these types of fraud.
               </h1>
             </Fade>
@@ -214,7 +214,7 @@ function App() {
                 <br></br>
                 <h1>
                   With the recent rise of{" "}
-                  <span style={{ color: "red" }}>‘Finfluencers*’</span> across
+                  <span style={{ color: "red" }}>‘Finfluencers’</span> across
                   all platforms, more and more people turn to social media for
                   their personal finances.{" "}
                   <span style={{ color: "red" }}>
