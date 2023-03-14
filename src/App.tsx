@@ -177,8 +177,9 @@ function App() {
           </section>
         </ParallaxLayer>
 
-        <ParallaxLayer offset={1} speed={0.4}>
+        <ParallaxLayer offset={1} speed={1}>
           <section>
+            {" "}
             <Fade duration={2000} cascade damping={0.15}>
               <h1 style={{ fontSize: 60, color: "red" }}>$1,000,000,000</h1>
               <h1>
@@ -193,7 +194,7 @@ function App() {
               <h1>
                 Of those victims, people between{" "}
                 <span style={{ color: "red" }}> ages 20-49 </span> were{" "}
-                <span style={{ color: "red", fontSize:40 }}> 3x </span> more
+                <span style={{ color: "red", fontSize: 40 }}> 3x </span> more
                 likely to report these types of fraud.
               </h1>
             </Fade>
@@ -210,21 +211,25 @@ function App() {
                 <Bar data={data} options={options} />
                 January 2021 - March 2022, data sourced from the Federal Trade
                 Comission
-                <br></br>
-                <br></br>
-                <h1>
-                  With the recent rise of{" "}
-                  <span style={{ color: "red" }}>‘Finfluencers’</span> across
-                  all platforms, more and more people turn to social media for
-                  their personal finances.{" "}
-                  <span style={{ color: "red" }}>
-                    Can we trust these platforms to provide balanced
-                    recommendations to everyone?
-                  </span>
-                </h1>
               </div>
-              <br></br>
-              <br></br>
+            </Fade>
+          </section>
+        </ParallaxLayer>
+        <ParallaxLayer offset={1.75} speed={1}>
+          <section>
+            {" "}
+            <Fade>
+              {" "}
+              <h1>
+                With the recent rise of{" "}
+                <span style={{ color: "red" }}>‘Finfluencers’</span> across all
+                platforms, more and more people turn to social media for their
+                personal finances.{" "}
+                <span style={{ color: "red" }}>
+                  Can we trust these platforms to provide balanced
+                  recommendations to everyone?
+                </span>
+              </h1>
             </Fade>
             <Fade delay={2000}>
               <p>
@@ -249,13 +254,15 @@ function App() {
                 in customer funds.
               </p>
             </Fade>
+          </section>
+        </ParallaxLayer>
+        <ParallaxLayer offset={2} speed={0.5}>
+          <section>
             <Fade
-              delay={1000}
               cascade
               damping={0.1}
               style={{ maxWidth: "600px" }}
             >
-              {" "}
               <h1>
                 In the following audit, we focus on
                 <span style={{ color: "red" }}> You</span>Tube and its rising
@@ -269,8 +276,7 @@ function App() {
             </Fade>
           </section>
         </ParallaxLayer>
-
-        <ParallaxLayer offset={2.5} speed={0.4}>
+        <ParallaxLayer offset={2.25} speed={1.25}>
           <section>
             <div
               style={{
@@ -362,7 +368,7 @@ function App() {
             </div>
           </section>
         </ParallaxLayer>
-        <ParallaxLayer offset={3}>
+        {/* <ParallaxLayer offset={3}>
           {" "}
           <section
             style={{
@@ -406,7 +412,7 @@ function App() {
               Return to Top
             </Button>
           </section>
-        </ParallaxLayer>
+        </ParallaxLayer> */}
       </Parallax>
     </div>
   );
