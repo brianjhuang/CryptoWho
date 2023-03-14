@@ -178,7 +178,7 @@ function App() {
         </ParallaxLayer>
 
         <ParallaxLayer offset={1} speed={0.4}>
-          <section style={{ minHeight: "50vh" }}>
+          <section>
             <Fade duration={2000} cascade damping={0.15}>
               <h1 style={{ fontSize: 60, color: "red" }}>$1,000,000,000</h1>
               <h1>
