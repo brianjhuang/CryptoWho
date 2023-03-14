@@ -14,8 +14,8 @@ section {
   display: grid;
   place-items: center;
   align-content: center;
-  min-height: "50vh";
-  max-width : "800px";
+  min-height:"120vh";
+  max-width: "800px";
 }
 
 .card {
