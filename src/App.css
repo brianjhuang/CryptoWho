@@ -15,6 +15,7 @@ section {
   place-items: center;
   align-content: center;
   min-height: "50vh";
+  max-width : "800px";
 }
 
 .card {
