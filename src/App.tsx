@@ -258,11 +258,7 @@ function App() {
         </ParallaxLayer>
         <ParallaxLayer offset={2} speed={0.5}>
           <section>
-            <Fade
-              cascade
-              damping={0.1}
-              style={{ maxWidth: "600px" }}
-            >
+            <Fade cascade damping={0.1} style={{ maxWidth: "600px" }}>
               <h1>
                 In the following audit, we focus on
                 <span style={{ color: "red" }}> You</span>Tube and its rising
@@ -276,7 +272,7 @@ function App() {
             </Fade>
           </section>
         </ParallaxLayer>
-        <ParallaxLayer offset={2.25} speed={.5}>
+        <ParallaxLayer offset={2.25} speed={0.5}>
           <section>
             <div
               style={{
@@ -368,19 +364,82 @@ function App() {
             </div>
           </section>
         </ParallaxLayer>
-        {/* <ParallaxLayer offset={3}>
-          {" "}
-          <section
-            style={{
-              backgroundColor: "#000000",
-            }}
-          >
+        <ParallaxLayer offset={3} speed={0.5}>
+          <section>
+            <Fade style={{ textAlign: "center" }}>
+              <strong>
+                <p style={{ fontSize: 30 }}>
+                  {" "}
+                  We've collected 120 'seed videos' for our users to build their
+                  watch histories. Each user will watch 60 of these videos.
+                  <br></br>
+                  40 of these videos are used to identify the age of the user to
+                  YouTube. (Twenty for each age group)
+                  <br></br>
+                  80 of these videos are used to identify what type of videos
+                  the user is looking for (40 for the traditional and blockchain
+                  labels each.)
+                  <br></br>
+                  Our average investor watches the twenty shortest videos from
+                  each label! Each user watches 50% of the video to demonstrate
+                  that they have the same interest in all videos!
+                </p>
+              </strong>
+            </Fade>
             <br></br>
-            <h2>How did you do this?</h2>
-            <p>{"Lorem Ipsum :)"}</p>
-            <br></br>
+            <Fade>
+              <img
+                style={{ width: "800px", height: "auto" }}
+                src={process.env.PUBLIC_URL + "/images/audit.png"}
+              />
+            </Fade>
           </section>
         </ParallaxLayer>
+
+        <ParallaxLayer offset={3.25} speed={0.5}>
+          <section>
+            <Fade style={{ textAlign: "center" }}>
+              <strong>
+                <p style={{ fontSize: 30 }}>
+                  As each user watches their videos, we collect the
+                  recommendations from the side bar and homepage!
+                  <br></br>
+                  These recommendations will later be classified using GPT-3.5
+                  to determine the distribution of finance videos throughout a
+                  user's watch period.
+                </p>
+              </strong>
+            </Fade>
+            <Fade>
+              <img
+                style={{ width: "800px", height: "auto" }}
+                src={process.env.PUBLIC_URL + "/images/methods.png"}
+              />
+            </Fade>
+          </section>
+        </ParallaxLayer>
+
+        <ParallaxLayer offset={3.5} speed={0.5}>
+          <section>
+            <Fade style={{ textAlign: "center" }}>
+              <strong>
+                <p style={{ fontSize: 30 }}>
+                  Why GPT?
+                  <br></br>
+                  ● Performs much better than any model we can train
+                  <br></br> 
+                  ● Lack of a large training set (seed videos) meant training our
+                  own classifier would be difficult 
+                  <br></br>
+                  ● Interest in prompt‘engineering’ to fine-tune a model 
+                  <br></br>
+                  ● Through prompting, we can interpret model decisions by asking it to explain itsrationale
+                </p>
+              </strong>
+            </Fade>
+          </section>
+        </ParallaxLayer>
+
         <ParallaxLayer offset={4}>
           {" "}
           <section
@@ -412,7 +471,7 @@ function App() {
               Return to Top
             </Button>
           </section>
-        </ParallaxLayer> */}
+        </ParallaxLayer>
       </Parallax>
     </div>
   );
