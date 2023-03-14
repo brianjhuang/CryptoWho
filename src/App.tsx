@@ -276,7 +276,7 @@ function App() {
             </Fade>
           </section>
         </ParallaxLayer>
-        <ParallaxLayer offset={2.25} speed={1.25}>
+        <ParallaxLayer offset={2.25} speed={.5}>
           <section>
             <div
               style={{
