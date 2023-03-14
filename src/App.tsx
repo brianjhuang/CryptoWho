@@ -140,7 +140,7 @@ function App() {
           }}
         >
           <section>
-            <h1 style={{ fontSize: 50, zIndex: 1000 }}>
+            <h1 style={{ fontSize: 80, zIndex: 1000 }}>
               CryptoWho
               <strong
                 style={{
@@ -270,7 +270,7 @@ function App() {
           </section>
         </ParallaxLayer>
 
-        <ParallaxLayer offset={2.15} factor={0.5} speed={0.4}>
+        <ParallaxLayer offset={2.15} speed={0.4}>
           <div
             style={{
               display: "flex",
@@ -339,6 +339,25 @@ function App() {
                 />
               </Fade>
             </div>
+            <Fade style={{ textAlign: "center" }}>
+              <h1>
+                Each of the user's in our audit is split based on one of two
+                criteria:
+              </h1>
+              <h2>
+                <span style={{ color : "green" }}>Age:</span> We want to know if
+                age impacts your financial recommedations!
+              </h2>
+              <h2>
+                <span style={{ color : "green" }}>Watch Behavior:</span> What
+                videos is our user looking for? Are they getting recommended
+                similar videos based on what they watch?
+              </h2>
+              <h2>
+                Regardless of user age, we expect users with similar watch
+                behavior to receive a similar distribution of recommendations!
+              </h2>
+            </Fade>
           </div>
         </ParallaxLayer>
         <ParallaxLayer offset={3}>
