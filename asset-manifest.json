@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/CryptoWho/static/css/main.10b7f47c.css",
-    "main.js": "/CryptoWho/static/js/main.cf3002f9.js",
+    "main.js": "/CryptoWho/static/js/main.556b03ab.js",
     "static/js/787.71e672d5.chunk.js": "/CryptoWho/static/js/787.71e672d5.chunk.js",
     "index.html": "/CryptoWho/index.html",
     "main.10b7f47c.css.map": "/CryptoWho/static/css/main.10b7f47c.css.map",
-    "main.cf3002f9.js.map": "/CryptoWho/static/js/main.cf3002f9.js.map",
+    "main.556b03ab.js.map": "/CryptoWho/static/js/main.556b03ab.js.map",
     "787.71e672d5.chunk.js.map": "/CryptoWho/static/js/787.71e672d5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.10b7f47c.css",
-    "static/js/main.cf3002f9.js"
+    "static/js/main.556b03ab.js"
   ]
 }
