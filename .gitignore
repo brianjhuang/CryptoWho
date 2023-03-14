@@ -31,3 +31,8 @@ notebooks/
 src/__pycache__/
 src/data/
 src/features/
+src/audit
+src/model
+src/results
+references
+.ipynb_checkpoints/
