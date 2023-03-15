@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import "./App.css";
 
 import Button from "@mui/material/Button";
@@ -106,8 +106,14 @@ function App() {
 
   return (
     <>
-      <div style={{ width: "100%", backgroundColor: "#000000", overflow: "hidden"}}>
-        <Parallax ref={parallax} pages={1} style = {{overflow : "hidden"}}>
+      <div
+        style={{
+          width: "100%",
+          backgroundColor: "#000000",
+          overflow: "hidden",
+        }}
+      >
+        <Parallax ref={parallax} pages={1} style={{ overflow: "hidden" }}>
           <ParallaxLayer
             offset={0}
             speed={0}
@@ -187,34 +193,40 @@ function App() {
           </ParallaxLayer>
         </Parallax>
       </div>
-      <div style = {{paddingTop : "100vh"}}>
+      <div style={{ paddingTop: "100vh" }}>
         <section
           style={{ width: "90vw", margin: "2vh auto", textAlign: "center" }}
         >
           {" "}
           <Fade duration={2000} cascade damping={0.15}>
-            <h1 style={{ fontSize: "3vw", color: "red" }}>$1,000,000,000</h1>
+            <h1 style={{ fontSize: "5vh", color: "red" }}>$1,000,000,000</h1>
             <h1 style={{ fontSize: "2.5vh" }}>
               That's how much money has been lost to cryptocurrency scams since
               2021.
             </h1>
             <h1 style={{ fontSize: "2.5vh" }}>
-              Over <span style={{ fontSize: "2.5vh", color: "red" }}>50%</span>{" "}
-              of victims reported that their first interaction with
-              cryptocurrency was on social media.
+              Over <span style={{ fontSize: "3vh", color: "red" }}>50%</span> of
+              victims reported that their first interaction with cryptocurrency
+              was on social media.
             </h1>
             <h1 style={{ fontSize: "2.5vh" }}>
               Of those victims, people between{" "}
-              <span style={{ color: "red" }}> ages 20-49 </span> were{" "}
-              <span style={{ color: "red", fontSize: "2.7vw" }}> 3x </span> more
-              likely to report these types of fraud.
+              <span style={{ fontSize: "3vh", color: "red" }}>
+                {" "}
+                ages 20-49{" "}
+              </span>{" "}
+              were <span style={{ color: "red", fontSize: "3h" }}>
+                {" "}
+                3x{" "}
+              </span>{" "}
+              more likely to report these types of fraud.
             </h1>
           </Fade>
           <Fade delay={1000}>
             {" "}
             <div
               style={{
-                width: "90vw",
+                width: "50vw",
                 height: "auto",
                 alignContent: "center",
                 textAlign: "center",
@@ -222,7 +234,7 @@ function App() {
             >
               <Bar data={data} options={options} />
               January 2021 - March 2022, data sourced from the Federal Trade
-              Comission
+              Comissions
             </div>
           </Fade>
         </section>
@@ -242,7 +254,7 @@ function App() {
               </span>
             </h1>
           </Fade>
-          <Fade delay={2000}>
+          <Fade delay={1500}>
             <p style={{ textAlign: "center" }}>
               Logan Paul's failed 'CryptoZoo' project cost his audience over{" "}
               <span style={{ color: "red" }}>$5 million.</span>
@@ -259,7 +271,7 @@ function App() {
             />
             <br></br>
           </Fade>
-          <Fade delay={1000}>
+          <Fade delay={500}>
             <p style={{ textAlign: "center" }}>
               The collapse of FTX cost lost over
               <span style={{ color: "red" }}>$8 billion </span>
@@ -275,15 +287,23 @@ function App() {
             style={{ width: "95vw", margin: "auto", textAlign: "center" }}
           >
             <h1>
-              In the following audit, we focus on
+              In the following project, we focus on
               <span style={{ color: "red" }}> You</span>Tube and its rising role
-              in education. More and more young people rely on{" "}
+              in financial education.
+            </h1>
+            <p>
+              More and more young people rely on{" "}
               <span style={{ color: "red" }}> You</span>Tube for their personal
               finance. Are these younger watchers being recommended the same
               type of investments as their older peers? Does age have any impact
               on if you see blockchain content?
-            </h1>
-            <h1>Let's meet our 'users' for our audit.</h1>
+              <br></br>
+              <span style={{ color: "red" }}> You</span>Tube is innocent until
+              proven guilty, so we assume that all recommendations are based on
+              watch behavior alone, and regardless of age, users will receive a
+              similar distribution of recommendations.
+            </p>
+            <h1>Let's meet our viewers...</h1>
           </Fade>
         </section>
 
@@ -291,9 +311,9 @@ function App() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, 30vw)",
-              gap: "1vw",
+              gridTemplateColumns: "repeat(3, 20vw)",
               width: "100vw",
+              gap: "1vh",
               margin: "auto",
               justifyContent: "space-evenly",
             }}
@@ -341,56 +361,107 @@ function App() {
               />
             </Fade>
           </div>
-          <Fade style={{ textAlign: "center" }}>
-            <h1>
-              Each of the user's in our audit is split based on one of two
-              criteria:
-            </h1>
-            <h2>
-              <span style={{ color: "green" }}>Age:</span> We want to know if
-              age impacts your financial recommedations!
-            </h2>
-            <h2>
-              <span style={{ color: "green" }}>Watch Behavior:</span> What
-              videos is our user looking for? Are they getting recommended
-              similar videos based on what they watch?
-            </h2>
-            <h2>
-              Regardless of user age, we expect users with similar watch
-              behavior to receive a similar distribution of recommendations!
-            </h2>
-          </Fade>
         </section>
 
         <section>
           <Fade style={{ textAlign: "center", width: "80%" }}>
-            <strong>
-              <p style={{ fontSize: "2.5vh" }}>
-                {" "}
-                <p>
-                  We've collected 120 'seed videos' for our users to build their
-                  watch histories. Each user will watch 60 of these videos.
-                  <br></br>
-                </p>
-                <p>
-                  40 of these videos are used to identify the age of the user to
-                  YouTube. (Twenty for each age group)
-                  <br></br>
-                </p>
-                <p>
-                  80 of these videos are used to identify what type of videos
-                  the user is looking for (40 for the traditional and blockchain
-                  labels each.)
-                  <br></br>
-                </p>
-                Our average investor watches the twenty shortest videos from
-                each label! Each user watches 50% of the video to demonstrate
-                that they have the same interest in all videos!
-              </p>
-            </strong>
+            <p style={{ fontSize: "2.5vh" }}>
+              {" "}
+              We've collected 120 seed videos for our users to build their watch
+              histories. Each user will watch 60 of these videos.
+              <br></br>
+              40 of these videos are used to identify the age of the user to
+              YouTube.
+              <br></br>
+              20 of these videos are videos we expect people between the ages of
+              18-23 to watch, while the other twenty are for people between the
+              ages of 55-60.
+              <br></br>
+              80 of these videos are used to identify a user as either a
+              blockchain investor or traditional investor. Each label has 40
+              videos.
+              <br></br>
+              Our average or mixed investor watches the twenty shortest videos
+              from each label.
+              <br></br>
+              Each user watches 50% of the video. This is because YouTube
+              factors in watch time, so watching videos unevenly may bias user
+              recommendations. If we only watch a small percent of each video,
+              YouTube may also think we don't enjoy these types of videos.
+            </p>
+            <br></br>
           </Fade>
+
+          <section>
+            <h2>Here are some examples of our seed videos</h2>
+            <div className="grid-container">
+              <Fade delay={500} cascade damping={0.25} direction="right">
+                <div>
+                  <h3>Young</h3>
+                  <iframe
+                    width="300"
+                    height="150"
+                    src="https://www.youtube.com/embed/wm6Ld8XcdGc"
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </div>
+                <div>
+                  <h3>Old</h3>
+                  <iframe
+                    width="300"
+                    height="150"
+                    src="https://www.youtube.com/embed/xd1N0WOcd5A"
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </div>
+                <div>
+                  <h3>Traditional</h3>
+                  <iframe
+                    width="300"
+                    height="150"
+                    src="https://www.youtube.com/embed/lFyeLeP44kY"
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </div>
+                <div>
+                  <h3>Blockchain</h3>
+                  <iframe
+                    width="300"
+                    height="150"
+                    src="https://www.youtube.com/embed/SSo_EIwHSd4"
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </div>
+                <div>
+                  <h3>Mixed</h3>
+                  <iframe
+                    width="300"
+                    height="150"
+                    src="https://www.youtube.com/embed/LmHmPeRTNdI"
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </div>
+                <div>
+                  <h3>Unrelated</h3>
+                  <iframe
+                    width="300"
+                    height="150"
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
+                </div>
+              </Fade>
+            </div>
+          </section>
           <br></br>
           <Fade style={{ maxWidth: "90vw" }}>
+            <h2>Our audit follows the steps outlined in the image below.</h2>
             <img
               style={{
                 width: "auto",
@@ -400,22 +471,29 @@ function App() {
               }}
               src={process.env.PUBLIC_URL + "/images/audit.png"}
             />
+            <p>
+              Each user watches their set of seed videos to build a watch
+              history. The rationale for creating a watch history for each age
+              is rooted in the idea that YouTube does not consider the age
+              parameter in your account settings. Oftentimes, ages on YouTube
+              can be faked, and we assume that YouTube’s recommender system will
+              use the videos watched to generate an age bucket rather than
+              relying on a user’s inputted age. Following this logic, we do not
+              create any accounts. We watch specific finance videos to show
+              YouTube our user's interest in a specific topic. Assuming age is
+              not a factor, users should expect to see exactly what they're
+              looking for.
+            </p>
+            <p>
+              As each user watches their videos, we collect the recommendations
+              from the side bar and homepage. These videos are later classifed
+              using GPT to determine the distribution of finance videos across a
+              user's recommendations.
+            </p>
           </Fade>
         </section>
 
         <section>
-          <Fade style={{ textAlign: "center" }}>
-            <strong>
-              <p style={{ fontSize: "2.5vh" }}>
-                As each user watches their videos, we collect the
-                recommendations from the side bar and homepage!
-                <br></br>
-                These recommendations will later be classified using GPT-3.5 to
-                determine the distribution of finance videos throughout a user's
-                watch period.
-              </p>
-            </strong>
-          </Fade>
           <Fade>
             <img
               style={{
@@ -432,16 +510,56 @@ function App() {
         <section>
           <Fade style={{ textAlign: "center" }}>
             <strong>
-              <p style={{ fontSize: "2.5vh" }}>
-                Why GPT?
-                <br></br>● Performs much better than any model we can train
-                <br></br>● Lack of a large training set (seed videos) meant
-                training our own classifier would be difficult
-                <br></br>● Interest in prompt‘engineering’ to fine-tune a model
-                <br></br>● Through prompting, we can interpret model decisions
-                by asking it to explain its rationale
+              <h1>Why GPT?</h1>
+            </strong>
+            <strong>
+              <p>
+                {" "}
+                - Performs much better than any model that can be trained in
+                less than 10 weeks.
+                <br></br>- Lack of a large training set (seed videos) meant
+                training our own classifier would be difficult.
+                <br></br>- Interest in prompt "engineering" to fine-tune a model
+                for this project.
+                <br></br>- Through clever prompting, we can interpret model
+                decisions by asking it to explain its rationale.
               </p>
             </strong>
+          </Fade>
+          <br></br>
+        </section>
+
+        <section>
+          <br></br>
+          <Fade style={{ textAlign: "center" }}>
+            <strong>
+              <Fade cascade damping={0.025} style={{ fontSize: 20 }}>
+                Using GPT, we reached an astounding classification accuracy of
+              </Fade>
+              <Fade delay={1750}>
+                <span style={{ color: "green", fontSize: 40 }}>91%</span>
+              </Fade>
+            </strong>
+          </Fade>
+        </section>
+
+        <section>
+          <br></br>
+          <Fade delay={2000}>
+            <img
+              style={{
+                width: "1000px",
+                height: "auto",
+                maxWidth: "90vw",
+              }}
+              src={process.env.PUBLIC_URL + "/images/confusion_matrix.png"}
+            />
+          </Fade>
+          <br></br>
+          <Fade delay={2000} style={{ textAlign: "center" }}>
+            This was achieved on our seed video set. Given more time and a
+            larger dataset, we believe even higher precision can be achieved
+            within our model.
           </Fade>
         </section>
       </div>
