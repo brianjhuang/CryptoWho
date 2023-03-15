@@ -978,13 +978,13 @@ function App() {
           }}
         >
           <Fade delay={1000}>
-            <div style={{ width: "30vw", height: "auto", textAlign: "center" }}>
+            <div style={{ width: "40vw", height: "auto", textAlign: "center" }}>
               <Bar data={sidebar_data} options={sidebar_options} />
               <p>I'm interactive! Click on the legends!</p>
             </div>
           </Fade>
           <Fade delay={1000}>
-            <div style={{ width: "30vw", height: "auto", textAlign: "center" }}>
+            <div style={{ width: "40vw", height: "auto", textAlign: "center" }}>
               <Bar data={homepage_data} options={homepage_options} />
               <p>I'm interactive! Click on the legends!</p>
             </div>
@@ -1026,6 +1026,7 @@ function App() {
         </section>
 
         <section>
+          <br></br>
           <br></br>
           <br></br>
           <br></br>
