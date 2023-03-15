@@ -263,7 +263,7 @@ function App() {
           <Fade delay={1000}>
             <img
               style={{
-                width: "1000px",
+                width: "800px",
                 height: "auto",
                 maxWidth: "90vw",
               }}
@@ -460,11 +460,11 @@ function App() {
             </div>
           </section>
           <br></br>
-          <Fade style={{ maxWidth: "90vw" }}>
+          <Fade style={{ textAlign: "center", width: "80%" }}>
             <h2>Our audit follows the steps outlined in the image below.</h2>
             <img
               style={{
-                width: "auto",
+                width: "800px",
                 height: "auto",
                 maxWidth: "90vw",
                 borderRadius: "5px",
@@ -494,10 +494,10 @@ function App() {
         </section>
 
         <section>
-          <Fade>
+          <Fade style={{ textAlign: "center", width: "80%" }}>
             <img
               style={{
-                width: "auto",
+                width: "800px",
                 height: "auto",
                 maxWidth: "90vw",
                 borderRadius: "5px",
@@ -508,7 +508,7 @@ function App() {
         </section>
 
         <section>
-          <Fade style={{ textAlign: "center" }}>
+          <Fade style={{ textAlign: "center", width: "80%" }}>
             <strong>
               <h1>Why GPT?</h1>
             </strong>
@@ -531,12 +531,16 @@ function App() {
 
         <section>
           <br></br>
-          <Fade style={{ textAlign: "center" }}>
+          <Fade style={{ textAlign: "center", width: "80%" }}>
             <strong>
-              <Fade cascade damping={0.025} style={{ fontSize: 20 }}>
+              <Fade
+                cascade
+                damping={0.025}
+                style={{ fontSize: 20, textAlign: "center", width: "80%" }}
+              >
                 Using GPT, we reached an astounding classification accuracy of
               </Fade>
-              <Fade delay={1750}>
+              <Fade delay={1750} style={{ textAlign: "center" }}>
                 <span style={{ color: "green", fontSize: 40 }}>91%</span>
               </Fade>
             </strong>
@@ -545,10 +549,10 @@ function App() {
 
         <section>
           <br></br>
-          <Fade delay={2000}>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
             <img
               style={{
-                width: "1000px",
+                width: "800px",
                 height: "auto",
                 maxWidth: "90vw",
               }}
@@ -556,11 +560,50 @@ function App() {
             />
           </Fade>
           <br></br>
-          <Fade delay={2000} style={{ textAlign: "center" }}>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
             This was achieved on our seed video set. Given more time and a
             larger dataset, we believe even higher precision can be achieved
             within our model.
           </Fade>
+        </section>
+
+        <section>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            <p>
+              Designing prompts was critical to reaching high accuracies in our
+              classifier. Unlike traditional classifiers, our seed video set
+              functioned both as the set used to create watch history and the
+              test set for our classifier. This is due to the fact that GPT-3.5
+              does not require a labeled training set (however it does help to
+              have more data) to fine-tune/train. In the future, given more
+              time, we would like to fine-tune the model using a training set
+              and testing set. This is something future researchers can delve
+              into when using GPT to audit. Given the relatively short lifetime
+              of GPT 3.5, there are many different ways to approach using it as
+              a classifier that we did not cover. Starting from GPT 3.5 prompts
+              are strung together to create a message. The message is sent to
+              the Chat Completions API where we collect our final prediction. In
+              all of our prompts, we pass in a YouTube video snippet, which is
+              the title concatenated with a summarized transcript (using
+              TextRank) and the top video tags determined using TF-IDF. It
+              outputs a predicted label with the probabilities and a short
+              explanation. We had multiple iterations of different prompts. We
+              follow a message format starting with a system message to bias our
+              model towards our task, a user message providing details on our
+              labels and how-to return formats, and an assistant message to
+              reiterate instructions so our classifier is more consistent with
+              output. We follow up with one last user message when we make our
+              API call containing our video snippet. The API returns a
+              completion object with the label and rationale behind its
+              prediction.
+            </p>
+          </Fade>
+        </section>
+
+        <section>
+          <br></br>
+          <br></br>
+          <br></br>
         </section>
       </div>
     </>
