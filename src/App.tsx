@@ -4,6 +4,7 @@ import "./App.css";
 
 import Button from "@mui/material/Button";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 import { animated, Interpolation, useSpring } from "@react-spring/web";
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
@@ -80,6 +81,157 @@ const options: ChartOptions<any> = {
       },
     },
   },
+};
+
+const homepage_options: ChartOptions<any> = {
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  maintainsAspectRatio: true,
+  responsive: true,
+  scales: {
+    y: {
+      stacked: true,
+      ticks: {
+        color: "white",
+        beginAtZero: true,
+        font: {
+          size: 20,
+        },
+      },
+    },
+    x: {
+      stacked: true,
+      ticks: {
+        color: "white",
+        beginAtZero: true,
+        font: {
+          size: 20,
+        },
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: "white",
+        font: {
+          size: 14,
+        },
+      },
+    },
+    title: {
+      display: true,
+      text: "Recommendations Across Different User Homepages",
+      color: "white", // set the text color to white
+      font: {
+        size: 16,
+      },
+    },
+  },
+};
+
+const sidebar_options: ChartOptions<any> = {
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  maintainsAspectRatio: true,
+  responsive: true,
+  scales: {
+    y: {
+      stacked: true,
+      ticks: {
+        color: "white",
+        beginAtZero: true,
+        font: {
+          size: 20,
+        },
+      },
+    },
+    x: {
+      stacked: true,
+      ticks: {
+        color: "white",
+        beginAtZero: true,
+        font: {
+          size: 20,
+        },
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: "white",
+        font: {
+          size: 14,
+        },
+      },
+    },
+    title: {
+      display: true,
+      text: "Recommendations Across Different User Sidebars",
+      color: "white", // set the text color to white
+      font: {
+        size: 16,
+      },
+    },
+  },
+};
+
+const audit_labels = [
+  "Old Blockchain",
+  "Old Traditional",
+  "Old Mixed",
+  "Young Blockchain",
+  "Young Traditional",
+  "Young Mixed",
+];
+
+export const homepage_data = {
+  audit_labels,
+  datasets: [
+    {
+      label: "Mixed",
+      data: [60, 43, 60, 62, 34, 34],
+      backgroundColor: "rgb(255, 99, 132)",
+    },
+    {
+      label: "Blockchain",
+      data: [129, 5, 68, 135, 1, 74],
+      backgroundColor: "rgb(75, 192, 192)",
+    },
+    {
+      label: "Traditional",
+      data: [116, 296, 198, 106, 257, 164],
+      backgroundColor: "rgb(53, 162, 235)",
+    },
+  ],
+};
+
+export const sidebar_data = {
+  audit_labels,
+  datasets: [
+    {
+      label: "Mixed",
+      data: [6, 6, 6, 2, 9, 10],
+      backgroundColor: "rgb(255, 99, 132)",
+    },
+    {
+      label: "Blockchain",
+      data: [4, 0, 1, 2, 0, 0],
+      backgroundColor: "rgb(75, 192, 192)",
+    },
+    {
+      label: "Traditional",
+      data: [17, 21, 15, 4, 9, 4],
+      backgroundColor: "rgb(53, 162, 235)",
+    },
+  ],
 };
 
 const labels = [
@@ -596,7 +748,282 @@ function App() {
               API call containing our video snippet. The API returns a
               completion object with the label and rationale behind its
               prediction.
+              <br></br>
+              <br></br>
+              <strong style={{ fontSize: 20, textAlign: "center" }}>
+                The final prompt we decided to use is shown below:
+              </strong>
             </p>
+          </Fade>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            <span style={{ color: "green" }}>
+              You are a classifier that determines if a YouTube video snippet
+              falls under a label. A snippet is a concatenation of the video
+              title, summarized transcript, and video tags. The labels and
+              additional instructions will be included in the first user
+              message.
+              <br></br>
+              <br></br>
+              Labels:
+              <br></br>
+              Traditional: Videos that recommend or educate about stocks, bonds,
+              real estate, commodities, retirement accounts, or other
+              traditional investments or keywords related to them.
+              <br></br>
+              Blockchain: Videos that recommend or educate about cryptocurrency
+              (BTC, ETH, etc.), NFTs, or other Web3 investments or keywords
+              related to them.
+              <br></br>
+              Mixed: Videos that recommend or educate about both blockchain and
+              traditional investments or keywords related to both.
+              <br></br>
+              Unrelated: Videos that do not recommend or educate about either
+              blockchain or traditional investments or keywords related to them.
+              <br></br>
+              <br></br>
+              Instructions:
+              <br></br>- The classifier should consider the context and meaning
+              of the keywords used to determine whether the snippet is related
+              to traditional or blockchain investments.
+              <br></br>- If talks about making money from jobs, side hustles, or
+              other alternative assets (cars, watches, artificial intelligence,
+              trading cards, art, etc), they are Unrelated.
+              <br></br>- A video that is only downplaying an investment or
+              discussing it negatively should be classified as Unrelated.
+              <br></br>- Please return predictions in the format" Label : 20
+              word or shorter rationale
+              <br></br>
+              <br></br>
+              Understood. I will classify YouTube video snippets based on the
+              provided labels and instructions. Here's how I will format the
+              predictions:
+              <br></br>
+              Label : 20-word or shorter rationale
+              <br></br>
+              Please provide me with the YouTube video snippet you would like me
+              to classify.`
+            </span>
+
+            <br></br>
+            <p>
+              This prompt is split into the System, User, and first Assistant
+              message in the respective order.
+            </p>
+          </Fade>
+        </section>
+
+        <section>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            <strong style={{ fontSize: 20, textAlign: "center" }}>
+              Although our final prompt performed extremely well, earlier
+              iterations of prompts struggled. Our very first prompt had an
+              accuracy of 51%.
+            </strong>
+            <span style={{ color: "green" }}>
+              I am a YouTube video classifier that takes in video snippets
+              (title + shortened transcript + tags) and outputs one of the
+              following labels if the video recommends or teaches about:
+              <br></br>
+              1. Blockchain: Cryptocurrency, NFTs, or anything related to the
+              blockchain
+              <br></br>
+              2. Traditional: Stocks, Bonds, Real Estate, Commodities
+              <br></br>
+              3. Mixed: Both blockchain and traditional investments
+              <br></br>
+              4. None: Not related to the labels above.
+            </span>
+          </Fade>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            <p>
+              Binarzing our task results in a substantial increase in the
+              performance of our model. Binarizing our baseline prompt resulted
+              in an accuracy of 77%. Given more time, we would’ve likely
+              binarized our final prompt as well. Binarzing allows the main
+              problem to be broken down into subproblems. By asking it to
+              predict if a video is or isn’t a label, we can avoid missed
+              predictions where traditional videos are classified as blockchain
+              and vice-versa. A downside of binarizing is that token cost, the
+              metric that Open AI uses to charge users of the GPT API, is
+              doubled. Also, our classifier no longer considers both blockchain
+              and traditional when predicting mixed, rather the predictions of
+              the two prompts are summed together.
+            </p>
+            <span style={{ color: "green" }}>
+              Blockchain Binary Prompt
+              <br></br>I am a YouTube video classifier. Provide me with a video
+              snippet (title + summarized transcript + tags) and I will analyze
+              if the video recommends or teaches about blockchain
+              investments(bitcoin, NFTs, Ethereum, etc). I respond only with Yes
+              and No.
+              <br></br>
+              Traditional Binary Prompt <br></br> I am a YouTube video
+              classifier. Provide me with a video snippet (title + summarized
+              transcript + tags) and I will analyze if the video recommends or
+              teaches about traditional investments (stocks, bonds, commodities,
+              real estate, etc). I respond only with Yes and No.
+            </span>
+          </Fade>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            <p>
+              The biggest struggle our classifier had was dealing with edge
+              cases. Our prompts often would hone in on keywords rather than the
+              context of our video snippets. There were many prompts that led up
+              to the final prompt, however rather than provide each prompt, the
+              snippet below shows how asking GPT for rationale provided valuable
+              insight on increasing prompt accuracy. <br></br> <br></br>
+              <strong>
+                Prior to adding the following line to our instructions:
+              </strong>
+            </p>
+            <span style={{ color: "green" }}>
+              A video that is only downplaying an investment or discussing it
+              negatively should be classified as Unrelated.
+            </span>
+            <strong>
+              <p>Our model classified the following video as Blockchain:</p>
+            </strong>
+            <h4>Charlie Munger: Bitcoin is Worthless Rat Poison</h4>
+            <iframe
+              width="300"
+              height="150"
+              src="https://www.youtube.com/embed/7LxtHoAHdOY"
+              title="YouTube video player"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+            <p>With the following label and rationale:</p>
+            <span style={{ color: "green" }}>
+              "Blockchain: The snippet mentions Bitcoin, blockchain, and
+              cryptocurrency, which are all related to blockchain investments.
+              Charlie Munger's negative comments about Bitcoin also suggest that
+              the snippet is related to blockchain investments."
+            </span>
+            <p>
+              Although the prompt emphasizes that the video should recommend
+              blockchain to receive a blockchain label, the classifier struggles
+              to do so, looking only for keywords. When adding the new
+              instructions, the following output is received instead:
+            </p>
+            <span style={{ color: "green" }}>
+              “Traditional: Charlie Munger downplays Bitcoin's value as an
+              investment, stating that it has no intrinsic value and is not
+              needed as a payment system. He compares it to "rat poison" and
+              believes that it encourages speculation."
+            </span>
+            <p>
+              By inspecting our misclassified seed videos, we can use GPT’s
+              rationale to modify our prompt for higher accuracy. There are
+              still faults with this method. Sometimes GPT’s rationale does not
+              match its prediction at all, i.e it predicts blockchain with a
+              rationale discussing why it predicted traditional. Other times
+              GPT’s rationale may result in a prompt that overfits the seed
+              videos. This can be avoided by validating the end results of the
+              classifier on the audit data through manual validation. In the
+              future, given more time, we hope to be able to further tune the
+              prompt and collect enough seed videos to both ‘train’ our prompt
+              using the rationale strategy and ‘test’ our prompt using the
+              remaining seed videos.
+            </p>
+          </Fade>
+        </section>
+
+        <section>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            <h1>
+              So what's the conclusion? Is YouTube providing me with bad
+              financial advice?
+            </h1>
+          </Fade>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            We performed Chi-Squared tests to statistically examine the
+            differences between video recommendations across audit users after
+            we conducted our audits for each user. For our Chi-Squared tests, we
+            focused on the mixed users, as they represent the average user. The
+            intent of the blockchain and traditional users was to observe if an
+            individual who was actively seeking one type of video (say
+            blockchain) would receive more of the other label due to their age.
+            For example, if we had rejected our null hypothesis, we would’ve
+            expected younger people to get more blockchain videos. Under that
+            assumption, it would be odd if our young users who watched a lot of
+            traditional videos got significantly higher blockchain
+            recommendations while watching these traditional videos compared to
+            their older counterparts. This was not true, however. We also
+            discard mixed videos and unrelated videos, only comparing the
+            frequency of traditional and blockchain videos to reduce the degrees
+            of freedom of our test. Separate tests were performed for
+            recommendations found on the YouTube homepage (p=0.339), and
+            recommendations found on the sidebar of the video (p=0.201), neither
+            being statistically significant. Given more time in the future, we
+            would like to run more statistical tests with higher degrees of
+            freedom.
+          </Fade>
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            {" "}
+            <br></br>
+            <strong style={{ fontSize: 30, color: "green" }}>
+              tldr; YouTube is off the hook, for now...
+            </strong>{" "}
+            <br></br>
+          </Fade>
+          <Fade delay={1000}>
+            {" "}
+            <div
+              style={{
+                width: "50vw",
+                height: "auto",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Bar data={sidebar_data} options={sidebar_options} />
+            </div>
+          </Fade>
+          <Fade delay={1000}>
+            {" "}
+            <div
+              style={{
+                width: "50vw",
+                height: "auto",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Bar data={homepage_data} options={homepage_options} />
+            </div>
+          </Fade>
+        </section>
+
+        <section>
+          {" "}
+          <Fade delay={2000} style={{ textAlign: "center", width: "80%" }}>
+            {" "}
+            <br></br>
+            <strong style={{ fontSize: 30, color: "green" }}>
+              Acknowledgements
+            </strong>{" "}
+            <p>
+              We'd like to make a special thanks to the Data Science Capstone
+              faculty, HDSI, Professor Stuart Geiger, and all our friends and
+              family who provied us the opportunity to work on this project.
+            </p>
+            <br></br>
+            <p>
+              For more info about this project please feel free to reach out to
+              either the HDSI capstone staff or:{" "}
+            </p>
+            <br></br>
+            <Button
+              variant="contained"
+              startIcon={<LinkedInIcon />}
+              onClick={() =>
+                window.open(
+                  "https://www.linkedin.com/in/brianjhuang/",
+                  "_blank"
+                )
+              }
+            >
+              Brian Huang
+            </Button>
           </Fade>
         </section>
 
