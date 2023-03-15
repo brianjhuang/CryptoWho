@@ -396,7 +396,6 @@ function App() {
                 width: "auto",
                 height: "auto",
                 maxWidth: "90vw",
-                backgroundColor: "white",
                 borderRadius: "5px",
               }}
               src={process.env.PUBLIC_URL + "/images/audit.png"}
@@ -423,7 +422,6 @@ function App() {
                 width: "auto",
                 height: "auto",
                 maxWidth: "90vw",
-                backgroundColor: "white",
                 borderRadius: "5px",
               }}
               src={process.env.PUBLIC_URL + "/images/methods.png"}
