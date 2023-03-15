@@ -96,7 +96,6 @@ const homepage_options: ChartOptions<any> = {
       stacked: true,
       ticks: {
         color: "white",
-        beginAtZero: true,
         font: {
           size: 20,
         },
@@ -106,7 +105,6 @@ const homepage_options: ChartOptions<any> = {
       stacked: true,
       ticks: {
         color: "white",
-        beginAtZero: true,
         font: {
           size: 20,
         },
@@ -146,7 +144,7 @@ const sidebar_options: ChartOptions<any> = {
       stacked: true,
       ticks: {
         color: "white",
-        beginAtZero: true,
+        suggestedMin: 0,
         font: {
           size: 20,
         },
@@ -156,7 +154,6 @@ const sidebar_options: ChartOptions<any> = {
       stacked: true,
       ticks: {
         color: "white",
-        beginAtZero: true,
         font: {
           size: 20,
         },
@@ -193,43 +190,49 @@ const audit_labels = [
 ];
 
 export const homepage_data = {
-  audit_labels,
+  labels: audit_labels,
   datasets: [
     {
       label: "Mixed",
       data: [60, 43, 60, 62, 34, 34],
-      backgroundColor: "rgb(255, 99, 132)",
+      backgroundColor: "rgba(147, 33, 145, 0.5)",
+      borderColor: "rgba(167, 53, 165, 0.7)",
     },
     {
       label: "Blockchain",
       data: [129, 5, 68, 135, 1, 74],
-      backgroundColor: "rgb(75, 192, 192)",
+      backgroundColor: "rgba(173, 61, 111, 0.5)",
+      borderColor: "rgba(193, 81, 131, 0.7)",
     },
     {
       label: "Traditional",
       data: [116, 296, 198, 106, 257, 164],
-      backgroundColor: "rgb(53, 162, 235)",
+      backgroundColor: "rgba(199, 105, 75, 0.5)",
+      borderColor: "rgba(219, 125, 95, 0.7)",
     },
   ],
 };
 
 export const sidebar_data = {
-  audit_labels,
+  labels: audit_labels,
   datasets: [
     {
       label: "Mixed",
       data: [6, 6, 6, 2, 9, 10],
-      backgroundColor: "rgb(255, 99, 132)",
+      backgroundColor: "rgba(147, 33, 145, 0.5)",
+      borderColor: "rgba(167, 53, 165, 0.7)",
     },
     {
       label: "Blockchain",
       data: [4, 0, 1, 2, 0, 0],
-      backgroundColor: "rgb(75, 192, 192)",
+      backgroundColor: "rgba(173, 61, 111, 0.5)",
+      borderColor: "rgba(193, 81, 131, 0.7)",
     },
     {
       label: "Traditional",
       data: [17, 21, 15, 4, 9, 4],
-      backgroundColor: "rgb(53, 162, 235)",
+      backgroundColor: "rgba(199, 105, 75, 0.5)",
+      borderColor: "rgba(219, 125, 95, 0.7)",
     },
   ],
 };
@@ -965,30 +968,25 @@ function App() {
             </strong>{" "}
             <br></br>
           </Fade>
+        </section>
+
+        <section
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "10%",
+          }}
+        >
           <Fade delay={1000}>
-            {" "}
-            <div
-              style={{
-                width: "50vw",
-                height: "auto",
-                alignContent: "center",
-                textAlign: "center",
-              }}
-            >
+            <div style={{ width: "30vw", height: "auto", textAlign: "center" }}>
               <Bar data={sidebar_data} options={sidebar_options} />
+              <p>I'm interactive! Click on the legends!</p>
             </div>
           </Fade>
           <Fade delay={1000}>
-            {" "}
-            <div
-              style={{
-                width: "50vw",
-                height: "auto",
-                alignContent: "center",
-                textAlign: "center",
-              }}
-            >
+            <div style={{ width: "30vw", height: "auto", textAlign: "center" }}>
               <Bar data={homepage_data} options={homepage_options} />
+              <p>I'm interactive! Click on the legends!</p>
             </div>
           </Fade>
         </section>
@@ -1023,7 +1021,7 @@ function App() {
               }
             >
               Brian Huang
-            </Button>
+            </Button>{" "}
           </Fade>
         </section>
 
